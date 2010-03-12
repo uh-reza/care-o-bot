@@ -66,15 +66,14 @@ PACKAGES_TO_BUILD=\
 	libwm4\
 	libm5api\
 	libntcan\
-	cob3_msgs\
-	cob3_srvs\
+	cob_msgs\
+	cob_srvs\
 	sick_s300\
 	cob3_hokuyo\
 	sdh\
-	cob3_camera_sensors\
+	cob_camera_sensors\
 	powercube_chain\
 	cob3_arm\
-	cob3_arm_ik\
 	cob3_platform\
 	cob3_tf_broadcaster\
 	cob3_teleop\
@@ -82,6 +81,7 @@ PACKAGES_TO_BUILD=\
 	cob3_defs\
 	cob3_ogre\
 	cob3_gazebo\
+	cob3_dashboard
 #--------------------------------------------------------------------
 
 all:

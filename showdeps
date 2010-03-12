@@ -64,21 +64,26 @@
 # list all packages here
 PACKAGES_APPS=\
 cob3_teleop,\
+cob3_dashboard,\
 cob3_test
 
 PACKAGES_COMMON=\
-cob3_msgs,\
-cob3_srvs
+cob_msgs,\
+cob_srvs,\
+generic_can,\
+canopen_motor,\
+cob_vision_utils,\
+cob_utilities
 
 PACKAGES_DRIVER=\
 sick_s300,\
 cob3_hokuyo,\
 sdh,\
-cob3_camera_sensors,\
+cob_camera_sensors,\
 powercube_chain,\
 cob3_arm,\
-cob3_arm_ik,\
 cob3_platform,\
+base_drive_chain,\
 cob3_tf_broadcaster
 
 PACKAGES_EXTERN=\
