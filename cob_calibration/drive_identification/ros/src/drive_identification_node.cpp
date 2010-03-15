@@ -120,8 +120,8 @@ class NodeClass
 
             //topicSub_demoSubscribe = n.subscribe("demoSubscribe", 1, &NodeClass::topicCallback_demoSubscribe, this);
 			
-			sIniDirectory = "";
-			sIniDirectory = "../../../../cob_driver/cob3_platform/ros/bin/Platform/IniFiles/";        
+			sIniDirectory = "./";
+			//sIniDirectory = "../../../../cob_driver/cob3_platform/ros/bin/Platform/IniFiles/";        
 		}
         
         // Destructor
@@ -135,7 +135,7 @@ class NodeClass
 
         
         // other function declarations
-        bool startupIdentification();
+        bool init();
         
         bool startDriveIdentification(IdentModus mode);
 
@@ -150,9 +150,9 @@ int main(int argc, char** argv)
     ros::init(argc, argv, "drive_identification");
     
     NodeClass identification;
-    identification.startupIdentification();
+    if(identification.init() == 1) return 1;
 
-	identification.simpleDriveTest(1.0);
+	identification.simpleDriveTest(4.0);
 	
  
     while(identification.n.ok())
@@ -168,26 +168,30 @@ int main(int argc, char** argv)
 
 //##################################
 //#### function implementations ####
-bool NodeClass::startupIdentification(){
+bool NodeClass::init(){
 	cob_srvs::Switch data;
     srvClient_InitPltf.call(data);
     if(data.response.success != true) {
-        ROS_ERROR("Failed to initialize Platform using base_drive_chain");
-        return 0;
-    }   
+        ROS_ERROR("Failed to initialize Platform using base_drive_chain_node");
+        return 1;
+    } else ROS_INFO("Successfully initialized base_drive_chain_node");
 
     //Read from ini-File
     iNumMotors = 8; //Parameter??!
-    m_vdVelGearDriveRadS.assign(4,0);
-    m_vdVelGearSteerRadS.assign(4,0);
+    
+    //m_vdVelGearDriveRadS.assign(4, 0.0);
+    //m_vdVelGearSteerRadS.assign(4, 0.0);
+    
     m_dSpeedRadS = 6.0;
 	m_sFilePrefix = "Platform\\Log\\ElmoRecordings";
     
-    IniFile iniFile;
-	iniFile.SetFileName(sIniDirectory+ "PltfIdent.ini", "drive_identification_node.cpp");
-	iniFile.GetKeyDouble("Identification", "SpeedRadS", &m_dSpeedRadS, true);
-	iniFile.GetKeyString("Identification", "FilePrefix", &m_sFilePrefix, true);
-
+    //IniFile iniFile;
+	//iniFile.SetFileName(sIniDirectory+ "PltfIdent.ini", "drive_identification_node.cpp");
+	//iniFile.GetKeyDouble("Identification", "SpeedRadS", &m_dSpeedRadS, true);
+	//iniFile.GetKeyString("Identification", "FilePrefix", &m_sFilePrefix, true);
+	
+	ROS_DEBUG("Drive_Identification init successful");
+	
     return 0;
 }
 
@@ -317,9 +321,10 @@ bool NodeClass::startDriveIdentification(IdentModus mode){
 }
 
 bool NodeClass::simpleDriveTest(double speed) {
+    ROS_DEBUG("Entered simpleDriveTest");
     
 	sensor_msgs::JointState msgDriveCmd;
-	for(int i = 0; i<iNumMotors; i++) {
+	for(int i = 0; i<iNumMotors; i = i+2) {
 	    msgDriveCmd.velocity[i] = speed;
     }
 	topicPub_JointStateCmd.publish(msgDriveCmd);
@@ -330,4 +335,6 @@ bool NodeClass::simpleDriveTest(double speed) {
 	    msgDriveCmd.velocity[i] = 0;
     }
 	topicPub_JointStateCmd.publish(msgDriveCmd);
+	
+	return 0;
 }
