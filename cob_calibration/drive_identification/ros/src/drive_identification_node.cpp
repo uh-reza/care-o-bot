@@ -121,7 +121,7 @@ class NodeClass
             //topicSub_demoSubscribe = n.subscribe("demoSubscribe", 1, &NodeClass::topicCallback_demoSubscribe, this);
 			
 			sIniDirectory = "";
-			sIniDirectory = "INIS_FOR_IDENT";        
+			sIniDirectory = "../../../../cob_driver/cob3_platform/ros/bin/Platform/IniFiles/";        
 		}
         
         // Destructor
