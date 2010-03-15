@@ -8,7 +8,7 @@
  * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  *
  * Project name: care-o-bot
- * ROS stack name: cob3_apps
+ * ROS stack name: cob_calibration
  * ROS package name: drive_identification
  * Description:
  *								
@@ -56,17 +56,17 @@
 
 // standard includes
 // Headers provided by cob-packages which should be avoided/removed
-#include <cob3_utilities/IniFile.h>
+#include <cob_utilities/IniFile.h>
 
 // ROS includes
 #include <ros/ros.h>
 
 // ROS message includes
-//#include <std_msgs/String.h>
 #include <sensor_msgs/JointState.h>
 
 // ROS service includes
-#include <std_srvs/Empty.h>
+#include <cob_srvs/Switch.h>
+#include <cob_srvs/GetJointState.h>
 
 // external includes
 //--
@@ -90,16 +90,18 @@ class NodeClass
         //--
             
         // service clients
-        ros::ServiceClient srvClient_GetJointState<cob3_srvs::GetJointState>("GetJointState");
-        ros::ServiceClient srvClient_InitPltf<cob3_srvs::Switch>("Init");
-        ros::ServiceClient srcClient_ShutdownPltf<cob3_srvs::Switch>("Shutdown");
+        ros::ServiceClient srvClient_GetJointState;
+        ros::ServiceClient srvClient_InitPltf;
+        ros::ServiceClient srcClient_ShutdownPltf;
         
         // global variables
         std::vector<double> m_vdVelGearDriveRadS;
 	    std::vector<double> m_vdVelGearSteerRadS;
 	    double m_dSpeedRadS;
 		std::string m_sFilePrefix;
-        int iNumMotors;        
+        int iNumMotors;
+
+		std::string sIniDirectory;        
 
         // Types of Identification Modes
 		enum IdentModus
@@ -111,8 +113,16 @@ class NodeClass
         NodeClass()
         {
             topicPub_JointStateCmd = n.advertise<sensor_msgs::JointState>("JointStateCmd", 1);
+			
+			srvClient_GetJointState = n.serviceClient<cob_srvs::GetJointState>("GetJointState");
+			srvClient_InitPltf = n.serviceClient<cob_srvs::Switch>("Init");
+			srcClient_ShutdownPltf = n.serviceClient<cob_srvs::Switch>("Shutdown");
+
             //topicSub_demoSubscribe = n.subscribe("demoSubscribe", 1, &NodeClass::topicCallback_demoSubscribe, this);
-        }
+			
+			sIniDirectory = "";
+			sIniDirectory = "../../../../cob_driver/cob3_platform/ros/bin/Platform/IniFiles/";        
+		}
         
         // Destructor
         ~NodeClass() 
@@ -128,6 +138,8 @@ class NodeClass
         bool startupIdentification();
         
         bool startDriveIdentification(IdentModus mode);
+
+		bool simpleDriveTest(double speed);
 };
 
 //#######################
@@ -139,6 +151,9 @@ int main(int argc, char** argv)
     
     NodeClass identification;
     identification.startupIdentification();
+
+	identification.simpleDriveTest(1.0);
+	
  
     while(identification.n.ok())
     {
@@ -154,9 +169,10 @@ int main(int argc, char** argv)
 //##################################
 //#### function implementations ####
 bool NodeClass::startupIdentification(){
-    srvClient_InitPltf.call(cob3_srvs::Switch data);
+	cob_srvs::Switch data;
+    srvClient_InitPltf.call(data);
     if(data.response.success != true) {
-        ROS_ERROR("Failed to initialize Platform with message: %s", data.response.errorMessage);
+        ROS_ERROR("Failed to initialize Platform using base_drive_chain");
         return 0;
     }   
 
@@ -164,22 +180,22 @@ bool NodeClass::startupIdentification(){
     iNumMotors = 8; //Parameter??!
     m_vdVelGearDriveRadS.assign(4,0);
     m_vdVelGearSteerRadS.assign(4,0);
-    m_speedRadS = 6.0;
+    m_dSpeedRadS = 6.0;
 	m_sFilePrefix = "Platform\\Log\\ElmoRecordings";
     
     IniFile iniFile;
-	iniFile.SetFileName("Platform/IniFiles/PltfIdent.ini", "drive_identification_node.cpp");
+	iniFile.SetFileName(sIniDirectory+ "PltfIdent.ini", "drive_identification_node.cpp");
 	iniFile.GetKeyDouble("Identification", "SpeedRadS", &m_dSpeedRadS, true);
 	iniFile.GetKeyString("Identification", "FilePrefix", &m_sFilePrefix, true);
 
     return 0;
 }
 
-bool startDriveIdentification(IdentModus mode){
+bool NodeClass::startDriveIdentification(IdentModus mode){
     double dVelDrivesLeft=0, dVelDrivesRight=0;
     double dVelSteers = 0;
     sensor_msgs::JointState msgDriveCmd;
-    cob3_srvs::GetJointState srvGetJointState;
+    cob_srvs::GetJointState srvGetJointState;
     sensor_msgs::JointState jointstate;
     
     // Declare an array of two Vectors two double values (Time, Velocity)
@@ -189,7 +205,7 @@ bool startDriveIdentification(IdentModus mode){
 	std::vector<double> vWheel4_Drive[2]; std::vector<double> vWheel4_Steer[2];
 
     ROS_INFO("Start drive identification");
-	switch (identModus)
+	switch (mode)
 	{
 		case IdentDrives:
 				dVelDrivesLeft=-m_dSpeedRadS;
@@ -218,7 +234,7 @@ bool startDriveIdentification(IdentModus mode){
             for(int i = 0; i<iNumMotors; i++) {
                 msgDriveCmd.velocity[i] = 0;
             }
-            pubTopic_JointStateCmd.publish(driveCmd);
+            topicPub_JointStateCmd.publish(msgDriveCmd);
 
 			/*
             m_pCanCtrlPltfCoB3->setVelGearRadS(m_pCanCtrlPltfCoB3->CANNODE_WHEEL1STEERMOTOR, 0);
@@ -248,7 +264,7 @@ bool startDriveIdentification(IdentModus mode){
             msgDriveCmd.velocity[4] = dVelDrivesRight;
             msgDriveCmd.velocity[6] = dVelDrivesRight;
 
-            pubTopic_JointStateCmd.publish(driveCmd);
+            topicPub_JointStateCmd.publish(msgDriveCmd);
 
             /*
 			m_pCanCtrlPltfCoB3->setVelGearRadS(m_pCanCtrlPltfCoB3->CANNODE_WHEEL1STEERMOTOR, dVelSteers);
@@ -268,7 +284,7 @@ bool startDriveIdentification(IdentModus mode){
         ros::Duration(0.003).sleep();
 		
         // Request "real" joint state from base_drive_chain
-        srvClient_GetJointState(srvGetJointState);
+        srvClient_GetJointState.call(srvGetJointState);
         
 		// Read and save new values
 		//vWheel1_Drive[0].push_back( dDeltaTime );
@@ -294,5 +310,24 @@ bool startDriveIdentification(IdentModus mode){
 		vWheel4_Steer[0].push_back( dDeltaTime );
 		vWheel4_Steer[1].push_back( jointstate.velocity[7] );				
 		
-	} while (!bReadyForNextStep)
+	} while (!bReadyForNextStep);
+	
+	return 0;
+
+}
+
+bool NodeClass::simpleDriveTest(double speed) {
+    
+	sensor_msgs::JointState msgDriveCmd;
+	for(int i = 0; i<iNumMotors; i++) {
+	    msgDriveCmd.velocity[i] = speed;
+    }
+	topicPub_JointStateCmd.publish(msgDriveCmd);
+
+	ros::Duration(3.0).sleep();
+
+	for(int i = 0; i<iNumMotors; i++) {
+	    msgDriveCmd.velocity[i] = 0;
+    }
+	topicPub_JointStateCmd.publish(msgDriveCmd);
 }
