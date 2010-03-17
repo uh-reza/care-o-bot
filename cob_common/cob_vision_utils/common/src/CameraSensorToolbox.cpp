@@ -52,7 +52,7 @@
 ****************************************************************/
 
 #ifdef __COB_ROS__
-#include "cob_camera_sensors/CameraSensorToolbox.h"
+#include "cob_vision_utils/CameraSensorToolbox.h"
 #else
 #include "CameraSensorToolbox.h"
 #endif
