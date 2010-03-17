@@ -57,8 +57,8 @@
 /// @author Jan Fischer
 /// @date September 2008.
 
-#ifndef __LIBCAMERASENSORSTYPES_H__
-#define __LIBCAMERASENSORSTYPES_H__
+#ifndef __CAMERASENSORTYPES_H__
+#define __CAMERASENSORTYPES_H__
 
 #include <iostream>
 
@@ -292,4 +292,4 @@ namespace ipa_CameraSensors {
 	}t_cameraRole;
 } // namespace ipa_CameraSensors
 
-#endif // __LIBCAMERASENSORSTYPES_H__
+#endif // __CAMERASENSORTYPES_H__
