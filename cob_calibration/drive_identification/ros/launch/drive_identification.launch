@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- start base_drive_chain and locate IniFiles -->
+  <node pkg="drive_identification" type="drive_identification_node" name="drive_identification_node" respawn="false" output="screen">
+	<param name="IniDirectory" value="$(find cob3_platform)/ros/bin/Platform/IniFiles/"/>
+  	<param name="LogDirectory" value="$(find drive_identification)/LOG_OUT/"/>
+  </node>
+</launch>
