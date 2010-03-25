@@ -57,8 +57,8 @@
 /// @author Jan Fischer
 /// @date September 2008.
 
-#ifndef __LIBCAMERASENSORSTYPES_H__
-#define __LIBCAMERASENSORSTYPES_H__
+#ifndef __CAMERASENSORTYPES_H__
+#define __CAMERASENSORTYPES_H__
 
 #include <iostream>
 
@@ -108,8 +108,9 @@ namespace ipa_CameraSensors {
 		CAM_VIRTUALRANGE,		///< Virtual range camera
 		CAM_IC,					///< Imaging source camera (blue camera)
 		CAM_AVTPIKE,			///< AVT Pike camera (red camera)
-		CAM_AXIS,			///< Axis 2100 IP camera
-		CAM_SR3000,				///< Swissranger 3000/3100/4000 camera
+		CAM_AXIS,				///< Axis 2100 IP camera
+		CAM_PROSILICA,				///< Prosilica GigE camera
+		CAM_SWISSRANGER,		///< Swissranger 3000/3100/4000 camera
 		CAM_PMDCAMCUBE			///< PMD Cam Cube camera
 	};
 
@@ -292,4 +293,4 @@ namespace ipa_CameraSensors {
 	}t_cameraRole;
 } // namespace ipa_CameraSensors
 
-#endif // __LIBCAMERASENSORSTYPES_H__
+#endif // __CAMERASENSORTYPES_H__
