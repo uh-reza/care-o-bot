@@ -27,14 +27,5 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/common/lib)
 #rosbuild_add_boost_directories()
 #rosbuild_link_boost(${PROJECT_NAME} thread)
 #rosbuild_add_executable(example examples/example.cpp)
+rosbuild_add_executable(simple_drive_node ros/src/simple_drive_node.cpp)
 #target_link_libraries(example ${PROJECT_NAME})
-
-# add include search paths
-INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/common/include)
-
-# add project libs
-rosbuild_add_library(base_drive_chain common/src/CanCtrlPltfCOb3.cpp)
-# add executable
-rosbuild_add_executable(base_drive_chain_node ros/src/base_drive_chain.cpp)
-
-target_link_libraries(base_drive_chain_node base_drive_chain canopen_motor_harmonica)
