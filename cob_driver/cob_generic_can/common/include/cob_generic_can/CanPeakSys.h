@@ -51,22 +51,23 @@
  *
  ****************************************************************/
 
-#ifndef CANPEAKSYSUSB_INCLUDEDEF_H
-#define CANPEAKSYSUSB_INCLUDEDEF_H
+
+#ifndef CANPEAKSYS_INCLUDEDEF_H
+#define CANPEAKSYS_INCLUDEDEF_H
 //-----------------------------------------------
-#include <generic_can/CanItf.h>
+#include <cob_generic_can/CanItf.h>
 #include <libpcan/libpcan.h>
 #include <cob_utilities/IniFile.h>
 //-----------------------------------------------
 
-class CANPeakSysUSB : public CanItf
+class CanPeakSys : public CanItf
 {
 public:
 	// --------------- Interface
-	CANPeakSysUSB(const char* cIniFile);
-	~CANPeakSysUSB();
+	CanPeakSys(const char* cIniFile);
+	~CanPeakSys();
 	void init();
-	void destroy() {};
+	void destroy() {}
 	bool transmitMsg(CanMsg CMsg, bool bBlocking = true);
 	bool receiveMsg(CanMsg* pCMsg);
 	bool receiveMsgRetry(CanMsg* pCMsg, int iNrOfRetry);
