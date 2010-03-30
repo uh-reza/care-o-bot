@@ -61,28 +61,47 @@
 
 #--------------------------------------------------------------------
 # list all packages here
-PACKAGES_TO_BUILD=\
-	libpcan\
-	libwm4\
-	libm5api\
-	libntcan\
-	cob_msgs\
-	cob_srvs\
-	sick_s300\
-	cob3_hokuyo\
-	sdh\
-	cob_camera_sensors\
-	powercube_chain\
-	cob3_arm\
-	cob3_platform\
-	cob3_tf_broadcaster\
-	cob3_teleop\
-	cob3_test\
-	cob3_defs\
-	cob3_ogre\
-	cob3_gazebo\
-	cob3_dashboard
+PACKAGES_APPS=\
+cob_teleop\
+cob_dashboard\
+cob_test
+
+PACKAGES_COMMON=\
+cob_msgs\
+cob_srvs\
+cob_actions\
+cob_vision_utils\
+cob_utilities
+
+PACKAGES_DRIVER=\
+cob_sick_s300\
+cob_hokuyo\
+cob_sdh\
+cob_camera_sensors\
+cob_powercube_chain\
+cob_camera_axis\
+cob_arm\
+cob_platform\
+cob_relayboard\
+cob_base_drive_chain\
+cob_generic_can\
+cob_canopen_motor\
+cob_drive_identification\
+cob_tf_broadcaster
+
+PACKAGES_EXTERN=\
+libm5api\
+libntcan\
+libpcan\
+libwm4
+
+PACKAGES_SIMULATION=\
+cob_defs\
+cob_ogre\
+cob_gazebo
 #--------------------------------------------------------------------
+
+PACKAGES_TO_BUILD=$(PACKAGES_APPS) $(PACKAGES_COMMON) $(PACKAGES_DRIVER) $(PACKAGES_EXTERN) $(PACKAGES_SIMULATION)
 
 all:
 	make ros
