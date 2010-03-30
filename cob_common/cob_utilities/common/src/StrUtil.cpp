@@ -51,7 +51,7 @@
  *
  ****************************************************************/
 
-#include <cob_relayboard/StrUtil.h>
+#include <cob_utilities/StrUtil.h>
 #include <algorithm>
 
 std::string StringToUpper(std::string strToConvert) {
