@@ -70,6 +70,7 @@ cob_test
 PACKAGES_COMMON=\
 cob_msgs,\
 cob_srvs,\
+cob_actions,\
 cob_vision_utils,\
 cob_utilities
 
