@@ -79,7 +79,6 @@ cob_hokuyo\
 cob_sdh\
 cob_camera_sensors\
 cob_powercube_chain\
-cob_camera_axis\
 cob_arm\
 cob_platform\
 cob_relayboard\
@@ -87,7 +86,8 @@ cob_base_drive_chain\
 cob_generic_can\
 cob_canopen_motor\
 cob_drive_identification\
-cob_tf_broadcaster
+cob_tf_broadcaster\
+#cob_camera_axis\
 
 PACKAGES_EXTERN=\
 libm5api\
