@@ -64,7 +64,9 @@
 PACKAGES_APPS=\
 cob_teleop\
 cob_dashboard\
-cob_test
+cob_test\
+cob_2dnav\
+cob_simpledrive
 
 PACKAGES_COMMON=\
 cob_msgs\
