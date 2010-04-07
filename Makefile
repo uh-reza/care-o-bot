@@ -64,7 +64,7 @@
 PACKAGES_APPS=\
 cob_teleop\
 cob_dashboard\
-cob_test\
+cob_2dslam\
 cob_2dnav\
 cob_simpledrive
 
@@ -82,6 +82,7 @@ cob_sdh\
 cob_camera_sensors\
 cob_powercube_chain\
 cob_arm\
+cob_torso\
 cob_platform\
 cob_relayboard\
 cob_base_drive_chain\
