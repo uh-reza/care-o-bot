@@ -14,5 +14,5 @@
     <env name="GAZEBO_RESOURCE_PATH" value="$(find pr2_ogre):$(find cob_ogre):$(find cob_defs):$(find pr2_description):$(find gazebo_worlds):$(find gazebo)/gazebo/share/gazebo" />
     <env name="OGRE_RESOURCE_PATH" value="$(find ogre)/ogre/lib/OGRE" />
   </node>
-
+<!--:$(find pr2_defs)-->
 </launch>
