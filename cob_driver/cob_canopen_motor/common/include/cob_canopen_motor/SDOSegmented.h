@@ -62,10 +62,10 @@
  * The difference between two time stamps can be calculated.
  */
 
-class recData {
+class segData {
     public:
         
-        recData() {
+        segData() {
             bytesReceived = 0;
             finishedTransmission = false;
             locked = false;
@@ -73,7 +73,7 @@ class recData {
             objectSubID = 0x00;
             }
 
-        ~recData() {}
+        ~segData() {}
 
         void resetTransferData() {
             if (locked == false) {

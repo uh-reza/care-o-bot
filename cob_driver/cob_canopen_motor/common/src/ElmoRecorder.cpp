@@ -51,8 +51,8 @@
  *
  ****************************************************************/
 
-#include <canopen_motor/ElmoRecorder.h>
-#include <canopen_motor/CanDriveHarmonica.h>
+#include <cob_canopen_motor/ElmoRecorder.h>
+#include <cob_canopen_motor/CanDriveHarmonica.h>
 
 ElmoRecorder::ElmoRecorder(CanDriveHarmonica * pParentHarmonicaDrive) {
 	pHarmonicaDrive = pParentHarmonicaDrive;
