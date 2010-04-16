@@ -63,28 +63,36 @@
 #--------------------------------------------------------------------
 # list all packages here
 PACKAGES_APPS=\
-cob3_teleop,\
-cob3_dashboard,\
-cob3_test
+cob_teleop,\
+cob_dashboard,\
+cob_2dslam,\
+cob_2dnav,\
+cob_simpledrive
 
 PACKAGES_COMMON=\
 cob_msgs,\
 cob_srvs,\
-generic_can,\
-canopen_motor,\
+cob_actions,\
 cob_vision_utils,\
 cob_utilities
 
 PACKAGES_DRIVER=\
-sick_s300,\
-cob3_hokuyo,\
-sdh,\
+cob_sick_s300,\
+cob_hokuyo,\
+cob_sdh,\
 cob_camera_sensors,\
-powercube_chain,\
-cob3_arm,\
-cob3_platform,\
-base_drive_chain,\
-cob3_tf_broadcaster
+cob_powercube_chain,\
+cob_camera_axis,\
+cob_arm,\
+cob_torso,\
+cob_platform,\
+cob_relayboard,\
+cob_base_drive_chain,\
+cob_generic_can,\
+cob_canopen_motor,\
+cob_drive_identification,\
+cob_tf_broadcaster
+#cob_camera_axis
 
 PACKAGES_EXTERN=\
 libm5api,\
@@ -93,9 +101,9 @@ libpcan,\
 libwm4
 
 PACKAGES_SIMULATION=\
-cob3_defs,\
-cob3_ogre,\
-cob3_gazebo
+cob_defs,\
+cob_ogre,\
+cob_gazebo
 
 #--------------------------------------------------------------------
 # choose stacks
