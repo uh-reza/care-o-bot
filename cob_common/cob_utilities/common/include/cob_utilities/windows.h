@@ -8,9 +8,9 @@
  * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  *
  * Project name: care-o-bot
- * ROS stack name: cob_drivers
- * ROS package name: cob_generic_can
- * Description: This class implements the interface to an ESD can node
+ * ROS stack name: cob_common
+ * ROS package name: cob_utilities
+ * Description: some defs and mappings that are missing in Linux
  *								
  * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  *			
@@ -18,7 +18,7 @@
  * Supervised by: Christian Connette, email:christian.connette@ipa.fhg.de
  *
  * Date of creation: April 2010
- * ToDo: - Remove Mutex.h search for a Boost lib
+ * ToDo: - Get rid of it
  *
  * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  *
@@ -51,73 +51,42 @@
  *
  ****************************************************************/
 
+#ifndef WINDOWS_H
+#define WINDOWS_H
 
-#ifndef CANESD_INCLUDEDEF_H
-#define CANESD_INCLUDEDEF_H
-//-----------------------------------------------
 
-// general includes
-#include <iostream>
-#include <errno.h>
+#include <sys/select.h>
 
-// Headers provided by other cob-packages
-#include <cob_generic_can/CanItf.h>
-
-// Headers provided by other cob-packages which should be avoided/removed
-#include <cob_utilities/IniFile.h>
-#include <cob_utilities/windows.h>
-#include <cob_utilities/Mutex.h>
-
-#include <libntcan/ntcan.h>
-
-//-----------------------------------------------
-/**
- * Driver of the CAN controller of ESD.
- */
-class CanESD : public CanItf
+inline void Sleep(long dwMilliseconds)
 {
-private:
-	BYTE m_DeviceNr;
-	BYTE m_BaudRate;
-	HANDLE m_Handle;
-	int m_LastID;
-	bool m_bObjectMode;
-	bool m_bIsTXError;
-	Mutex m_Mutex;
+	::timeval sleepTime = {0, dwMilliseconds * 1000};
+	::select(0, 0, 0, 0, &sleepTime);
+}
 
-	IniFile m_IniFile;
 
-	void initIntern();
-
-public:
-	CanESD(const char* cIniFile, bool bObjectMode = false);
-	~CanESD();
-	void init(){};
-	bool transmitMsg(CanMsg CMsg, bool bBlocking = true);
-	bool receiveMsgRetry(CanMsg* pCMsg, int iNrOfRetry);
-	bool receiveMsg(CanMsg* pCMsg);
-	bool isObjectMode() { return m_bObjectMode; }
-	bool isTransmitError() { return m_bIsTXError; }
-protected:
-
-    /*!
-        \fn CanESD::invert(int id)
-     */
-	/**
-	 * Invert a give ID in 1-complement.
-	 * <b>Note:</b> Only 11 bits are used, i.e. the range is from 0x00 to 0x7FF.
-	 * @param id The id to be inverted.
-	 * @return The inverted id.
-	 */
-	int invert(int id)
-	{
-		return (~id) & 0x7F8;
-	}
-	
-	int canIdAddGroup(HANDLE handle, int id);
-
-	std::string GetErrorStr(int ntstatus) const;
-	int readEvent();
-};
-//-----------------------------------------------
+#ifndef HANDLE
+typedef int HANDLE;
 #endif
+typedef int DWORD;
+typedef unsigned char BYTE;
+enum {
+	FALSE = false,
+	TRUE = true
+};
+
+
+inline int min(int a, int b)
+{
+	return (a < b) ? a : b;
+}
+
+
+inline int max(int a, int b)
+{
+	return (a > b) ? a : b;
+}
+
+
+
+#endif
+
