@@ -8,17 +8,17 @@
  * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  *
  * Project name: care-o-bot
- * ROS stack name: cob3_common
- * ROS package name: canopen_motor
- * Description:
+ * ROS stack name: cob_common
+ * ROS package name: cob_utilities
+ * Description: some defs and mappings that are missing in Linux
  *								
  * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  *			
  * Author: Christian Connette, email:christian.connette@ipa.fhg.de
  * Supervised by: Christian Connette, email:christian.connette@ipa.fhg.de
  *
- * Date of creation: Feb 2009
- * ToDo:
+ * Date of creation: April 2010
+ * ToDo: - Get rid of it
  *
  * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  *
@@ -51,33 +51,42 @@
  *
  ****************************************************************/
 
+#ifndef WINDOWS_H
+#define WINDOWS_H
 
-#ifndef CAN_DUMMY_INCLUDEDEF_H
-#define CAN_DUMMY_INCLUDEDEF_H
 
-//-----------------------------------------------
-#include <generic_can/CanMsg.h>
-//-----------------------------------------------
+#include <sys/select.h>
 
-/**
- * Dummy interface of the CAN bus.
- * \ingroup DriversCanModul	
- */
-class CanDummy : public CanItf
+inline void Sleep(long dwMilliseconds)
 {
-public:
+	::timeval sleepTime = {0, dwMilliseconds * 1000};
+	::select(0, 0, 0, 0, &sleepTime);
+}
 
-	~CanDummy();
-	
-	void init(){};
-	
-	bool transmitMsg(CanMsg CMsg, bool bBlocking){ return true; }
 
-	bool receiveMsg(CanMsg* pCMsg){ return false; }
-
-	bool receiveMsgRetry(CanMsg* pCMsg, int iNrOfRetry){ return false; }
-
-	bool isObjectMode() { return false; }
-};
-//-----------------------------------------------
+#ifndef HANDLE
+typedef int HANDLE;
 #endif
+typedef int DWORD;
+typedef unsigned char BYTE;
+enum {
+	FALSE = false,
+	TRUE = true
+};
+
+
+inline int min(int a, int b)
+{
+	return (a < b) ? a : b;
+}
+
+
+inline int max(int a, int b)
+{
+	return (a > b) ? a : b;
+}
+
+
+
+#endif
+
