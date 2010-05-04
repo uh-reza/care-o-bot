@@ -9,16 +9,16 @@
  *
  * Project name: care-o-bot
  * ROS stack name: cob_drivers
- * ROS package name: cob_canopen_motor
- * Description: Holds data, that is collected during a SDO Segmented Upload process
+ * ROS package name: cob_generic_can
+ * Description: This class implements the interface to an ESD can node
  *								
  * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  *			
- * Author: Philipp Köhler
+ * Author: Christian Connette, email:christian.connette@ipa.fhg.de
  * Supervised by: Christian Connette, email:christian.connette@ipa.fhg.de
  *
- * Date of creation: Mar 2010
- * ToDo:
+ * Date of creation: April 2010
+ * ToDo: - Remove Mutex.h search for a Boost lib
  *
  * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  *
@@ -51,54 +51,73 @@
  *
  ****************************************************************/
 
-#ifndef _RecorderData_H
-#define _RecorderData_H
 
-#include <vector>
+#ifndef CANESD_INCLUDEDEF_H
+#define CANESD_INCLUDEDEF_H
+//-----------------------------------------------
 
-/** Measure system time.
- * Use this class for measure system time accurately. Under Windows, it uses
- * QueryPerformanceCounter(), which has a resolution of approx. one micro-second.
- * The difference between two time stamps can be calculated.
+// general includes
+#include <iostream>
+#include <errno.h>
+
+// Headers provided by other cob-packages
+#include <cob_generic_can/CanItf.h>
+
+// Headers provided by other cob-packages which should be avoided/removed
+#include <cob_utilities/IniFile.h>
+#include <cob_utilities/windows.h>
+#include <cob_utilities/Mutex.h>
+
+#include <libntcan/ntcan.h>
+
+//-----------------------------------------------
+/**
+ * Driver of the CAN controller of ESD.
  */
+class CanESD : public CanItf
+{
+private:
+	BYTE m_DeviceNr;
+	BYTE m_BaudRate;
+	HANDLE m_Handle;
+	int m_LastID;
+	bool m_bObjectMode;
+	bool m_bIsTXError;
+	Mutex m_Mutex;
 
-class recData {
-    public:
-        
-        recData() {
-            bytesReceived = 0;
-            finishedTransmission = false;
-            locked = false;
-            objectID = 0x00;
-            objectSubID = 0x00;
-            }
+	IniFile m_IniFile;
 
-        ~recData() {}
+	void initIntern();
 
-        void resetTransferData() {
-            if (locked == false) {
-                bytesReceived = 0;
-                data.clear();
-                finishedTransmission = false;
-                objectID = 0x00;
-                objectSubID = 0x00;
-            }
-        }
-            
-        
-        unsigned int numTotalBytes; //contains the number of bytes to be uploaded (if specified)
+public:
+	CanESD(const char* cIniFile, bool bObjectMode = false);
+	~CanESD();
+	void init(){};
+	bool transmitMsg(CanMsg CMsg, bool bBlocking = true);
+	bool receiveMsgRetry(CanMsg* pCMsg, int iNrOfRetry);
+	bool receiveMsg(CanMsg* pCMsg);
+	bool isObjectMode() { return m_bObjectMode; }
+	bool isTransmitError() { return m_bIsTXError; }
+protected:
 
-        int bytesReceived; //number of data bytes already received in current SDO Upload process      
+    /*!
+        \fn CanESD::invert(int id)
+     */
+	/**
+	 * Invert a give ID in 1-complement.
+	 * <b>Note:</b> Only 11 bits are used, i.e. the range is from 0x00 to 0x7FF.
+	 * @param id The id to be inverted.
+	 * @return The inverted id.
+	 */
+	int invert(int id)
+	{
+		return (~id) & 0x7F8;
+	}
+	
+	int canIdAddGroup(HANDLE handle, int id);
 
-        bool finishedTransmission; //no more segments to receive
-
-        bool locked; //prevent Data from beeing resetted before read out has been proceeded
-
-        int objectID;
-        int objectSubID;
-
-        std::vector<unsigned char> data; //this vector holds received bytes as a stream. Little endian conversion is already done during receive. 
-
+	std::string GetErrorStr(int ntstatus) const;
+	int readEvent();
 };
-
+//-----------------------------------------------
 #endif
