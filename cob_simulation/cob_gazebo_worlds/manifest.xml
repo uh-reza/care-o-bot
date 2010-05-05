@@ -1,14 +1,14 @@
 <package>
-  <description brief="cob_tray">
+  <description brief="cob_gazebo_worlds">
 
-  Launch files to configure and startup the Care-O-bot tray.
+     cob_gazebo_worlds
 
   </description>
   <author>Florian Weisshardt, email:florian.weisshardt@ipa.fhg.de</author>
   <license>LGPL</license>
   <review status="unreviewed" notes=""/>
-  <url>http://ros.org/wiki/cob_tray</url>
-  
-  <depend package="cob_powercube_chain"/>
+  <url>http://ros.org/wiki/cob_gazebo_worlds</url>
 
 </package>
+
+
