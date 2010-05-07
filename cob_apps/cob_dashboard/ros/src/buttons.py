@@ -6,6 +6,7 @@ from parameters import *
 torso=torso()
 tray=tray()
 arm=arm()
+lbr=lbr()
 arm_pr2=arm_pr2()
 sdh=sdh()
 
@@ -34,6 +35,15 @@ panels = [
 	( "folded", arm.MoveTraj, (armParameter.folded,)),
 	( "moveArm3", arm.MoveArm3, ("dadsasasfd","asdf")),
 	]),
+  ( "lbr", [ 
+	( "home", lbr.MoveTraj, (lbrParameter.home,)),
+	( "folded", lbr.MoveTraj, (lbrParameter.folded,)),
+	( "foldedTopregrasp", lbr.MoveTraj, (lbrParameter.foldedTopregrasp,)),
+	( "pregrasp", lbr.MoveTraj, (lbrParameter.pregrasp,)),
+	( "grasp", lbr.MoveTraj, (lbrParameter.grasp,)),
+	( "graspTOtablet", lbr.MoveTraj, (lbrParameter.graspTOtablet,)),
+	( "tablet", lbr.MoveTraj, (lbrParameter.tablet,)),
+	]),
 #  ( "pr2_r_arm", [ 
 #	( "Home", arm_pr2.MoveTraj, (armParameter_pr2.home,)),
 #	( "Folded", arm_pr2.MoveTraj, (armParameter_pr2.folded,)),
@@ -46,5 +56,7 @@ panels = [
 	( "cylOpen", sdh.MoveCommand, (sdhParameter.cylOpen,)),
 	( "spherClose", sdh.MoveCommand, (sdhParameter.spherClose,)),
 	( "spherOpen", sdh.MoveCommand, (sdhParameter.spherOpen,)),
+	( "trainObjects", sdh.MoveCommand, (sdhParameter.trainObjects,)),
+	( "trainObjectsParallel", sdh.MoveCommand, (sdhParameter.trainObjectsParallel,)),
 	])
   ]
