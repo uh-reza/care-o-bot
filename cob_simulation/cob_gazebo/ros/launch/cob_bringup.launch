@@ -1,12 +1,6 @@
 <?xml version="1.0"?>
 <launch>
-  
-  <!-- send cob urdf platform to param server -->
-  <include file="$(find cob_description)/ros/robots/upload_cob3-sim.launch" />
-  
-  <!-- push robot_description to factory and spawn robot in gazebo -->
-  <node name="pr2_gazebo_model" pkg="gazebo_tools" type="gazebo_model" args="$(optenv ROBOT_INITIAL_POSE) -p robot_description spawn" respawn="false" output="screen" />
- 
+	
   <!-- Controller Manager -->
   <include file="$(find pr2_controller_manager)/controller_manager.launch" />
 
@@ -26,8 +20,4 @@
     <remap from="imu_data" to="torso_lift_imu/data" />
   </node>
 
-  <!-- Default Controllers -->
-  <include file="$(find cob_controller_configuration_gazebo)/ros/controller/cob_default_controller.launch" />
-
 </launch>
-

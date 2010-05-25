@@ -5,7 +5,7 @@ from trajectory_msgs.msg import *
 from cob_msgs.msg import *
 
 class torsoParameter:
-	action_goal_topic = 'torso/JointTrajectory'
+	action_goal_topic = 'torso_controller/joint_trajectory_action'
 	joint_names = ["torso_lower_neck_pan_joint","torso_lower_neck_tilt_joint","torso_upper_neck_pan_joint","torso_upper_neck_tilt_joint"]
 
 	home = JointTrajectory()
@@ -95,7 +95,7 @@ class torsoParameter:
 	shake.points.append(point)
 	
 class trayParameter:
-	action_goal_topic = 'tray/JointTrajectory'
+	action_goal_topic = 'tray_controller/joint_trajectory_action'
 	joint_names = ["torso_tray_joint"]
 
 	up = JointTrajectory()
@@ -296,6 +296,30 @@ class lbrParameter:
 	point.time_from_start=rospy.Duration(12)
 	cupTOtablet.points.append(point)
 	
+class armParameter:
+	action_goal_topic = 'arm_controller/joint_trajectory_action'
+	joint_names = ["arm_1_joint","arm_2_joint","arm_3_joint","arm_4_joint","arm_5_joint","arm_6_joint","arm_7_joint"]
+	home = JointTrajectory()
+	home.joint_names = joint_names
+	point=JointTrajectoryPoint()
+	point.positions=[0,0,0,0,0,0,0]
+	point.time_from_start=rospy.Duration(3)
+	home.points.append(point)
+
+	folded = JointTrajectory()
+	folded.joint_names = joint_names
+	point=JointTrajectoryPoint()
+	point.positions=[5.5721,2.0184,4.8944,1.7424,0.1602,0.9800,4.8580]
+	point.time_from_start=rospy.Duration(3)
+	folded.points.append(point)
+	
+	folded2 = JointTrajectory()
+	folded2.joint_names = joint_names
+	point=JointTrajectoryPoint()
+	point.positions=[2.79,-1.74,0,0,0,0,0]
+	point.time_from_start=rospy.Duration(3)
+	folded2.points.append(point)
+
 class armParameter_pr2:
 	action_goal_topic = 'r_arm_controller/joint_trajectory_action'
 	joint_names = ["r_shoulder_pan_joint","r_shoulder_lift_joint","r_upper_arm_roll_joint","r_elbow_flex_joint","r_forearm_roll_joint","r_wrist_flex_joint","r_wrist_roll_joint"]
@@ -387,3 +411,42 @@ class sdhParameter:
 	coolerCupClose = JointCommand()
 	coolerCupClose.joint_names = joint_names
 	coolerCupClose.positions=[0.0, -1.5700, -0.0, 1.5700, -0.2000, 0.3500, 1.5700, -0.2000, 0.3500]
+	
+class sdhTrajParameter:
+	action_goal_topic = 'sdh_controller/joint_trajectory_action'
+	joint_names = ["sdh_thumb_2_joint", "sdh_thumb_3_joint", "sdh_finger_11_joint", "sdh_finger_12_joint", "sdh_finger_13_joint", "sdh_finger_21_joint", "sdh_finger_22_joint", "sdh_finger_23_joint"]
+	
+	home = JointTrajectory()
+	home.joint_names = joint_names
+	point=JointTrajectoryPoint()
+	point.positions=[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
+	point.time_from_start=rospy.Duration(3)
+	home.points.append(point)
+
+	cylClose = JointTrajectory()
+	cylClose.joint_names = joint_names
+	point=JointTrajectoryPoint()
+	point.positions=[0.0,1.0472,0.0,0.0,1.0472,0.0,0.0,1.0472]
+	point.time_from_start=rospy.Duration(3)
+	cylClose.points.append(point)
+	
+	cylOpen = JointTrajectory()
+	cylOpen.joint_names = joint_names
+	point=JointTrajectoryPoint()
+	point.positions=[-0.7854,1.0472,0.0,-0.7854,1.0472,0.0,-0.7854,1.0472]
+	point.time_from_start=rospy.Duration(3)
+	cylOpen.points.append(point)
+
+	spherClose = JointTrajectory()
+	spherClose.joint_names = joint_names
+	point=JointTrajectoryPoint()
+	point.positions=[-0.2618,1.0472,1.0472,-0.2618,1.0472,-1.0472,-0.2618,1.0472]
+	point.time_from_start=rospy.Duration(3)
+	spherClose.points.append(point)
+
+	spherOpen = JointTrajectory()
+	spherOpen.joint_names = joint_names
+	point=JointTrajectoryPoint()
+	point.positions=[-0.7854,1.0472,1.0472,-0.7854,1.0472,-1.0472,-0.7854,1.0472]
+	point.time_from_start=rospy.Duration(3)
+	spherOpen.points.append(point)
