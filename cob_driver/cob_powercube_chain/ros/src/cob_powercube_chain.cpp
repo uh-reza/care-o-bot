@@ -72,6 +72,7 @@
 
 // external includes
 #include <powercube_chain/PowerCubeCtrl.h>
+#include <powercube_chain/simulatedArm.h>
 
 //####################
 //#### node class ####
@@ -106,7 +107,11 @@ class NodeClass
         //--
         
         // global variables
-        PowerCubeCtrl* PCube_;
+#ifndef SIMU
+        PowerCubeCtrl* PCube;
+#else
+        simulatedArm* PCube;
+#endif
 		PowerCubeCtrlParams* PCubeParams_;
 		std::string CanModule_;
 		int CanDevice_;
@@ -134,8 +139,12 @@ class NodeClass
 			traj_point_nr_ = 0;
 			finished_ = false;
 
-        	PCube_ = new PowerCubeCtrl();
-        	PCubeParams_ = new PowerCubeCtrlParams();
+#ifndef SIMU
+        	PCube = new PowerCubeCtrl();
+#else
+        	PCube = new simulatedArm();
+#endif
+        	PCubeParams = new PowerCubeCtrlParams();
 
             // implementation of topics to publish
             topicPub_JointState_ = n_.advertise<sensor_msgs::JointState>("/joint_states", 1);
@@ -514,7 +523,7 @@ class NodeClass
 					}
 					else
 					{
-						//ROS_INFO("...powercubes moving to point[%d]",traj_point_nr);
+						ROS_INFO("...powercubes still moving to point[%d]",traj_point_nr);
 					}
 			    }
 			    else if (operationMode == "velocity")
