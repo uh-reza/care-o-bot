@@ -81,6 +81,7 @@ cob_utilities
 PACKAGES_DRIVER=\
 cob_sick_s300,\
 cob_hokuyo,\
+cob_light,\
 cob_sdh,\
 cob_camera_sensors,\
 cob_point_cloud_publisher,\
