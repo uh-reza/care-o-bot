@@ -66,7 +66,8 @@ cob_teleop\
 cob_dashboard\
 cob_2dslam\
 cob_2dnav\
-cob_simpledrive
+cob_simpledrive\
+cob_tactiletools
 
 PACKAGES_COMMON=\
 cob_msgs\

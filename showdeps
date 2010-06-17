@@ -15,11 +15,11 @@
 # *     repository. Define all packages you want to include in the variables PACKAGES_XXX.
 # * Usage:
 # *     run "./showdeps" to create and show the dependency tree of all packages listed below
-# *     run "./showdeps -a" to create and show the dependency tree for the cob3_apps stack
-# *     run "./showdeps -c" to create and show the dependency tree for the cob3_common stack
-# *     run "./showdeps -d" to create and show the dependency tree for the cob3_driver stack
-# *     run "./showdeps -e" to create and show the dependency tree for the cob3_extern stack
-# *     run "./showdeps -s" to create and show the dependency tree for the cob3_simulation stack
+# *     run "./showdeps -a" to create and show the dependency tree for the cob_apps stack
+# *     run "./showdeps -c" to create and show the dependency tree for the cob_common stack
+# *     run "./showdeps -d" to create and show the dependency tree for the cob_driver stack
+# *     run "./showdeps -e" to create and show the dependency tree for the cob_extern stack
+# *     run "./showdeps -s" to create and show the dependency tree for the cob_simulation stack
 # *
 # * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # *			
@@ -67,23 +67,29 @@ cob_teleop,\
 cob_dashboard,\
 cob_2dslam,\
 cob_2dnav,\
-cob_simpledrive
+cob_simpledrive,\
+cob_tactiletools
 
 PACKAGES_COMMON=\
 cob_msgs,\
 cob_srvs,\
 cob_actions,\
+cob_defs,\
+cob_description,\
 cob_vision_utils,\
 cob_utilities
 
 PACKAGES_DRIVER=\
 cob_sick_s300,\
 cob_hokuyo,\
+cob_light,\
 cob_sdh,\
 cob_camera_sensors,\
+cob_point_cloud_publisher,\
 cob_powercube_chain,\
 cob_camera_axis,\
 cob_arm,\
+cob_tray,\
 cob_torso,\
 cob_platform,\
 cob_relayboard,\
@@ -92,7 +98,6 @@ cob_generic_can,\
 cob_canopen_motor,\
 cob_drive_identification,\
 cob_tf_broadcaster
-#cob_camera_axis
 
 PACKAGES_EXTERN=\
 libm5api,\
@@ -101,9 +106,10 @@ libpcan,\
 libwm4
 
 PACKAGES_SIMULATION=\
-cob_defs,\
 cob_ogre,\
-cob_gazebo
+cob_gazebo,\
+cob_gazebo_worlds,\
+cob_controller_configuration_gazebo
 
 #--------------------------------------------------------------------
 # choose stacks
