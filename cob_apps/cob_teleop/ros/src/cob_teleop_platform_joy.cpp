@@ -8,15 +8,15 @@
  * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  *
  * Project name: care-o-bot
- * ROS stack name: cob3_driver
- * ROS package name: cob3_teleop
+ * ROS stack name: cob_apps
+ * ROS package name: cob_teleop
  *								
  * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  *			
  * Author: Florian Weisshardt, email:florian.weisshardt@ipa.fhg.de
  * Supervised by: Florian Weisshardt, email:florian.weisshardt@ipa.fhg.de
  *
- * Date of creation: Jan 2010
+ * Date of creation: June 2010
  * ToDo:
  *
  * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -105,7 +105,7 @@ class NodeClass
 			n.param("scale_linear", l_scale_, l_scale_);			
 			
         	// implementation of topics to publish
-            topicPub_CmdVel = n.advertise<geometry_msgs::Twist>("cmd_vel", 50);
+            topicPub_CmdVel = n.advertise<geometry_msgs::Twist>("/base_controller/command", 50);
 
             // implementation of topics to subscribe
             topicSub_Joy = n.subscribe("joy", 10, &NodeClass::topicCallback_Joy, this);
