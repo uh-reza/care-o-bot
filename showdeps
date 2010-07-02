@@ -67,7 +67,8 @@ cob_teleop,\
 cob_dashboard,\
 cob_2dslam,\
 cob_2dnav,\
-cob_simpledrive
+cob_simpledrive,\
+cob_tactiletools
 
 PACKAGES_COMMON=\
 cob_msgs,\
@@ -81,6 +82,7 @@ cob_utilities
 PACKAGES_DRIVER=\
 cob_sick_s300,\
 cob_hokuyo,\
+cob_light,\
 cob_sdh,\
 cob_camera_sensors,\
 cob_point_cloud_publisher,\
