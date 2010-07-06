@@ -102,8 +102,8 @@ cob_tf_broadcaster
 PACKAGES_EXTERN=\
 libm5api,\
 libntcan,\
-libpcan,\
-libwm4
+libpcan#,\
+#libwm4
 
 PACKAGES_SIMULATION=\
 cob_ogre,\
