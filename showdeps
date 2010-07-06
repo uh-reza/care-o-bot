@@ -63,53 +63,60 @@
 #--------------------------------------------------------------------
 # list all packages here
 PACKAGES_APPS=\
-cob_teleop,\
-cob_dashboard,\
-cob_2dslam,\
 cob_2dnav,\
+cob_2dslam,\
+cob_dashboard,\
+cob_mmcontroller,\
 cob_simpledrive,\
-cob_tactiletools
+cob_simpletrajectories,\
+cob_tactiletools,\
+cob_teleop
 
 PACKAGES_COMMON=\
-cob_msgs,\
-cob_srvs,\
 cob_actions,\
 cob_defs,\
 cob_description,\
-cob_vision_utils,\
-cob_utilities
+cob_machine,\
+cob_msgs,\
+cob_srvs,\
+cob_utilities,\
+cob_vision_utils
 
 PACKAGES_DRIVER=\
-cob_sick_s300,\
-cob_hokuyo,\
-cob_light,\
-cob_sdh,\
-cob_camera_sensors,\
-cob_point_cloud_publisher,\
-cob_powercube_chain,\
-cob_camera_axis,\
 cob_arm,\
-cob_tray,\
-cob_torso,\
-cob_platform,\
-cob_relayboard,\
 cob_base_drive_chain,\
-cob_generic_can,\
+cob_camera_axis,\
+cob_camera_sensors,\
 cob_canopen_motor,\
 cob_drive_identification,\
-cob_tf_broadcaster
+cob_forcetorque,\
+cob_generic_can,\
+cob_hokuyo,\
+cob_joy,\
+cob_light,\
+cob_platform,\
+cob_point_cloud_publisher,\
+cob_powercube_chain,\
+cob_relayboard,\
+cob_sdh,\
+cob_sick_s300,\
+cob_tf_broadcaster,\
+cob_torso,\
+cob_tray,\
+cob_undercarriage_ctrl
 
 PACKAGES_EXTERN=\
 libm5api,\
 libntcan,\
-libpcan#,\
-#libwm4
+libpcan,\
+libsiftfast,\
+libwm4
 
 PACKAGES_SIMULATION=\
-cob_ogre,\
+cob_controller_configuration_gazebo,\
 cob_gazebo,\
 cob_gazebo_worlds,\
-cob_controller_configuration_gazebo
+cob_ogre
 
 #--------------------------------------------------------------------
 # choose stacks
@@ -128,7 +135,7 @@ else
 fi
 
 # create dependency tree
-rxdeps --one --cluster --target=$PACKAGES
+rxdeps --one --cluster --target=$PACKAGES -l
 
 # show dependency tree
 evince deps.pdf&
