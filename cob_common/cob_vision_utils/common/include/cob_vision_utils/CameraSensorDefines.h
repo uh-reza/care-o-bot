@@ -8,16 +8,16 @@
 * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 *
 * Project name: care-o-bot
-* ROS stack name: cob_driver
+* ROS stack name: cob3_driver
 * ROS package name: cob_camera_sensors
-* Description:
+* Description: Defines for camera sensors.
 *
 * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 *
 * Author: Jan Fischer, email:jan.fischer@ipa.fhg.de
 * Supervised by: Jan Fischer, email:jan.fischer@ipa.fhg.de
 *
-* Date of creation: Mai 2008
+* Date of creation: Sept 2008
 * ToDo:
 *
 * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -50,26 +50,55 @@
 * If not, see <http://www.gnu.org/licenses/>.
 *
 ****************************************************************/
+ 
+
+/// @file CameraSensorDefines.h
+/// Defines for camera sensors.
+/// @author Jan Fischer
+/// @date June 2010.
+
+#ifndef __IPA_CAMERASENSORDEFINES_H__
+#define __IPA_CAMERASENSORDEFINES_H__
 
 #ifdef __COB_ROS__
-#include "cob_camera_sensors/AbstractRangeImagingSensor.h"
+	#include <opencv/cv.h>
+	#include <opencv/cvaux.h>
+	#include <opencv/highgui.h>
 #else
-#include "cob_driver/cob_camera_sensors/common/include/cob_camera_sensors/AbstractRangeImagingSensor.h"
+	#include <cv.h>
+	#include <cvaux.h>
+	#include <highgui.h>
 #endif
 
-using namespace ipa_CameraSensors;
+#include <boost/shared_ptr.hpp>
+#include <boost/progress.hpp>
+#include <boost/timer.hpp>
 
-AbstractRangeImagingSensor::~AbstractRangeImagingSensor()
-{
-}
+#include <string>
+#include <iostream>
+#include <iomanip>
+#include <limits.h>
+#include <vector>
 
-unsigned long AbstractRangeImagingSensor::SetIntrinsics(cv::Mat& intrinsicMatrix,
-		cv::Mat& undistortMapX, cv::Mat& undistortMapY)
-{
-	m_intrinsicMatrix = intrinsicMatrix.clone();
-	m_undistortMapX = undistortMapX.clone();
-	m_undistortMapY = undistortMapY.clone();
+namespace ipa_CameraSensors {
 
-	return RET_OK; 
-}
+#if defined _MSC_VER && _MSC_VER >= 1200
+    // disable warnings related to inline functions
+    #pragma warning( disable: 4251 4275)
+#endif
 
+/// Define, if we need to import or export the libraries
+#ifdef __LINUX__
+	#define __DLL_LIBCAMERASENSORS__ 
+	#define APIENTRY
+#else
+	#ifdef __LIBCAMERASENSORS_EXPORT__
+		#define __DLL_LIBCAMERASENSORS__ __declspec(dllexport)
+	#else
+		#define __DLL_LIBCAMERASENSORS__ __declspec(dllimport)
+	#endif
+#endif
+
+} // namespace ipa_CameraSensors
+
+#endif // __IPA_CAMERASENSORDEFINES_H__
