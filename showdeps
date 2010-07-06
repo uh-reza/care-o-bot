@@ -135,7 +135,7 @@ else
 fi
 
 # create dependency tree
-rxdeps --one --cluster --target=$PACKAGES -l
+rxdeps --one --cluster -l --target=$PACKAGES
 
 # show dependency tree
 evince deps.pdf&
