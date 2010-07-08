@@ -11,7 +11,7 @@ cob_simulation
 # checking for ROS release
 if [ $# != 1 ]; then
 	echo "ERROR: no ROS release specified"
-	exit
+	exit 1
 elif [ $1 = "boxturtle" ]; then
 	RELEASE=boxturtle
 elif [ $1 = "latest" ]; then
@@ -20,7 +20,7 @@ elif [ $1 = "cturtle" ]; then
 	RELEASE=cturtle
 else
 	echo "ERROR: no valid ROS release specified"
-	exit
+	exit 1
 fi
 echo $RELEASE
 
@@ -56,5 +56,6 @@ elif [ $RELEASE = "cturtle" ]; then
 	rosmake $STACKS
 else
 	echo "ERROR: no valid ROS release specified"
-	exit
+	exit 1
 fi
+exit 0
