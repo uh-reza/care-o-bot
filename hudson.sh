@@ -10,8 +10,8 @@ cob_simulation
 
 # checking for ROS release
 if [ $# != 1 ]; then
-	echo "no ROS release specified, setting to boxturtle"
-	RELEASE=boxturtle
+	echo "ERROR: no ROS release specified"
+	exit
 elif [ $1 = "boxturtle" ]; then
 	RELEASE=boxturtle
 elif [ $1 = "latest" ]; then
@@ -19,8 +19,8 @@ elif [ $1 = "latest" ]; then
 elif [ $1 = "cturtle" ]; then
 	RELEASE=cturtle
 else
-	echo "no valid ROS release specified, setting to boxturtle"
-	RELEASE=boxturtle
+	echo "ERROR: no valid ROS release specified"
+	exit
 fi
 echo $RELEASE
 
@@ -48,4 +48,13 @@ echo $ROS_PACKAGE_PATH
 
 # installing dependencies and building
 rosdep install $STACKS
-rosmake $STACKS --skip-blacklist
+if [ $RELEASE = "boxturtle" ]; then
+	rosmake $STACKS --skip-blacklist
+elif [ $RELEASE = "latest" ]; then
+	rosmake $STACKS
+elif [ $RELEASE = "cturtle" ]; then
+	rosmake $STACKS
+else
+	echo "ERROR: no valid ROS release specified"
+	exit
+fi
