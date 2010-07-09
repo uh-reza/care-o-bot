@@ -67,7 +67,8 @@ cob_teleop,\
 cob_dashboard,\
 cob_2dslam,\
 cob_2dnav,\
-cob_simpledrive
+cob_simpledrive,\
+cob_tactiletools
 
 PACKAGES_COMMON=\
 cob_msgs,\
@@ -81,8 +82,10 @@ cob_utilities
 PACKAGES_DRIVER=\
 cob_sick_s300,\
 cob_hokuyo,\
+cob_light,\
 cob_sdh,\
 cob_camera_sensors,\
+cob_point_cloud_publisher,\
 cob_powercube_chain,\
 cob_camera_axis,\
 cob_arm,\
@@ -95,7 +98,6 @@ cob_generic_can,\
 cob_canopen_motor,\
 cob_drive_identification,\
 cob_tf_broadcaster
-#cob_camera_axis
 
 PACKAGES_EXTERN=\
 libm5api,\
