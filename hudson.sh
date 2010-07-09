@@ -58,4 +58,3 @@ else
 	echo "ERROR: no valid ROS release specified"
 	exit 1
 fi
-exit 0
