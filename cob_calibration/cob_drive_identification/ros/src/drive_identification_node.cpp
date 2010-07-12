@@ -54,6 +54,8 @@
 //##################
 //#### includes ####
 
+#include <math.h>
+
 // ROS includes
 #include <ros/ros.h>
 
@@ -61,8 +63,12 @@
 #include <geometry_msgs/Twist.h>
 
 // ROS service includes
-#include <cob_base_drive_chain/ElmoRecorderConfig.h>
-#include <cob_base_drive_chain/ElmoRecorderReadout.h>
+#include <cob_srvs/ElmoRecorderReadout.h>
+#include <cob_srvs/ElmoRecorderConfig.h>
+
+const float ACC = 0.4f; // m/sec
+const float V_MAX = 3.0f; // m/sec
+const float W_MAX = 2* M_PI /8; // rad/sec
 
 
 //####################
@@ -88,9 +94,9 @@ class NodeClass
 		// Constructor
 		NodeClass()
 		{
-			topic_pub_pltf_vel = n.advertise<geometry_msgs::Twist>("/base_controller/command", 50);
-			srv_client_recorder_config = n.serviceClient<cob_base_drive_chain::ElmoRecorderConfig>("ElmoRecorderConfig");
-			srv_client_recorder_readout = n.serviceClient<cob_base_drive_chain::ElmoRecorderReadout>("ElmoRecorderReadout");
+			topic_pub_pltf_vel_ = n.advertise<geometry_msgs::Twist>("/base_controller/command", 50);
+			srv_client_recorder_config = n.serviceClient<cob_srvs::ElmoRecorderConfig>("ElmoRecorderConfig");
+			srv_client_recorder_readout = n.serviceClient<cob_srvs::ElmoRecorderReadout>("ElmoRecorderReadout");
 			
 		}
 		
@@ -104,30 +110,101 @@ class NodeClass
 
 		// service callback functions
 
+		// class variables
+		enum cur_test_program {
+			TEST_LINE,
+			TEST_RECT,
+			TEST_CIRCLE,
+			TEST_ROTATE,
+			TEST_IDLE,
+		};
+		
+		int motion_state_;
 		
 		// other function declarations
-		int init();
+		int commandPltfSpeed(float vx, float vy, float vw);
+		
+		int configRecorder(float total_time);
+		
+		int driveLine(float x_rel, float y_rel);
+		
+		int rotate(float w_rad);
 };
 
 //#######################
 //#### main programm ####
-int main(int argc, char** argv)
-{
+int main(int argc, char** argv) {
 	// initialize ROS, spezify name of node
 	ros::init(argc, argv, "drive_identification_node");
-	
 	NodeClass ident;
  
-	while(ident.ok())
+ 	ros::Time start = ros::Time::now();
+ 
+ 	ident.rotate(0.6);
+ 
+	while(true)
 	{
 		ros::spinOnce();
+		
+		switch(ident.motion_state_) {
+			
+			case NodeClass::TEST_LINE:
+				break;
+				
+		
+		}
 	}
 	return 0;
 }
 
-int NodeClass::init() {
-	float total_time_;
+int NodeClass::configRecorder(float total_time) {
+	
+	cob_srvs::ElmoRecorderConfig config_;
+	config_.request.recordinggap = (int)(total_time / 1024 / (4 * 0.000090)/2);
+	srv_client_recorder_config.call(config_);
+	
+	return 0;
+}
 
-	cob_base_drive_chain::ElmoRecorderConfig config_;
-	config.recordinggap = (int)(total_time_ / 1024 / (4 * 0.000090)/2);
+int NodeClass::rotate(float w_rad){
+	ros::Time motion_duration_(0.0);
+	
+	while(motion_duration_.toSec() < w_rad / W_MAX) {
+		commandPltfSpeed(0.0, 0.0, W_MAX);
+	}
+	
+	commandPltfSpeed(0, 0, 0);
+	
+	return 0;
+}
+
+int NodeClass::driveLine(float x_rel, float y_rel) {
+	
+	
+	ros::Time motion_duration_(0.0);
+	
+	
+	
+	while(motion_duration_.toSec() < 3) {
+		
+	
+	}
+	
+	commandPltfSpeed(0, 0, 0);
+
+	return 0;
+}
+
+int NodeClass::commandPltfSpeed(float vx, float vy, float vw) {
+	geometry_msgs::Twist twist_cmd_;
+	
+	twist_cmd_.linear.x = vx;
+	twist_cmd_.linear.y = vy;
+	twist_cmd_.linear.z = 0.0f;
+	twist_cmd_.angular.x = 0.0f;
+	twist_cmd_.angular.y = 0.0f;
+	twist_cmd_.angular.z = vw;
+	
+	topic_pub_pltf_vel_.publish(twist_cmd_);
+	return 0;
 }
