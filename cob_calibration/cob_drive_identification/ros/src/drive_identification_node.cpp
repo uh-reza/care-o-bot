@@ -66,9 +66,11 @@
 #include <cob_srvs/ElmoRecorderReadout.h>
 #include <cob_srvs/ElmoRecorderConfig.h>
 
-const float ACC = 0.4f; // m/sec
-const float V_MAX = 3.0f; // m/sec
-const float W_MAX = 2* M_PI /8; // rad/sec
+const float ACC = 0.5f; // m/sec
+const float V_MAX = 2.0f; // m/sec
+
+const float W_MAX = 2* M_PI /4; // one quarter circle per second rad/sec
+const float W_ACC = W_MAX; //accelerate to MAX speed in one second
 
 
 //####################
@@ -111,24 +113,17 @@ class NodeClass
 		// service callback functions
 
 		// class variables
-		enum cur_test_program {
-			TEST_LINE,
-			TEST_RECT,
-			TEST_CIRCLE,
-			TEST_ROTATE,
-			TEST_IDLE,
-		};
-		
-		int motion_state_;
 		
 		// other function declarations
+		int startTestProgram(int ID);
+		
 		int commandPltfSpeed(float vx, float vy, float vw);
 		
 		int configRecorder(float total_time);
 		
-		int driveLine(float x_rel, float y_rel);
+		float moveRelative(float x_rel, float y_rel, bool only_get_time = false);
 		
-		int rotate(float w_rad);
+		float rotate(float phi_rad, bool only_get_time = false);
 };
 
 //#######################
@@ -137,24 +132,36 @@ int main(int argc, char** argv) {
 	// initialize ROS, spezify name of node
 	ros::init(argc, argv, "drive_identification_node");
 	NodeClass ident;
- 
- 	ros::Time start = ros::Time::now();
- 
- 	ident.rotate(0.6);
- 
-	while(true)
+
+
+	//ROTATE TO DO
+	ident.rotate(M_PI / 4);
+
+	//ident.startTestProgram(1);
+
+	while(ident.n.ok())
 	{
 		ros::spinOnce();
-		
-		switch(ident.motion_state_) {
-			
-			case NodeClass::TEST_LINE:
-				break;
-				
-		
-		}
+
 	}
 	return 0;
+}
+
+int NodeClass::startTestProgram(int ID) {
+	switch(ID) {
+		case 1:
+			configRecorder(moveRelative(0, 1, true) * 4);
+			std::cout << "The coming program will last " << moveRelative(0, 1, true) * 4 << " seconds" << std::endl;
+		
+			//Test-drive a 1 m - square: forward, right ..
+			moveRelative(0, 1);
+			moveRelative(1, 0);
+			moveRelative(0, -1);
+			moveRelative(-1, 0);	
+	}
+	
+	return 0;
+
 }
 
 int NodeClass::configRecorder(float total_time) {
@@ -166,11 +173,44 @@ int NodeClass::configRecorder(float total_time) {
 	return 0;
 }
 
-int NodeClass::rotate(float w_rad){
-	ros::Time motion_duration_(0.0);
+float NodeClass::rotate(float phi_rad, bool only_get_time){
+	float time_to_acc_, time_tot_, v_tot_;
+	bool finished = false;
+	ros::Duration motion_time_;
+	ros::Time motion_begin_ = ros::Time::now();
 	
-	while(motion_duration_.toSec() < w_rad / W_MAX) {
-		commandPltfSpeed(0.0, 0.0, W_MAX);
+	if( phi_rad < 2 * 1/2 * ACC * pow((W_MAX/W_ACC),2) ) { // v/a = time to accelerate to top speed
+		//max speed won't be reached:
+		time_to_acc_ = sqrt(phi_rad / 2 / W_ACC * 2);
+		time_tot_ = time_to_acc_ * 2;
+	} else {
+		//max speed will be reached:
+		time_to_acc_ = W_MAX / W_ACC;
+		time_tot_ = time_to_acc_ * 2 + (phi_rad - 1/2*W_ACC* pow(time_to_acc_,2) * 2) / W_MAX;
+	}
+	
+	if(only_get_time) return time_tot_;
+		
+	while(finished == false && n.ok()) {
+		motion_time_ = ros::Time::now() - motion_begin_;
+		
+		if(motion_time_.toSec() < time_to_acc_) {
+			//accelerating
+			v_tot_ = W_ACC * motion_time_.toSec();
+		} else if(motion_time_.toSec() < time_tot_ - time_to_acc_) {
+			//driving at max speed
+			v_tot_ = W_MAX;
+		} else if(motion_time_.toSec() < time_tot_){
+			//deccelerating
+			v_tot_ = W_ACC * (time_tot_ - motion_time_.toSec());
+		} else {
+			v_tot_ = 0.0f;
+			finished = true;
+		}
+		
+		commandPltfSpeed(0.0f, 0.0f, v_tot_);
+		
+		ros::Duration(0.1).sleep();
 	}
 	
 	commandPltfSpeed(0, 0, 0);
@@ -178,16 +218,46 @@ int NodeClass::rotate(float w_rad){
 	return 0;
 }
 
-int NodeClass::driveLine(float x_rel, float y_rel) {
+float NodeClass::moveRelative(float x_rel, float y_rel, bool only_get_time) {
+	float dist_tot_, time_tot_, time_to_acc_, v_tot_;
+	bool finished = false;
+	ros::Duration motion_time_;
+	ros::Time motion_begin_ = ros::Time::now();
 	
+	dist_tot_ = sqrt(x_rel * x_rel + y_rel * y_rel);
 	
-	ros::Time motion_duration_(0.0);
+	if( dist_tot_ < 2 * 1/2 * ACC * pow((V_MAX/ACC),2) ) { // v/a = time to accelerate to top speed
+		//max speed won't be reached:
+		time_to_acc_ = sqrt(dist_tot_ / 2 / ACC * 2);
+		time_tot_ = time_to_acc_ * 2;
+	} else {
+		//max speed will be reached:
+		time_to_acc_ = V_MAX / ACC;
+		time_tot_ = time_to_acc_ * 2 + (dist_tot_ - 1/2*ACC* pow(time_to_acc_,2) * 2) / V_MAX;
+	}
 	
-	
-	
-	while(motion_duration_.toSec() < 3) {
+	if(only_get_time) return time_tot_;
 		
-	
+	while(finished == false && n.ok()) {
+		motion_time_ = ros::Time::now() - motion_begin_;
+		
+		if(motion_time_.toSec() < time_to_acc_) {
+			//accelerating
+			v_tot_ = ACC * motion_time_.toSec();
+		} else if(motion_time_.toSec() < time_tot_ - time_to_acc_) {
+			//driving at max speed
+			v_tot_ = V_MAX;
+		} else if(motion_time_.toSec() < time_tot_){
+			//deccelerating
+			v_tot_ = ACC * (time_tot_ - motion_time_.toSec());
+		} else {
+			v_tot_ = 0.0f;
+			finished = true;
+		}
+		
+		commandPltfSpeed(x_rel / dist_tot_ * v_tot_, y_rel / dist_tot_ * v_tot_, 0.0f); //x_rel / dist_tot_ = vx / v_tot  = sin a
+		
+		ros::Duration(0.1).sleep();
 	}
 	
 	commandPltfSpeed(0, 0, 0);
@@ -198,6 +268,9 @@ int NodeClass::driveLine(float x_rel, float y_rel) {
 int NodeClass::commandPltfSpeed(float vx, float vy, float vw) {
 	geometry_msgs::Twist twist_cmd_;
 	
+	std::cout << "VX = " << vx << " VY = " << vy << " W = " << vw << std::endl;
+	
+	/*
 	twist_cmd_.linear.x = vx;
 	twist_cmd_.linear.y = vy;
 	twist_cmd_.linear.z = 0.0f;
@@ -206,5 +279,6 @@ int NodeClass::commandPltfSpeed(float vx, float vy, float vw) {
 	twist_cmd_.angular.z = vw;
 	
 	topic_pub_pltf_vel_.publish(twist_cmd_);
+	*/
 	return 0;
 }
