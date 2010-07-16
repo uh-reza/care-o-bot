@@ -54,6 +54,7 @@
 from actions import *
 from parameters import *
 
+base=base()
 torso=torso()
 tray=tray()
 arm=arm()
@@ -61,6 +62,10 @@ lbr=lbr()
 sdh=sdh()
 
 panels = [  
+  ( "base", [ 
+#	( "stop", base.Stop, ()),
+	( "init", base.Init, ()),
+	]),
   ( "torso", [ 
 	( "stop", torso.Stop, ()),
 	( "init", torso.Init, ()),
@@ -98,6 +103,13 @@ panels = [
 	( "Mode: Joy", arm.SetOperationMode, ("velocity",)),
 	( "graspTOtablet", arm.MoveTraj, (armParameter.graspTOtablet,)),
 	( "tabletTOfolded", arm.MoveTraj, (armParameter.tabletTOfolded,)),
+	]),
+  ( "lbr", [ 
+	( "home", lbr.MoveTraj, (lbrParameter.home,)),
+	( "folded", lbr.MoveTraj, (lbrParameter.folded,)),
+	( "pregrasp", lbr.MoveTraj, (lbrParameter.pregrasp,)),
+	( "grasp", lbr.MoveTraj, (lbrParameter.grasp,)),
+	( "overTablet", lbr.MoveTraj, (lbrParameter.overTablet,)),
 	]),
 #  ( "sdh", [ 
 #  	( "stop", sdh.Stop, ()),
