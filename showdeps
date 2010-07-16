@@ -67,6 +67,7 @@ cob_2dnav,\
 cob_2dslam,\
 cob_dashboard,\
 cob_mmcontroller,\
+cob_script_server,\
 cob_simpledrive,\
 cob_simpletrajectories,\
 cob_tactiletools,\
@@ -76,6 +77,7 @@ PACKAGES_COMMON=\
 cob_actions,\
 cob_defs,\
 cob_description,\
+cob_goco,\
 cob_machine,\
 cob_msgs,\
 cob_srvs,\
