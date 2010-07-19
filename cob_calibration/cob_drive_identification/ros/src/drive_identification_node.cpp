@@ -67,8 +67,8 @@
 #include <cob_srvs/ElmoRecorderReadout.h>
 #include <cob_srvs/ElmoRecorderConfig.h>
 
-const float ACC = 1.0f; // m/sec
-const float V_MAX = 2.0f; // m/sec
+const float ACC = 0.8f; // m/sec
+const float V_MAX = 1.0f; // m/sec
 
 const float W_MAX = 2* M_PI /8; // one eights circle per second rad/sec
 const float W_ACC = W_MAX; //accelerate to MAX speed in one second
@@ -124,12 +124,13 @@ class NodeClass
 		bool srvCallback_startTestCallback(cob_drive_identification::StartIdentPrg::Request &req, 
 											cob_drive_identification::StartIdentPrg::Response &res) {
 			
-			startTestProgram(req.program_number);
+			if(req.program_number!=99) startTestProgram(req.program_number);
+			else startTestProgram(req.program_number, req.x_rel, req.y_rel);
 			
 			return true;		
 		}
 		
-		int startTestProgram(int ID);
+		int startTestProgram(int ID, float x_rel = 0.0f, float y_rel = 0.0f);
 		
 		int commandPltfSpeed(float vx, float vy, float vw);
 		
@@ -156,7 +157,7 @@ int main(int argc, char** argv) {
 }
 
 
-int NodeClass::startTestProgram(int ID) {
+int NodeClass::startTestProgram(int ID, float x_rel, float y_rel) {
 	switch(ID) {
 		case 1:
 			configRecorder(moveRelative(0, 1, true) * 4);
@@ -174,6 +175,20 @@ int NodeClass::startTestProgram(int ID) {
 			std::cout << "The coming program will last " << rotate(M_PI * 2, true) * 2 << " seconds" << std::endl;
 			rotate(2 * M_PI);
 			rotate(-2 * M_PI);
+			break;
+			
+		case 3:
+			//configRecorder((rotate(M_PI / 4, true));
+			std::cout << "The coming program will last " << rotate(M_PI / 2, true) << " seconds" << std::endl;
+			rotate(M_PI / 2);
+			break;
+			
+		case 4:
+			moveRelative(-0.3,0);
+			break;
+			
+		case 99:
+			moveRelative(x_rel, y_rel);
 			break;
 	}
 	
@@ -288,9 +303,9 @@ int NodeClass::commandPltfSpeed(float vx, float vy, float vw) {
 	
 	std::cout << "VX = " << vx << " VY = " << vy << " W = " << vw << std::endl;
 
-	ros::Duration(0.1).sleep();
+	ros::Duration(0.01).sleep();
 	
-	/*
+
 	twist_cmd_.linear.x = vx;
 	twist_cmd_.linear.y = vy;
 	twist_cmd_.linear.z = 0.0f;
@@ -299,6 +314,6 @@ int NodeClass::commandPltfSpeed(float vx, float vy, float vw) {
 	twist_cmd_.angular.z = vw;
 	
 	topic_pub_pltf_vel_.publish(twist_cmd_);
-	*/
+
 	return 0;
 }
