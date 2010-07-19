@@ -70,7 +70,7 @@
 const float ACC = 1.0f; // m/sec
 const float V_MAX = 2.0f; // m/sec
 
-const float W_MAX = 2* M_PI /4; // one quarter circle per second rad/sec
+const float W_MAX = 2* M_PI /8; // one eights circle per second rad/sec
 const float W_ACC = W_MAX; //accelerate to MAX speed in one second
 
 
