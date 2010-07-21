@@ -101,8 +101,8 @@ class NodeClass
 		NodeClass()
 		{
 			topic_pub_pltf_vel_ = n.advertise<geometry_msgs::Twist>("/base_controller/command", 50);
-			srv_client_recorder_config = n.serviceClient<cob_srvs::ElmoRecorderConfig>("ElmoRecorderConfig");
-			srv_client_recorder_readout = n.serviceClient<cob_srvs::ElmoRecorderReadout>("ElmoRecorderReadout");
+			srv_client_recorder_config = n.serviceClient<cob_srvs::ElmoRecorderConfig>("/base_driver/ElmoRecorderConfig");
+			srv_client_recorder_readout = n.serviceClient<cob_srvs::ElmoRecorderReadout>("/base_driver/ElmoRecorderReadout");
 
 			srv_server_start_test = n.advertiseService("StartIdentPrg", &NodeClass::srvCallback_startTestCallback, this);
 			
@@ -164,30 +164,26 @@ int NodeClass::startTestProgram(int ID, float x_rel, float y_rel) {
 			std::cout << "The coming program will last " << moveRelative(0, 1, true) * 4 << " seconds" << std::endl;
 		
 			//Test-drive a 1 m - square: forward, right ..
-			moveRelative(0, 1);
 			moveRelative(1, 0);
 			moveRelative(0, -1);
 			moveRelative(-1, 0);
+			moveRelative(0, 1);
 			break;
 			
 		case 2:
-			configRecorder(rotate(M_PI * 2, true));
+			configRecorder(rotate(M_PI * 2, true) * 2);
 			std::cout << "The coming program will last " << rotate(M_PI * 2, true) * 2 << " seconds" << std::endl;
 			rotate(2 * M_PI);
 			rotate(-2 * M_PI);
 			break;
 			
 		case 3:
-			//configRecorder((rotate(M_PI / 4, true));
 			std::cout << "The coming program will last " << rotate(M_PI / 2, true) << " seconds" << std::endl;
 			rotate(M_PI / 2);
 			break;
-			
-		case 4:
-			moveRelative(-0.3,0);
-			break;
-			
+
 		case 99:
+			std::cout << "The coming movement will last " << moveRelative(x_rel, y_rel, true) << " seconds" << std::endl;
 			moveRelative(x_rel, y_rel);
 			break;
 	}
@@ -197,10 +193,13 @@ int NodeClass::startTestProgram(int ID, float x_rel, float y_rel) {
 }
 
 int NodeClass::configRecorder(float total_time) {
+	total_time += 0.5; //due to the instant start of the recorder and delay between motors and CAN
 	
 	cob_srvs::ElmoRecorderConfig config_;
-	config_.request.recordinggap = (int)(total_time / 1024 / (4 * 0.000090)/2);
+	config_.request.recordinggap = (int)(total_time / (4 * 0.000090) / 1024 );
 	srv_client_recorder_config.call(config_);
+	
+	ros::Duration(0.3).sleep();
 	
 	return 0;
 }
@@ -301,9 +300,9 @@ float NodeClass::moveRelative(float x_rel, float y_rel, bool only_get_time) {
 int NodeClass::commandPltfSpeed(float vx, float vy, float vw) {
 	geometry_msgs::Twist twist_cmd_;
 	
-	std::cout << "VX = " << vx << " VY = " << vy << " W = " << vw << std::endl;
+	//std::cout << "VX = " << vx << " VY = " << vy << " W = " << vw << std::endl;
 
-	ros::Duration(0.01).sleep();
+	//ros::Duration(0.01).sleep();
 	
 
 	twist_cmd_.linear.x = vx;
