@@ -172,13 +172,13 @@ int NodeClass::startTestProgram(int ID, float x_rel, float y_rel) {
 			
 		case 2:
 			configRecorder(rotate(M_PI * 2, true) * 2);
-			std::cout << "The coming program will last " << rotate(M_PI * 2, true) * 2 << " seconds" << std::endl;
+			std::cout << "The coming program will last " << rotate(M_PI * 2, true) * 2 << " seconds and is recorded" << std::endl;
 			rotate(2 * M_PI);
 			rotate(-2 * M_PI);
 			break;
 			
 		case 3:
-			std::cout << "The coming program will last " << rotate(M_PI / 2, true) << " seconds" << std::endl;
+			std::cout << "The coming program will last " << rotate(M_PI / 2, true) << " seconds and is recorded" << std::endl;
 			rotate(M_PI / 2);
 			break;
 
@@ -186,6 +186,11 @@ int NodeClass::startTestProgram(int ID, float x_rel, float y_rel) {
 			std::cout << "The coming movement will last " << moveRelative(x_rel, y_rel, true) << " seconds" << std::endl;
 			moveRelative(x_rel, y_rel);
 			break;
+			
+		case 100:
+			configRecorder(moveRelative(x_rel, y_rel, true));
+			std::cout << "The coming movement will last " << moveRelative(x_rel, y_rel, true) << " seconds and is recorded" << std::endl;
+			moveRelative(x_rel, y_rel);
 	}
 	
 	return 0;
