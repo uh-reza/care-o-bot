@@ -15,11 +15,11 @@
 # *     repository. Define all packages you want to include in the variables PACKAGES_XXX.
 # * Usage:
 # *     run "./showdeps" to create and show the dependency tree of all packages listed below
-# *     run "./showdeps -a" to create and show the dependency tree for the cob3_apps stack
-# *     run "./showdeps -c" to create and show the dependency tree for the cob3_common stack
-# *     run "./showdeps -d" to create and show the dependency tree for the cob3_driver stack
-# *     run "./showdeps -e" to create and show the dependency tree for the cob3_extern stack
-# *     run "./showdeps -s" to create and show the dependency tree for the cob3_simulation stack
+# *     run "./showdeps -a" to create and show the dependency tree for the cob_apps stack
+# *     run "./showdeps -c" to create and show the dependency tree for the cob_common stack
+# *     run "./showdeps -d" to create and show the dependency tree for the cob_driver stack
+# *     run "./showdeps -e" to create and show the dependency tree for the cob_extern stack
+# *     run "./showdeps -s" to create and show the dependency tree for the cob_simulation stack
 # *
 # * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # *			
@@ -63,45 +63,60 @@
 #--------------------------------------------------------------------
 # list all packages here
 PACKAGES_APPS=\
-cob_teleop,\
-cob_dashboard,\
-cob_test,\
 cob_2dnav,\
-cob_simpledrive
+cob_2dslam,\
+cob_dashboard,\
+cob_mmcontroller,\
+cob_simpledrive,\
+cob_simpletrajectories,\
+cob_tactiletools,\
+cob_teleop
 
 PACKAGES_COMMON=\
+cob_actions,\
+cob_defs,\
+cob_description,\
+cob_machine,\
 cob_msgs,\
 cob_srvs,\
-cob_actions,\
-cob_vision_utils,\
-cob_utilities
+cob_utilities,\
+cob_vision_utils
 
 PACKAGES_DRIVER=\
-cob_sick_s300,\
-cob_hokuyo,\
-cob_sdh,\
-cob_camera_sensors,\
-cob_powercube_chain,\
-cob_camera_axis,\
 cob_arm,\
-cob_platform,\
-cob_relayboard,\
 cob_base_drive_chain,\
-cob_generic_can,\
+cob_camera_axis,\
+cob_camera_sensors,\
 cob_canopen_motor,\
 cob_drive_identification,\
-cob_tf_broadcaster
+cob_forcetorque,\
+cob_generic_can,\
+cob_hokuyo,\
+cob_joy,\
+cob_light,\
+cob_platform,\
+cob_point_cloud_publisher,\
+cob_powercube_chain,\
+cob_relayboard,\
+cob_sdh,\
+cob_sick_s300,\
+cob_tf_broadcaster,\
+cob_torso,\
+cob_tray,\
+cob_undercarriage_ctrl
 
 PACKAGES_EXTERN=\
 libm5api,\
 libntcan,\
 libpcan,\
+libsiftfast,\
 libwm4
 
 PACKAGES_SIMULATION=\
-cob_defs,\
-cob_ogre,\
-cob_gazebo
+cob_controller_configuration_gazebo,\
+cob_gazebo,\
+cob_gazebo_worlds,\
+cob_ogre
 
 #--------------------------------------------------------------------
 # choose stacks
@@ -120,7 +135,7 @@ else
 fi
 
 # create dependency tree
-rxdeps --one --cluster --target=$PACKAGES
+rxdeps --one --cluster -l --target=$PACKAGES
 
 # show dependency tree
 evince deps.pdf&
