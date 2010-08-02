@@ -49,7 +49,7 @@ export ROS_ROOT=/opt/ros/$RELEASE/ros
 export PATH=${ROS_ROOT}/bin:${PATH}
 export PYTHONPATH=${ROS_ROOT}/core/roslib/src
 export ROS_PACKAGE_PATH=/opt/ros/$RELEASE/stacks
-export ROS_PACKAGE_PATH=/home/${USER}/ros/$RELEASE/ros_experimental:$ROS_PACKAGE_PATH
+#export ROS_PACKAGE_PATH=/home/${USER}/ros/$RELEASE/ros_experimental:$ROS_PACKAGE_PATH
 export ROS_PACKAGE_PATH=$WORKSPACE:$ROS_PACKAGE_PATH
 export ROS_PARALLEL_JOBS=-j2
 
