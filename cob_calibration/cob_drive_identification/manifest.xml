@@ -1,0 +1,21 @@
+<package>
+  <description brief="cob_drive_identification">
+
+     This package is designed to record drive information (such as current) of some predefined trajectories. For driving purposes, the cob_undercarriage_ctrl is used, for recording the Elmo Recorder functions in cob_base_drive_chain.
+
+  </description>
+  <author>Philipp Köhler (cpc-pk)</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/cob_drive_identification</url>
+  
+
+  <depend package="roscpp"/>
+  <depend package="cob_srvs"/>
+  <depend package="geometry_msgs"/>
+  <depend package="cob_base_drive_chain"/>
+  <depend package="cob_undercarriage_ctrl"/>
+
+</package>
+
+

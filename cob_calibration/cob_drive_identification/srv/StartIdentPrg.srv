@@ -1,0 +1,5 @@
+#Specify a program number you want to test drive & record, select 99 for manually entered x and y relative movements
+int32 program_number
+float32 x_rel
+float32 y_rel
+---
