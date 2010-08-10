@@ -169,9 +169,9 @@ class SdhNode
 			sdh_ = new SDH::cSDH(false, false, 0); //(_use_radians=false, bool _use_fahrenheit=false, int _debug_level=0)
 
 			// implementation of service servers
-			srvServer_Init_ = nh_.advertiseService("Init", &SdhNode::srvCallback_Init, this);
-            srvServer_Stop_ = nh_.advertiseService("Stop", &SdhNode::srvCallback_Stop, this);
-            srvServer_SetOperationMode_ = nh_.advertiseService("SetOperationMode", &SdhNode::srvCallback_SetOperationMode, this);
+			srvServer_Init_ = nh_.advertiseService("init", &SdhNode::srvCallback_Init, this);
+            srvServer_Stop_ = nh_.advertiseService("stop", &SdhNode::srvCallback_Stop, this);
+            srvServer_SetOperationMode_ = nh_.advertiseService("set_operation_mode", &SdhNode::srvCallback_SetOperationMode, this);
             
             // getting harware parameters from parameter server
 //#ifdef USE_ESD
@@ -341,8 +341,17 @@ class SdhNode
 					if(sdhdevicetype_.compare("ESD")==0)
 					{
 						ROS_INFO("Starting init ESD");
-						sdh_->OpenCAN_ESD(0, baudrate_, timeout_, id_read_, id_write_ );
-						ROS_INFO("Initialized ESDCAN for SDH");
+						if(strcmp(sdhdevicestring_.c_str(), "/dev/can0") == 0)
+						{
+							ROS_INFO("Initializin ESD on /dev/can0");
+							sdh_->OpenCAN_ESD(0, baudrate_, timeout_, id_read_, id_write_ );
+						}
+						if(strcmp(sdhdevicestring_.c_str(), "/dev/can1") == 0)
+						{
+							ROS_INFO("Initializin ESD on /dev/can1");
+							sdh_->OpenCAN_ESD(1, baudrate_, timeout_, id_read_, id_write_ );
+						}
+						ROS_INFO("Initialized ESDCAN for SDH");	
 						isInitialized_ = true;
 					}
 				}

@@ -1,6 +1,8 @@
 #!/usr/bin/python
 
 import time
+import os
+import sys
 
 import roslib
 roslib.load_manifest('cob_script_server')
@@ -17,26 +19,44 @@ from tf.transformations import *
 from sound_play.libsoundplay import SoundClient
 
 class simple_script_server:
+	# Decides wether do use the ROS sound_play package play sound and speech or to start the services
+	#	directly via command line. The command line version has the great advantage that it works!
+	use_ROS_sound_play = False
+
 	def __init__(self):
 		self.ns_global_prefix = "/script_server"
+		#self.ns_global_prefix = ""
+		if self.use_ROS_sound_play:
+			self.soundhandle = SoundClient()
 		time.sleep(1)
-		self.soundhandle = SoundClient()
 
 #------------------- Init section -------------------#
 	def Init(self,component_name):
-		rospy.loginfo("Waiting for %s_controller init...", component_name)
-		service_name = component_name + "_controller/Init"
+		Trigger(component_name,"init")
+
+	def Stop(self,component_name):
+		Trigger(component_name,"stop")
+
+	def Recover(self,component_name):
+		Trigger(component_name,"recover")
+
+	def Trigger(self,component_name,service_name,blocking=True):
+		rospy.loginfo("<<%s>> <<%s>>", service_name, component_name)
+		rospy.loginfo("Waiting for <<%s>> to <<%s>>...", component_name, service_name)
+		service_full_name = "/" + component_name + "_controller/" + service_name
 		try:
-			rospy.wait_for_service(service_name,rospy.get_param('server_timeout',1))
+			rospy.wait_for_service(service_full_name,rospy.get_param('server_timeout',3))
 		except rospy.ROSException, e:
 			print "Service not available: %s"%e
 			return False
 		try:
-			init = rospy.ServiceProxy(service_name,Trigger)
-			print init()
+			init = rospy.ServiceProxy(service_full_name,Trigger)
+			#print init()
+			init()
 		except rospy.ServiceException, e:
 			print "Service call failed: %s"%e
 			return False
+		rospy.loginfo("...<<%s>> is <<%s>>", component_name, service_name)
 		return True
 
 #------------------- Move section -------------------#
@@ -125,6 +145,7 @@ class simple_script_server:
 		ah.client = self.client
 
 		if blocking:
+			rospy.logdebug("actionlib client waiting for result...")
 			ah.wait()
 		else:
 			rospy.logdebug("actionlib client not waiting for result, continuing...")
@@ -230,12 +251,13 @@ class simple_script_server:
 		ah.client = self.client
 
 		if blocking:
+			rospy.logdebug("actionlib client waiting for result...")
 			ah.wait()
 		else:
 			rospy.logdebug("actionlib client not waiting for result, continuing...")
 		
 		return ah
-		
+
 	def MoveCartRel(self,component_name,position=[0.0, 0.0, 0.0],orientation=[0.0, 0.0, 0.0]):
 		service_name = component_name + "_controller/move_cart_rel"
 		try:
@@ -255,12 +277,16 @@ class simple_script_server:
 			req.goal_pose.pose.orientation.y = q[1]
 			req.goal_pose.pose.orientation.z = q[2]
 			req.goal_pose.pose.orientation.w = q[3]
-			print req
-			print move_cart(req)
+			#print req
+			move_cart(req)
 		except rospy.ServiceException, e:
 			print "Service call failed: %s"%e
 			return False
 		return True
+		
+	def SetOperationMode(self,component_name,mode):
+		rospy.loginfo("setting <<%s>> to operation mode <<%s>>",component_name, mode)
+		rospy.set_param(component_name + "_controller/OperationMode",mode)
 			
 #------------------- LED section -------------------#
 	def SetLight(self,parameter_name):
@@ -327,19 +353,20 @@ class simple_script_server:
 			CEPS_DE	- use Text-to-speech with the German Cepstral voice Matthias
 			MUTE	- play no sound at all
 		"""
+		rospy.logdebug("Speak <<%s>> in mode <<%s>>",parameter_name,mode)
 		ah = action_handle()
 		ah.parameter_name = parameter_name
 		
 		# get mode from global parameter if necessary
 		if mode == "DEFAULT":
-			if not rospy.has_param(self.ns_global_prefix + "/sound/mode"):
-				rospy.logerr("parameter %s does not exist on ROS Parameter Server, aborting...",self.ns_global_prefix + "/sound/mode")
+			if not rospy.has_param(self.ns_global_prefix + "/sound/speech_mode"):
+				rospy.logerr("parameter %s does not exist on ROS Parameter Server, aborting...",self.ns_global_prefix + "/sound/speech_mode")
 				ah.error_code = 2
 				return ah
-			mode = rospy.get_param(self.ns_global_prefix + "/sound/mode")
+			mode = rospy.get_param(self.ns_global_prefix + "/sound/speech_mode")
 		
 		# play sound depending on the mode that was chosen
-		elif mode == "WAV_DE":
+		if mode == "WAV_DE":
 			rospy.loginfo("Playing German WAV file %s",parameter_name)
 			
 			# get path for German WAV files
@@ -350,8 +377,20 @@ class simple_script_server:
 			wav_path = rospy.get_param(self.ns_global_prefix + "/sound/wav_de_path")
 			
 			# play sound
-			self.soundhandle.playWave(wav_path + parameter_name + ".wav")
-			ah.error_code = 0
+			rospy.loginfo("Playing file %s",wav_path + parameter_name + ".wav")
+			if self.use_ROS_sound_play:
+				self.soundhandle.playWave(wav_path + parameter_name + ".wav")
+				ah.error_code = 0
+			else:
+				retVal = os.system("aplay -q " + wav_path + parameter_name + ".wav")
+				if retVal == 127:
+					rospy.logerr("Calling audio player 'aplay' caused a failure. Check if it is installed and works properly!")
+					ah.error_code = 4
+				elif retVal == 1:
+					rospy.logerr("Calling audio player 'aplay' caused a failure. Check if wave file is existing and the path is valid!")
+					ah.error_code = 3
+				else:
+					ah.error_code = 0
 			return ah 
 			
 		elif mode == "WAV_EN":
@@ -365,8 +404,20 @@ class simple_script_server:
 			wav_path = rospy.get_param(self.ns_global_prefix + "/sound/wav_en_path")
 			
 			# play sound
-			self.soundhandle.playWave(wav_path + parameter_name + ".wav")
-			ah.error_code = 0
+			rospy.loginfo("Playing file %s",wav_path + parameter_name + ".wav")
+			if self.use_ROS_sound_play:
+				self.soundhandle.playWave(wav_path + parameter_name + ".wav")
+				ah.error_code = 0
+			else:
+				retVal = os.system("aplay -q " + wav_path + parameter_name + ".wav")
+				if retVal == 127:
+					rospy.logerr("Calling audio player 'aplay' returned a failure. Check if it is installed and works properly!")
+					ah.error_code = 4
+				elif retVal == 1:
+					rospy.logerr("Calling audio player 'aplay' returned a failure. Check if wave file is existing and the path is valid!")
+					ah.error_code = 3
+				else:
+					ah.error_code = 0
 			return ah 
 			
 		elif mode == "FEST_EN":
@@ -376,16 +427,10 @@ class simple_script_server:
 				ah.error_code = 2
 				return ah 
 			text_string = rospy.get_param(self.ns_global_prefix + "/sound/speech_en/"+parameter_name)
-			if not type(text_string) == str:
-				rospy.logerr("no valid parameter for text-to-speech system: Not a string, aborting...")
-				ah.error_code = 3
-				return ah
-			rospy.loginfo("Using English Festival Voice for speaking '%s'",text_string)
 			
 			# send text string to TTS system
-			self.soundhandle.say(text_string)
-			ah.error_code = 0
-			return ah 
+			ah.error_code = self.SpeakStr(text_string,mode)
+			return ah
 	
 		elif mode == "CEPS_EN":
 			# get the text string to speak
@@ -394,16 +439,10 @@ class simple_script_server:
 				ah.error_code = 2
 				return ah 
 			text_string = rospy.get_param(self.ns_global_prefix + "/sound/speech_en/"+parameter_name)
-			if not type(text_string) == str:
-				rospy.logerr("no valid parameter for text-to-speech system: Not a string, aborting...")
-				ah.error_code = 3
-				return ah
-			rospy.loginfo("Using English Cepstral Voice David for speaking '%s'",text_string)
 			
 			# send text string to TTS system
-			returnVal = os.system("swift -n \"David\" -e \"utf-8\" \"" + str + "\"")
-			ah.error_code = 0
-			return ah 
+			ah.error_code = self.SpeakStr(text_string,mode)
+			return ah
 
 		elif mode == "CEPS_DE":
 			# get the text string to speak
@@ -412,30 +451,113 @@ class simple_script_server:
 				ah.error_code = 2
 				return ah 
 			text_string = rospy.get_param(self.ns_global_prefix + "/sound/speech_de/"+parameter_name)
-			if not type(text_string) == str:
-				rospy.logerr("no valid parameter for text-to-speech system: Not a string, aborting...")
-				ah.error_code = 3
-				return ah
-			rospy.loginfo("Using German Cepstral Voice Matthias for speaking '%s'",text_string)
 			
 			# send text string to TTS system
-			returnVal = os.system("swift -n \"Matthias\"-e \"utf-8\" \"" + str + "\"")
-			ah.error_code = 0
-			return ah 
+			ah.error_code = self.SpeakStr(text_string,mode)
+			return ah
 
 		elif mode == "MUTE":
-			rospy.loginfo("Playing sound %s",parameter_name)
+			rospy.loginfo("Playing sound %s (muted)",parameter_name)
+			ah.error_code = 0
+			return ah
 
 		else:
 			rospy.logerr("ROS has no sound mode %s!",mode)
+			ah.error_code = 2
 			return ah
-			
-		rospy.loginfo("Speak <<%s>> in mode <<%s>>",parameter_name,mode)
+
+	def SpeakStr(self,text,mode):
+		""" Speak the string 'text' via the TTS system specified by mode
+		Possible modes are:
+			FEST_EN	- use Text-to-speech with the English Festival voice
+			CEPS_EN	- use Text-to-speech with the English Cepstral voice David
+			CEPS_DE	- use Text-to-speech with the German Cepstral voice Matthias
+			MUTE	- play no sound at all
+		"""
+		# verify that argument 'text' is a string
+		if not type(text) == str:
+			rospy.logerr("no valid parameter for text-to-speech system: Not a string, aborting...")
+			return 3
+
+		# get parameter for temporary wav file
+		if not rospy.has_param(self.ns_global_prefix +"/sound/temp_wav_file"):
+			rospy.logerr("parameter temp_wav_file does not exist on ROS Parameter Server, aborting")
+			return 2
+		temp_wav_file = rospy.get_param(self.ns_global_prefix +"/sound/temp_wav_file")
+
+		# play sound depending on the mode that was chosen
+		if mode == "FEST_EN":
+			rospy.loginfo("Using English Festival Voice for speaking '%s'",text)
+		
+			# send text string to TTS system
+			if self.use_ROS_sound_play:
+				self.soundhandle.say(text)
+				return 0
+			else:
+				retVal = os.system("echo "+text+" | text2wave | aplay -q")
+				if retVal != 0:
+					rospy.logerr("calling Festival TTS system returned failure. Check if it is installed and works properly!")
+					return 4
+				else:
+					return 0	
+
+		elif mode == "CEPS_EN":
+			rospy.loginfo("Using English Cepstral Voice David for speaking '%s'",text)
+		
+			# send text string to TTS system
+			retVal = os.system("swift -n \"David\" -e \"utf-8\" \"" + text + "\" -o " + temp_wav_file)
+			if retVal != 0:
+				rospy.logerr("Calling Cepstral TTS system returned failure. Check if Cepstral voice \"David\" is set up properly!")
+				return 4
+			retVal = os.system("aplay -q " + temp_wav_file)
+			if retVal == 127:
+				rospy.logerr("Calling audio player 'aplay' returned a failure. Check if it is installed and works properly!")
+				return 4
+			elif retVal == 1:
+				rospy.logerr("Calling audio player 'aplay' returned a failure. Check the directory for temporary file is existing and has write access!")
+				return 3
+			else:
+				return 0
+
+		elif mode == "CEPS_DE":
+			rospy.loginfo("Using German Cepstral Voice Matthias for speaking '%s'",text)
+		
+			# send text string to TTS system
+			retVal = os.system("swift -n \"Matthias\" -e \"utf-8\" \"" + text + "\" -o " + temp_wav_file)
+			if retVal != 0:
+				rospy.logerr("Calling Cepstral TTS system returned failure. Check if Cepstral voice \"Matthias\" is set up properly!")
+				return 4
+			retVal = os.system("aplay -q " + temp_wav_file)
+			if retVal == 127:
+				rospy.logerr("Calling audio player 'aplay' returned a failure. Check if it is installed and works properly!")
+				return 4
+			elif retVal == 1:
+				rospy.logerr("Calling audio player 'aplay' returned a failure. Check the directory for temporary file is existing and has write access!")
+				return 3
+			else:
+				return 0
+			return 0
+
+		elif mode == "MUTE":
+			rospy.loginfo("Playing sound %s (muted)",text)
+			return 0
+
+		else:
+			rospy.logerr("ROS has no sound mode %s!",mode)
+			return 2
 
 #------------------- General section -------------------#
 	def sleep(self,duration):
 		rospy.loginfo("Wait for %f sec",duration)
 		time.sleep(duration)
+
+	def wait_for_input(self):
+		rospy.loginfo("Wait for user input...")
+		retVal = sys.stdin.readline()
+		rospy.loginfo("Got string >%s<",retVal)
+		return retVal
+		#key = input()
+		#return key
 
 	def check_pause(self):
 		""" check if pause is globally set. If yes, enter a wait loop until
