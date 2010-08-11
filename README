@@ -10,6 +10,6 @@ add internal ip addresses to /etc/hosts
 192.168.0.101 cob3-2-pc2
 
 Connecting to the robot machines
-pc1: ssh -X -p2201 cob3-1
-pc2: ssh -X -p2202 cob3-1
-pc3: ssh -X -p2203 cob3-1
+pc1: ssh -X -p2201 cob3-2
+pc2: ssh -X -p2202 cob3-2
+pc3: ssh -X -p2203 cob3-2
