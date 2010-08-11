@@ -1,11 +1,11 @@
 <package>
   <description brief="cob_bringup">
 
-     cob_bringup
+     This package launches all nodes for operating either a real Care-O-bot or a simulated one.
 
   </description>
-  <author>fmw</author>
-  <license>BSD</license>
+  <author>Florian Weisshardt, email:florian.weisshardt@ipa.fhg.de</author>
+  <license>LGPL</license>
   <review status="unreviewed" notes=""/>
   <url>http://ros.org/wiki/cob_bringup</url>
   
@@ -15,8 +15,12 @@
   <depend package="cob_arm"/>
   <depend package="cob_sdh"/>
   <depend package="cob_camera_axis"/>
-  <depend package="cob_camera_sensors"/>
+  <!--depend package="cob_camera_sensors"/-->
   <depend package="cob_platform"/>
+  <depend package="cob_sick_s300"/>
+  <depend package="cob_teleop"/>
+
+  <depend package="cob_gazebo"/>
 
 </package>
 

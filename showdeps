@@ -65,6 +65,7 @@
 PACKAGES_APPS=\
 cob_2dnav,\
 cob_2dslam,\
+cob_bringup,\
 cob_dashboard,\
 cob_mmcontroller,\
 cob_script_server,\
@@ -96,6 +97,7 @@ cob_generic_can,\
 cob_hokuyo,\
 cob_joy,\
 cob_light,\
+cob_manipulator,\
 cob_platform,\
 cob_point_cloud_publisher,\
 cob_powercube_chain,\
