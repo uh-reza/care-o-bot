@@ -5,7 +5,10 @@
 
 0 base:
   [[stop,Trigger,base,stop],
-  [init,Trigger,base,init]]
+  [init,Trigger,base,init],
+  [resa1,Move,base,resa1],
+  [resa2,Move,base,resa2],
+  [resa3,Move,base,resa3]]
 1 torso:
   [[stop,Trigger,torso,stop],
   [init,Trigger,torso,init],
@@ -33,16 +36,19 @@
   [home,Move,arm,home],
   [folded,Move,arm,folded],
   [pregrasp,Move,arm,pregrasp],
+  [grasp,Move,arm,grasp],
   [intermediateback,Move,arm,intermediateback],
   [intermediatefront,Move,arm,intermediatefront],
-  [overtablet,Move,arm,overtablet]]
+  [overtablet,Move,arm,overtablet],
+  [tablet,Move,arm,tablet],
+  [resa2,Move,arm,resa2]]
 4 arm traj:
   [[stop,Trigger,arm,stop],
   [init,Trigger,arm,init],
   [recover,Trigger,arm,recover],
   [enable joystick,Mode,arm,velocity],
-  [graspTOtablet,Move,arm,graspTOtablet],
-  [tabletTOfolded,Move,arm,tabletTOfolded]]
+  [graspTOtablet,Move,arm,grasp-to-tablet],
+  [tabletTOfolded,Move,arm,tablet-to-folded]]
 5 sdh:
   [[stop,Trigger,sdh,stop],
   [init,Trigger,sdh,init],
