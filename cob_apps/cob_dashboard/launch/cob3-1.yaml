@@ -29,10 +29,12 @@
   [up,Move,tray,up],
   [down,Move,tray,down]]
 3 arm:
-  [[init,Trigger,arm,init],
-  [home,Move,arm,home],
-  [grasp2,Move,arm,grasp2],
-  [grasp3,Move,arm,grasp3]]
+  [[home,Move,arm,home],
+  [folded,Move,arm,folded],
+  [pregrasp,Move,arm,pregrasp],
+  [grasp,Move,arm,grasp],
+  [overtablet,Move,arm,overtablet],
+  [tablet,Move,arm,tablet]]
 4 arm traj:
   [[grasp-to-tablet,Move,arm,grasp-to-tablet],
   [tablet-to-folded,Move,arm,tablet-to-folded]]
