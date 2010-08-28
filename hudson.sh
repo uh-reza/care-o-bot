@@ -61,9 +61,9 @@ rosdep install $STACKS
 if [ $RELEASE = "boxturtle" ]; then
 	rosmake $STACKS --skip-blacklist
 elif [ $RELEASE = "latest" ]; then
-	rosmake $STACKS
+	rosmake $STACKS --skip-blacklist
 elif [ $RELEASE = "cturtle" ]; then
-	rosmake $STACKS
+	rosmake $STACKS --skip-blacklist
 else
 	echo "ERROR: no valid ROS release specified"
 	exit 1
