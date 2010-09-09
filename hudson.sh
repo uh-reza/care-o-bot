@@ -51,7 +51,12 @@ export PYTHONPATH=${ROS_ROOT}/core/roslib/src
 export ROS_PACKAGE_PATH=/opt/ros/$RELEASE/stacks
 #export ROS_PACKAGE_PATH=/home/${USER}/ros/$RELEASE/ros_experimental:$ROS_PACKAGE_PATH
 export ROS_PACKAGE_PATH=$WORKSPACE:$ROS_PACKAGE_PATH
-export ROS_PARALLEL_JOBS=-j2
+
+#build farm stuff
+export PATH=/usr/lib/ccache/:$PATH
+export DISTCC_HOSTS='localhost distcc@hektor.ipa.fhg.de/8 distcc@chaos.ipa.fhg.de/4'
+export CCACHE_PREFIX=distcc
+export ROS_PARALLEL_JOBS=-j28
 
 echo $ROS_ROOT
 echo $ROS_PACKAGE_PATH
@@ -61,9 +66,9 @@ rosdep install $STACKS
 if [ $RELEASE = "boxturtle" ]; then
 	rosmake $STACKS --skip-blacklist
 elif [ $RELEASE = "latest" ]; then
-	rosmake $STACKS
+	rosmake $STACKS --skip-blacklist
 elif [ $RELEASE = "cturtle" ]; then
-	rosmake $STACKS
+	rosmake $STACKS --skip-blacklist
 else
 	echo "ERROR: no valid ROS release specified"
 	exit 1
