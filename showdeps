@@ -91,7 +91,6 @@ cob_base_drive_chain,\
 cob_camera_axis,\
 cob_camera_sensors,\
 cob_canopen_motor,\
-cob_drive_identification,\
 cob_forcetorque,\
 cob_generic_can,\
 cob_hokuyo,\
@@ -104,7 +103,6 @@ cob_powercube_chain,\
 cob_relayboard,\
 cob_sdh,\
 cob_sick_s300,\
-cob_tf_broadcaster,\
 cob_torso,\
 cob_tray,\
 cob_undercarriage_ctrl
@@ -113,6 +111,7 @@ PACKAGES_EXTERN=\
 libm5api,\
 libntcan,\
 libpcan,\
+libphidgets,\
 libsiftfast,\
 libwm4
 

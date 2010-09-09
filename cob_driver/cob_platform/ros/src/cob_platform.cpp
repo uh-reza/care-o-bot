@@ -103,7 +103,7 @@ class NodeClass
         bool isInitialized;
         double cmdVelX, cmdVelY, cmdVelTh;
         double x, y, th;
-        double dxMM, dyMM, dth, dvth;
+        double dxMM, dyMM, dth, dvth ;
         double vxMMS, vyMMS, vth, vvth;
         ros::Time current_time, last_time;
 
@@ -173,6 +173,8 @@ class NodeClass
                 pltf->initPltf();
                 isInitialized = true;
                 res.success = 0; // 0 = true, else = false
+		sleep(1);
+		
             }
             else
             {
@@ -245,7 +247,11 @@ class NodeClass
                 // get odometry from platform
                 pltf->getDeltaPosePltf(dxMM, dyMM, dth, dvth,
         					           vxMMS, vyMMS, vth, vvth);
-
+			if(vxMMS > 100000)
+			{
+				printf("Not yet initialized\n");
+				return;
+			}
 				// calculation from ROS odom publisher tutorial http://www.ros.org/wiki/navigation/Tutorials/RobotSetup/Odom
 			    //compute odometry in a typical way given the velocities of the robot
 				//double dt = (current_time - last_time).toSec();
@@ -266,7 +272,6 @@ class NodeClass
 				odom_trans.header.frame_id = "/odom_combined";
 				odom_trans.child_frame_id = "/base_footprint";
 
-				//std::cout << x << y << std::endl;
 				odom_trans.transform.translation.x = x;
 				odom_trans.transform.translation.y = y;
 				odom_trans.transform.translation.z = 0.0;
