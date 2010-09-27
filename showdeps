@@ -103,7 +103,6 @@ cob_powercube_chain,\
 cob_relayboard,\
 cob_sdh,\
 cob_sick_s300,\
-cob_tf_broadcaster,\
 cob_torso,\
 cob_tray,\
 cob_undercarriage_ctrl
