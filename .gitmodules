@@ -1,0 +1,6 @@
+[submodule "cob_common/brics_intefaces"]
+	path = cob_common/brics_intefaces
+	url = git://github.com/abubeck/brics-interfaces.git
+[submodule "cob_common/brics_interfaces"]
+	path = cob_common/brics_interfaces
+	url = git://github.com/abubeck/brics-interfaces.git
