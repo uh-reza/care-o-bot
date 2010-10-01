@@ -11,4 +11,4 @@
 export ROS_PACKAGE_PATH=$1:$ROS_PACKAGE_PATH
 
 # define amount of ros prozesses during build for multi-prozessor machines
-export ROS_PARALLEL_JOBS=-j4
+export ROS_PARALLEL_JOBS=-j8
