@@ -93,6 +93,7 @@ cob_camera_sensors,\
 cob_canopen_motor,\
 cob_forcetorque,\
 cob_generic_can,\
+cob_hardware_info,\
 cob_hokuyo,\
 cob_joy,\
 cob_light,\
