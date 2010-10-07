@@ -67,11 +67,13 @@
 #include <cob_srvs/ElmoRecorderReadout.h>
 #include <cob_srvs/ElmoRecorderConfig.h>
 
-const float ACC = 0.8f; // m/sec
-const float V_MAX = 1.0f; // m/sec
+const double PI = 3.141592654;
 
-const float W_MAX = 2* M_PI /8; // one eights circle per second rad/sec
-const float W_ACC = W_MAX; //accelerate to MAX speed in one second
+const double ACC = 0.5f; // m/sec
+const double V_MAX = 0.4f; // m/sec
+
+const double W_MAX = 2.0f * PI / 8.0f; // one eights circle per second rad/sec
+const double W_ACC = W_MAX; //accelerate to MAX speed in one second
 
 
 //####################
@@ -130,15 +132,15 @@ class NodeClass
 			return true;		
 		}
 		
-		int startTestProgram(int ID, float x_rel = 0.0f, float y_rel = 0.0f);
+		int startTestProgram(int ID, double x_rel = 0.0f, double y_rel = 0.0f);
 		
-		int commandPltfSpeed(float vx, float vy, float vw);
+		int commandPltfSpeed(double vx, double vy, double vw);
 		
-		int configRecorder(float total_time);
+		int configRecorder(double total_time);
 		
-		float moveRelative(float x_rel, float y_rel, bool only_get_time = false);
+		double moveRelative(double x_rel, double y_rel, bool only_get_time = false);
 		
-		float rotate(float phi_rad, bool only_get_time = false);
+		double rotate(double phi_rad, bool only_get_time = false);
 };
 
 //#######################
@@ -157,29 +159,40 @@ int main(int argc, char** argv) {
 }
 
 
-int NodeClass::startTestProgram(int ID, float x_rel, float y_rel) {
+int NodeClass::startTestProgram(int ID, double x_rel, double y_rel) {
 	switch(ID) {
 		case 1:
 			configRecorder(moveRelative(0, 1, true) * 4);
-			std::cout << "The coming program will last " << moveRelative(0, 1, true) * 4 << " seconds" << std::endl;
+			std::cout << "The coming program will last " << moveRelative(0, 1, true) * 4.0f << " seconds" << std::endl;
 		
 			//Test-drive a 1 m - square: forward, right ..
-			moveRelative(1, 0);
-			moveRelative(0, -1);
-			moveRelative(-1, 0);
-			moveRelative(0, 1);
+			moveRelative(0.7, 0);
+			moveRelative(0, -0.7);
+			moveRelative(-0.7, 0);
+			moveRelative(0, 0.7);
 			break;
 			
 		case 2:
 			configRecorder(rotate(M_PI * 2, true) * 2);
-			std::cout << "The coming program will last " << rotate(M_PI * 2, true) * 2 << " seconds and is recorded" << std::endl;
-			rotate(2 * M_PI);
-			rotate(-2 * M_PI);
+			std::cout << "The coming program will last " << rotate(PI * 2.0f, true) * 2.0f << " seconds and is recorded" << std::endl;
+			rotate(2.0f * PI);
+			rotate(-2.0f * PI);
 			break;
 			
 		case 3:
-			std::cout << "The coming program will last " << rotate(M_PI / 2, true) << " seconds and is recorded" << std::endl;
-			rotate(M_PI / 2);
+			std::cout << "The coming program will last " << rotate(PI / 2, true) << " seconds and is recorded" << std::endl;
+			rotate(PI / 2);
+			break;
+			
+		case 4: //square with forward and backward driving forward .. right ...
+			moveRelative(0.7, 0);
+			rotate(- M_PI / 2);
+			moveRelative(0.7, 0);
+			rotate(- M_PI / 2);
+			moveRelative(0.7, 0);
+			rotate(- M_PI / 2);
+			moveRelative(0.7, 0);
+			rotate(- M_PI / 2);
 			break;
 
 		case 99:
@@ -197,7 +210,7 @@ int NodeClass::startTestProgram(int ID, float x_rel, float y_rel) {
 
 }
 
-int NodeClass::configRecorder(float total_time) {
+int NodeClass::configRecorder(double total_time) {
 	total_time += 0.5; //due to the instant start of the recorder and delay between motors and CAN
 	
 	cob_srvs::ElmoRecorderConfig config_;
@@ -209,17 +222,38 @@ int NodeClass::configRecorder(float total_time) {
 	return 0;
 }
 
-float NodeClass::rotate(float phi_rad, bool only_get_time){
-	float time_to_acc_, time_tot_, v_tot_;
+double NodeClass::rotate(double phi_rad, bool only_get_time){
+	double time_to_acc_, time_tot_, v_tot_;
 	int rot_dir_;
 	bool finished = false;
 	ros::Duration motion_time_;
 	ros::Time motion_begin_ = ros::Time::now();
 	
+	/*
 	if(phi_rad < 0) rot_dir_ = -1;
 	else rot_dir_ = 1;
 	
-	phi_rad = abs(phi_rad);
+	phi_rad = fabs(phi_rad);
+	
+	time_tot_ = phi_rad / W_MAX;
+	
+	if(only_get_time) return time_tot_;
+	
+	while(finished == false && n.ok()) {
+		commandPltfSpeed(0.0f, 0.0f, W_MAX * rot_dir_);
+		
+		motion_time_ = ros::Time::now() - motion_begin_;
+		
+		if(motion_time_.toSec() > time_tot_) finished = true;
+	}
+	
+	commandPltfSpeed(0, 0, 0);
+	*/
+
+	if(phi_rad < 0) rot_dir_ = -1;
+	else rot_dir_ = 1;
+	
+	phi_rad = fabs(phi_rad);
 	
 	if( phi_rad < 2 * 0.5 * ACC * pow((W_MAX/W_ACC),2) ) { // v/a = time to accelerate to top speed
 		//max speed won't be reached:
@@ -258,8 +292,8 @@ float NodeClass::rotate(float phi_rad, bool only_get_time){
 	return 0;
 }
 
-float NodeClass::moveRelative(float x_rel, float y_rel, bool only_get_time) {
-	float dist_tot_, time_tot_, time_to_acc_, v_tot_;
+double NodeClass::moveRelative(double x_rel, double y_rel, bool only_get_time) {
+	double dist_tot_, time_tot_, time_to_acc_, v_tot_;
 	bool finished = false;
 	ros::Duration motion_time_;
 	ros::Time motion_begin_ = ros::Time::now();
@@ -302,7 +336,7 @@ float NodeClass::moveRelative(float x_rel, float y_rel, bool only_get_time) {
 	return 0;
 }
 
-int NodeClass::commandPltfSpeed(float vx, float vy, float vw) {
+int NodeClass::commandPltfSpeed(double vx, double vy, double vw) {
 	geometry_msgs::Twist twist_cmd_;
 	
 	//std::cout << "VX = " << vx << " VY = " << vy << " W = " << vw << std::endl;
