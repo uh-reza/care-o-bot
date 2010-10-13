@@ -461,33 +461,60 @@ int NodeClass::ICMTestDriveTraj() {
 }
 
 int NodeClass::ICMTestDrive() {
-	double vx1, vy1, vphi1;
+	double vx0, vy0, vphi0, vx1, vy1, vphi1;
 	/*
-	T = 0s (Start): Rho = 0mm/s; Phi = 0rad; Theta = 0rad;
-	T = 1s: Rho = 200mm/s; Phi = 0rad; Theta = 0,8rad;
-	T = 2,5s: Rho = 200mm/s; Phi = 3rad; Theta = 1,23rad;
-	T = 5s: Rho = 200mm/s; Phi = 0rad; Theta = -1,4rad;
-	T = 9s: Rho = 0mm/s; Phi = 0rad; Theta = 0,8rad;
+	
 	*/
-	getKartesianCoords(0, 0, 0, vx1, vy1, vphi1);
-	movePltf(vx1, vy1, vphi1, 1.0);
-	std::cout << "Driving: vx=" << vx1 << " vy=" << vy1 << " vw=" << vphi1 << std::endl;
+	vx0 = 0.0f; vy0 = 0.0f; vphi0 = 0.0f;
+
+	// T = 1
+	vx1 = 0.0f; vy1 = 0.0f; vphi1 = 0.0f;
+	driveTrajectory(vx0, vy0, vphi0, vx1, vy1, vphi1, 1.0f);
+	vx0 = vx1; vy0 = vy1; vphi0 = vphi1;
+	std::cout << "Going to: vx=" << vx0 << " vy=" << vy0 << " vw=" << vphi0 << std::endl;
+
+	// T = 1.1
+	vx1 = 0.6967f; vy1 = 0.0f; vphi1 = 2.3984f;
+	driveTrajectory(vx0, vy0, vphi0, vx1, vy1, vphi1, 0.1f);
+	vx0 = vx1; vy0 = vy1; vphi0 = vphi1;
+	std::cout << "Going to: vx=" << vx0 << " vy=" << vy0 << " vw=" << vphi0 << std::endl;
+
+	// T = 2.6
+	vx1 = 0.6967f; vy1 = 0.0f; vphi1 = 2.3984f;
+	driveTrajectory(vx0, vy0, vphi0, vx1, vy1, vphi1, 1.5f);
+	vx0 = vx1; vy0 = vy1; vphi0 = vphi1;
+	std::cout << "Going to: vx=" << vx0 << " vy=" << vy0 << " vw=" << vphi0 << std::endl;
+
+	// T = 2.7
+	vx1 = -0.3309f; vy1 = 0.0472f; vphi1 = 3.1511f;
+	driveTrajectory(vx0, vy0, vphi0, vx1, vy1, vphi1, 0.1f);
+	vx0 = vx1; vy0 = vy1; vphi0 = vphi1;
+	std::cout << "Going to: vx=" << vx0 << " vy=" << vy0 << " vw=" << vphi0 << std::endl;
+
+	// T = 5.3
+	vx1 = -0.3309f; vy1 = 0.0472f; vphi1 = 3.1511f;
+	driveTrajectory(vx0, vy0, vphi0, vx1, vy1, vphi1, 2.6f);
+	vx0 = vx1; vy0 = vy1; vphi0 = vphi1;
+	std::cout << "Going to: vx=" << vx0 << " vy=" << vy0 << " vw=" << vphi0 << std::endl;
+
+	// T = 5.4
+	vx1 = 0.17f; vy1 = 0.0f; vphi1 = -3.2947f;
+	driveTrajectory(vx0, vy0, vphi0, vx1, vy1, vphi1, 0.1f);
+	vx0 = vx1; vy0 = vy1; vphi0 = vphi1;
+	std::cout << "Going to: vx=" << vx0 << " vy=" << vy0 << " vw=" << vphi0 << std::endl;
+
+	// T = 9
+	vx1 = 0.17f; vy1 = 0.0f; vphi1 = -3.2947f;
+	driveTrajectory(vx0, vy0, vphi0, vx1, vy1, vphi1, 3.6f);
+	vx0 = vx1; vy0 = vy1; vphi0 = vphi1;
+	std::cout << "Going to: vx=" << vx0 << " vy=" << vy0 << " vw=" << vphi0 << std::endl;
+
+	// T = 9.1
+	vx1 = 0.0f; vy1 = 0.0f; vphi1 = 0.0f;
+	driveTrajectory(vx0, vy0, vphi0, vx1, vy1, vphi1, 0.1f);
+	vx0 = vx1; vy0 = vy1; vphi0 = vphi1;
+	std::cout << "Going to: vx=" << vx0 << " vy=" << vy0 << " vw=" << vphi0 << std::endl;
 	
-	getKartesianCoords(0.2, 0, 0.8, vx1, vy1, vphi1);
-	movePltf(vx1, vy1, vphi1, 1.5);
-	std::cout << "Driving: vx=" << vx1 << " vy=" << vy1 << " vw=" << vphi1 << std::endl;
-	
-	getKartesianCoords(0.2, 3, 1.23, vx1, vy1, vphi1);
-	movePltf(vx1, vy1, vphi1, 2.5);
-	std::cout << "Driving: vx=" << vx1 << " vy=" << vy1 << " vw=" << vphi1 << std::endl;
-	
-	getKartesianCoords(0.2, 0, -1.4, vx1, vy1, vphi1);
-	movePltf(vx1, vy1, vphi1, 4.0);
-	std::cout << "Driving: vx=" << vx1 << " vy=" << vy1 << " vw=" << vphi1 << std::endl;
-	
-	getKartesianCoords(0, 0, 0, vx1, vy1, vphi1);
-	movePltf(vx1, vy1, vphi1, 1.0);
-	std::cout << "Driving: vx=" << vx1 << " vy=" << vy1 << " vw=" << vphi1 << std::endl;
 
 	return 0;
 }
@@ -495,10 +522,19 @@ int NodeClass::ICMTestDrive() {
 int NodeClass::commandPltfSpeed(double vx, double vy, double vw) {
 	geometry_msgs::Twist twist_cmd_;
 	
-	//std::cout << "VX = " << vx << " VY = " << vy << " W = " << vw << std::endl;
-
-	//ros::Duration(0.01).sleep();
+	//Velocity constraints for ICM controller-tests
+	double vmax = 0.9f; //vmax in m/s
+	double dmax = 0.2991f;
 	
+	double vtemp, v_lim_factor;
+
+	vtemp = sqrt(vx*vx + vy*vy) + fabs(vw*dmax);
+	if(vtemp > vmax) {
+		v_lim_factor = vmax / vtemp;
+		vx = vx * v_lim_factor;
+		vy = vy * v_lim_factor;
+		vw = vw * v_lim_factor;
+	}
 
 	twist_cmd_.linear.x = vx;
 	twist_cmd_.linear.y = vy;
