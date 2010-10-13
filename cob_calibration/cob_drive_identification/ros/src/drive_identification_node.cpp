@@ -462,55 +462,70 @@ int NodeClass::ICMTestDriveTraj() {
 
 int NodeClass::ICMTestDrive() {
 	double vx0, vy0, vphi0, vx1, vy1, vphi1;
+	double factor = 0.3f;
 	/*
 	
 	*/
-	vx0 = 0.0f; vy0 = 0.0f; vphi0 = 0.0f;
+	vx0 = 0.0f*factor; vy0 = 0.0f*factor; vphi0 = 0.0f*factor;
 
 	// T = 1
-	vx1 = 0.0f; vy1 = 0.0f; vphi1 = 0.0f;
+	vx1 = 0.0f*factor; vy1 = 0.0f*factor; vphi1 = 0.0f*factor;
 	driveTrajectory(vx0, vy0, vphi0, vx1, vy1, vphi1, 1.0f);
 	vx0 = vx1; vy0 = vy1; vphi0 = vphi1;
 	std::cout << "Going to: vx=" << vx0 << " vy=" << vy0 << " vw=" << vphi0 << std::endl;
 
 	// T = 1.1
-	vx1 = 0.6967f; vy1 = 0.0f; vphi1 = 2.3984f;
+	vx1 = 0.6967f*factor; vy1 = 0.0f*factor; vphi1 = 2.3984f*factor;
 	driveTrajectory(vx0, vy0, vphi0, vx1, vy1, vphi1, 0.1f);
 	vx0 = vx1; vy0 = vy1; vphi0 = vphi1;
 	std::cout << "Going to: vx=" << vx0 << " vy=" << vy0 << " vw=" << vphi0 << std::endl;
 
 	// T = 2.6
-	vx1 = 0.6967f; vy1 = 0.0f; vphi1 = 2.3984f;
+	vx1 = 0.6967f*factor; vy1 = 0.0f*factor; vphi1 = 2.3984f*factor;
 	driveTrajectory(vx0, vy0, vphi0, vx1, vy1, vphi1, 1.5f);
 	vx0 = vx1; vy0 = vy1; vphi0 = vphi1;
 	std::cout << "Going to: vx=" << vx0 << " vy=" << vy0 << " vw=" << vphi0 << std::endl;
 
 	// T = 2.7
-	vx1 = -0.3309f; vy1 = 0.0472f; vphi1 = 3.1511f;
+	vx1 = -0.3309f*factor; vy1 = 0.0472f*factor; vphi1 = 3.1511f*factor;
 	driveTrajectory(vx0, vy0, vphi0, vx1, vy1, vphi1, 0.1f);
 	vx0 = vx1; vy0 = vy1; vphi0 = vphi1;
 	std::cout << "Going to: vx=" << vx0 << " vy=" << vy0 << " vw=" << vphi0 << std::endl;
 
 	// T = 5.3
-	vx1 = -0.3309f; vy1 = 0.0472f; vphi1 = 3.1511f;
+	vx1 = -0.3309f*factor; vy1 = 0.0472f*factor; vphi1 = 3.1511f*factor;
 	driveTrajectory(vx0, vy0, vphi0, vx1, vy1, vphi1, 2.6f);
 	vx0 = vx1; vy0 = vy1; vphi0 = vphi1;
 	std::cout << "Going to: vx=" << vx0 << " vy=" << vy0 << " vw=" << vphi0 << std::endl;
 
+	/*
 	// T = 5.4
-	vx1 = 0.17f; vy1 = 0.0f; vphi1 = -3.2947f;
+	vx1 = 0.17f*factor; vy1 = 0.0f*factor; vphi1 = -3.2947f*factor;
 	driveTrajectory(vx0, vy0, vphi0, vx1, vy1, vphi1, 0.1f);
 	vx0 = vx1; vy0 = vy1; vphi0 = vphi1;
 	std::cout << "Going to: vx=" << vx0 << " vy=" << vy0 << " vw=" << vphi0 << std::endl;
 
 	// T = 9
-	vx1 = 0.17f; vy1 = 0.0f; vphi1 = -3.2947f;
+	vx1 = 0.17f*factor; vy1 = 0.0f*factor; vphi1 = -3.2947f*factor;
+	driveTrajectory(vx0, vy0, vphi0, vx1, vy1, vphi1, 3.6f);
+	vx0 = vx1; vy0 = vy1; vphi0 = vphi1;
+	std::cout << "Going to: vx=" << vx0 << " vy=" << vy0 << " vw=" << vphi0 << std::endl;
+	*/
+
+	// T = 5.4
+	vx1 = 0.25f*factor; vy1 = 0.0f*factor; vphi1 = -3.2947f*factor;
+	driveTrajectory(vx0, vy0, vphi0, vx1, vy1, vphi1, 0.1f);
+	vx0 = vx1; vy0 = vy1; vphi0 = vphi1;
+	std::cout << "Going to: vx=" << vx0 << " vy=" << vy0 << " vw=" << vphi0 << std::endl;
+
+	// T = 9
+	vx1 = 0.25f*factor; vy1 = 0.0f*factor; vphi1 = -3.2947f*factor;
 	driveTrajectory(vx0, vy0, vphi0, vx1, vy1, vphi1, 3.6f);
 	vx0 = vx1; vy0 = vy1; vphi0 = vphi1;
 	std::cout << "Going to: vx=" << vx0 << " vy=" << vy0 << " vw=" << vphi0 << std::endl;
 
 	// T = 9.1
-	vx1 = 0.0f; vy1 = 0.0f; vphi1 = 0.0f;
+	vx1 = 0.0f*factor; vy1 = 0.0f*factor; vphi1 = 0.0f*factor;
 	driveTrajectory(vx0, vy0, vphi0, vx1, vy1, vphi1, 0.1f);
 	vx0 = vx1; vy0 = vy1; vphi0 = vphi1;
 	std::cout << "Going to: vx=" << vx0 << " vy=" << vy0 << " vw=" << vphi0 << std::endl;
