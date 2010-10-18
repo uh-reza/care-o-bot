@@ -206,6 +206,14 @@ int NodeClass::startTestProgram(int ID, double x_rel, double y_rel) {
 			moveRelative(0.7, 0);
 			rotate(- M_PI / 2);
 			break;
+
+		case 5: //square with forward and backward driving forward .. right ...
+			moveRelative(0.7, 0);
+			moveRelative(0, -0.7);
+			rotate(M_PI);
+			moveRelative(0.7, 0);
+			moveRelative(0, -0.7);
+			break;
 			
 			
 		case 10: // Christians test trajectory set
@@ -462,7 +470,7 @@ int NodeClass::ICMTestDriveTraj() {
 
 int NodeClass::ICMTestDrive() {
 	double vx0, vy0, vphi0, vx1, vy1, vphi1;
-	double factor = 0.3f;
+	double factor = 0.13; //0.3f;
 	/*
 	
 	*/
