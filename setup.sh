@@ -11,4 +11,6 @@
 export ROS_PACKAGE_PATH=$1:$ROS_PACKAGE_PATH
 
 # define amount of ros prozesses during build for multi-prozessor machines
-export ROS_PARALLEL_JOBS=-j2
+COUNT=$(cat /proc/cpuinfo | grep 'processor' | wc -l)
+COUNT=$(echo "$COUNT*2" | bc)
+export ROS_PARALLEL_JOBS=-j$COUNT

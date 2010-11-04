@@ -65,16 +65,17 @@
 PACKAGES_APPS=\
 cob_2dnav,\
 cob_2dslam,\
+cob_bringup,\
 cob_dashboard,\
 cob_mmcontroller,\
 cob_script_server,\
 cob_simpledrive,\
 cob_simpletrajectories,\
 cob_tactiletools,\
-cob_teleop
+cob_teleop,\
+cob_webportal
 
 PACKAGES_COMMON=\
-cob_actions,\
 cob_defs,\
 cob_description,\
 cob_goco,\
@@ -86,23 +87,23 @@ cob_vision_utils
 
 PACKAGES_DRIVER=\
 cob_arm,\
+cob_base,\
 cob_base_drive_chain,\
-cob_camera_axis,\
 cob_camera_sensors,\
 cob_canopen_motor,\
-cob_drive_identification,\
 cob_forcetorque,\
 cob_generic_can,\
+cob_hardware_info,\
+cob_head_axis,\
 cob_hokuyo,\
 cob_joy,\
 cob_light,\
-cob_platform,\
+cob_manipulator,\
 cob_point_cloud_publisher,\
 cob_powercube_chain,\
 cob_relayboard,\
 cob_sdh,\
 cob_sick_s300,\
-cob_tf_broadcaster,\
 cob_torso,\
 cob_tray,\
 cob_undercarriage_ctrl
@@ -111,6 +112,7 @@ PACKAGES_EXTERN=\
 libm5api,\
 libntcan,\
 libpcan,\
+libphidgets,\
 libsiftfast,\
 libwm4
 

@@ -67,11 +67,13 @@
 #include <cob_srvs/ElmoRecorderReadout.h>
 #include <cob_srvs/ElmoRecorderConfig.h>
 
-const float ACC = 0.8f; // m/sec
-const float V_MAX = 1.0f; // m/sec
+const double PI = 3.141592654;
 
-const float W_MAX = 2* M_PI /8; // one eights circle per second rad/sec
-const float W_ACC = W_MAX; //accelerate to MAX speed in one second
+const double ACC = 0.5f; // m/sec
+const double V_MAX = 0.4f; // m/sec
+
+const double W_MAX = 2.0f * PI / 8.0f; // one eights circle per second rad/sec
+const double W_ACC = W_MAX; //accelerate to MAX speed in one second
 
 
 //####################
@@ -130,15 +132,27 @@ class NodeClass
 			return true;		
 		}
 		
-		int startTestProgram(int ID, float x_rel = 0.0f, float y_rel = 0.0f);
+		int startTestProgram(int ID, double x_rel = 0.0f, double y_rel = 0.0f);
 		
-		int commandPltfSpeed(float vx, float vy, float vw);
+		int commandPltfSpeed(double vx, double vy, double vw);
 		
-		int configRecorder(float total_time);
+		int configRecorder(double total_time);
 		
-		float moveRelative(float x_rel, float y_rel, bool only_get_time = false);
+		double moveRelative(double x_rel, double y_rel, bool only_get_time = false);
 		
-		float rotate(float phi_rad, bool only_get_time = false);
+		double rotate(double phi_rad, bool only_get_time = false);
+		
+		int driveTrajectory(double vx0, double vyo, double vphi0, double vx1, double vy1, double vphi1, double T);
+		
+		int getKartesianCoords(double Rho_icm, double Phi_icm, double Theta_icm, double & vx, double & vy, double &vphi);
+		
+		int movePltf(double vx, double vy, double vphi, double T);
+		
+		int ICMTestDrive();
+		
+		int ICMTestDriveTraj();
+		
+		
 };
 
 //#######################
@@ -157,30 +171,67 @@ int main(int argc, char** argv) {
 }
 
 
-int NodeClass::startTestProgram(int ID, float x_rel, float y_rel) {
+int NodeClass::startTestProgram(int ID, double x_rel, double y_rel) {
 	switch(ID) {
 		case 1:
 			configRecorder(moveRelative(0, 1, true) * 4);
-			std::cout << "The coming program will last " << moveRelative(0, 1, true) * 4 << " seconds" << std::endl;
+			std::cout << "The coming program will last " << moveRelative(0, 1, true) * 4.0f << " seconds" << std::endl;
 		
 			//Test-drive a 1 m - square: forward, right ..
-			moveRelative(1, 0);
-			moveRelative(0, -1);
-			moveRelative(-1, 0);
-			moveRelative(0, 1);
+			moveRelative(0.7, 0);
+			moveRelative(0, -0.7);
+			moveRelative(-0.7, 0);
+			moveRelative(0, 0.7);
 			break;
 			
 		case 2:
 			configRecorder(rotate(M_PI * 2, true) * 2);
-			std::cout << "The coming program will last " << rotate(M_PI * 2, true) * 2 << " seconds and is recorded" << std::endl;
-			rotate(2 * M_PI);
-			rotate(-2 * M_PI);
+			std::cout << "The coming program will last " << rotate(PI * 2.0f, true) * 2.0f << " seconds and is recorded" << std::endl;
+			rotate(2.0f * PI);
+			rotate(-2.0f * PI);
 			break;
 			
 		case 3:
-			std::cout << "The coming program will last " << rotate(M_PI / 2, true) << " seconds and is recorded" << std::endl;
-			rotate(M_PI / 2);
+			std::cout << "The coming program will last " << rotate(PI / 2, true) << " seconds and is recorded" << std::endl;
+			rotate(PI / 2);
 			break;
+			
+		case 4: //square with forward and backward driving forward .. right ...
+			moveRelative(0.7, 0);
+			rotate(- M_PI / 2);
+			moveRelative(0.7, 0);
+			rotate(- M_PI / 2);
+			moveRelative(0.7, 0);
+			rotate(- M_PI / 2);
+			moveRelative(0.7, 0);
+			rotate(- M_PI / 2);
+			break;
+
+		case 5: //square with forward and backward driving forward .. right ...
+			moveRelative(0.7, 0);
+			moveRelative(0, -0.7);
+			rotate(M_PI);
+			moveRelative(0.7, 0);
+			moveRelative(0, -0.7);
+			break;
+			
+			
+		case 10: // Christians test trajectory set
+			ICMTestDrive();
+			break;
+			
+		case 12:
+			movePltf(1, 0, 0, 1.0);
+			break;
+			
+			
+		case 11: //Trajectory-test
+			driveTrajectory(0, 0, 0, 0.5, 0, 0, 1.0f);
+			driveTrajectory(0.5, 0, 0, 0, 0, 0, 1.0f);
+			
+			//commandPltfSpeed(0,0,0);
+			break;
+			
 
 		case 99:
 			std::cout << "The coming movement will last " << moveRelative(x_rel, y_rel, true) << " seconds" << std::endl;
@@ -197,7 +248,7 @@ int NodeClass::startTestProgram(int ID, float x_rel, float y_rel) {
 
 }
 
-int NodeClass::configRecorder(float total_time) {
+int NodeClass::configRecorder(double total_time) {
 	total_time += 0.5; //due to the instant start of the recorder and delay between motors and CAN
 	
 	cob_srvs::ElmoRecorderConfig config_;
@@ -209,17 +260,38 @@ int NodeClass::configRecorder(float total_time) {
 	return 0;
 }
 
-float NodeClass::rotate(float phi_rad, bool only_get_time){
-	float time_to_acc_, time_tot_, v_tot_;
+double NodeClass::rotate(double phi_rad, bool only_get_time){
+	double time_to_acc_, time_tot_, v_tot_;
 	int rot_dir_;
 	bool finished = false;
 	ros::Duration motion_time_;
 	ros::Time motion_begin_ = ros::Time::now();
 	
+	/*
 	if(phi_rad < 0) rot_dir_ = -1;
 	else rot_dir_ = 1;
 	
-	phi_rad = abs(phi_rad);
+	phi_rad = fabs(phi_rad);
+	
+	time_tot_ = phi_rad / W_MAX;
+	
+	if(only_get_time) return time_tot_;
+	
+	while(finished == false && n.ok()) {
+		commandPltfSpeed(0.0f, 0.0f, W_MAX * rot_dir_);
+		
+		motion_time_ = ros::Time::now() - motion_begin_;
+		
+		if(motion_time_.toSec() > time_tot_) finished = true;
+	}
+	
+	commandPltfSpeed(0, 0, 0);
+	*/
+
+	if(phi_rad < 0) rot_dir_ = -1;
+	else rot_dir_ = 1;
+	
+	phi_rad = fabs(phi_rad);
 	
 	if( phi_rad < 2 * 0.5 * ACC * pow((W_MAX/W_ACC),2) ) { // v/a = time to accelerate to top speed
 		//max speed won't be reached:
@@ -258,8 +330,8 @@ float NodeClass::rotate(float phi_rad, bool only_get_time){
 	return 0;
 }
 
-float NodeClass::moveRelative(float x_rel, float y_rel, bool only_get_time) {
-	float dist_tot_, time_tot_, time_to_acc_, v_tot_;
+double NodeClass::moveRelative(double x_rel, double y_rel, bool only_get_time) {
+	double dist_tot_, time_tot_, time_to_acc_, v_tot_;
 	bool finished = false;
 	ros::Duration motion_time_;
 	ros::Time motion_begin_ = ros::Time::now();
@@ -302,13 +374,190 @@ float NodeClass::moveRelative(float x_rel, float y_rel, bool only_get_time) {
 	return 0;
 }
 
-int NodeClass::commandPltfSpeed(float vx, float vy, float vw) {
+int NodeClass::driveTrajectory(double vx0, double vy0, double vphi0, double vx1, double vy1, double vphi1, double T) {
+	double vx, vy, vphi;
+	bool finished = false;
+	ros::Duration motion_time_;
+	ros::Time motion_begin_ = ros::Time::now();
+	
+
+	while(finished == false && n.ok()) {
+		motion_time_ = ros::Time::now() - motion_begin_;
+
+		if(motion_time_.toSec() / T >= 1.0f) {
+			finished = true;
+			commandPltfSpeed(vx1, vy1, vphi1);
+			
+		} else {
+
+			vx = vx0 + (vx1 - vx0) * motion_time_.toSec() / T;
+			vy = vy0 + (vy1 - vy0) * motion_time_.toSec() / T;
+			vphi = vphi0 + (vphi1 - vphi0) * motion_time_.toSec() / T;
+		
+			commandPltfSpeed(vx, vy, vphi);
+		}
+		
+		
+	}
+	
+	return 0;
+}
+
+int NodeClass::movePltf(double vx, double vy, double vphi, double T) {
+	bool finished = false;
+	ros::Duration motion_time_;
+	ros::Time motion_begin_ = ros::Time::now();
+	
+
+	while(finished == false && n.ok()) {
+		motion_time_ = ros::Time::now() - motion_begin_;
+
+		if(motion_time_.toSec() / T >= 1.0f) {
+			finished = true;		
+		} else {
+			commandPltfSpeed(vx, vy, vphi);
+		}
+		
+	}
+	
+	return 0;
+}
+
+int NodeClass::getKartesianCoords(double Rho_icm, double Phi_icm, double Theta_icm, double & vx, double & vy, double &vphi) {
+	vx = Rho_icm * cos(Theta_icm) * cos(Phi_icm);
+	vy = Rho_icm * cos(Theta_icm) * sin(Phi_icm);
+	vphi = Rho_icm * sin(Theta_icm);
+
+	return 0;
+}
+
+int NodeClass::ICMTestDriveTraj() {
+	double vx0, vy0, vphi0, vx1, vy1, vphi1;
+	/*
+	T = 0s (Start): Rho = 0mm/s; Phi = 0rad; Theta = 0rad;
+	T = 1s: Rho = 200mm/s; Phi = 0rad; Theta = 0,8rad;
+	T = 2,5s: Rho = 200mm/s; Phi = 3rad; Theta = 1,23rad;
+	T = 5s: Rho = 200mm/s; Phi = 0rad; Theta = -1,4rad;
+	T = 9s: Rho = 0mm/s; Phi = 0rad; Theta = 0,8rad;
+	*/
+	getKartesianCoords(0, 0, 0, vx1, vy1, vphi1);
+	driveTrajectory(0, 0, 0, vx1, vy1, vphi1, 0.0f);
+	vx0 = vx1; vy0 = vy1; vphi0 = vphi1;
+	std::cout << "Going to: vx=" << vx0 << " vy=" << vy0 << " vw=" << vphi0 << std::endl;
+	
+	getKartesianCoords(0.2, 0, 0.8, vx1, vy1, vphi1);
+	driveTrajectory(vx0, vy0, vphi0, vx1, vy1, vphi1, 1.0f);
+	vx0 = vx1; vy0 = vy1; vphi0 = vphi1;
+	std::cout << "Going to: vx=" << vx0 << " vy=" << vy0 << " vw=" << vphi0 << std::endl;
+	
+	getKartesianCoords(0.2, 3, 1.23, vx1, vy1, vphi1);
+	driveTrajectory(vx0, vy0, vphi0, vx1, vy1, vphi1, 1.5f);
+	vx0 = vx1; vy0 = vy1; vphi0 = vphi1;
+	std::cout << "Going to: vx=" << vx0 << " vy=" << vy0 << " vw=" << vphi0 << std::endl;
+	
+	getKartesianCoords(0.2, 0, -1.4, vx1, vy1, vphi1);
+	driveTrajectory(vx0, vy0, vphi0, vx1, vy1, vphi1, 2.5f);
+	vx0 = vx1; vy0 = vy1; vphi0 = vphi1;
+	std::cout << "Going to: vx=" << vx0 << " vy=" << vy0 << " vw=" << vphi0 << std::endl;
+	
+	getKartesianCoords(0, 0, 0, vx1, vy1, vphi1);
+	driveTrajectory(vx0, vy0, vphi0, vx1, vy1, vphi1, 4.0f);
+	vx0 = vx1; vy0 = vy1; vphi0 = vphi1;
+	std::cout << "Going to: vx=" << vx0 << " vy=" << vy0 << " vw=" << vphi0 << std::endl;
+
+	return 0;
+}
+
+int NodeClass::ICMTestDrive() {
+	double vx0, vy0, vphi0, vx1, vy1, vphi1;
+	double factor = 0.13; //0.3f;
+	/*
+	
+	*/
+	vx0 = 0.0f*factor; vy0 = 0.0f*factor; vphi0 = 0.0f*factor;
+
+	// T = 1
+	vx1 = 0.0f*factor; vy1 = 0.0f*factor; vphi1 = 0.0f*factor;
+	driveTrajectory(vx0, vy0, vphi0, vx1, vy1, vphi1, 1.0f);
+	vx0 = vx1; vy0 = vy1; vphi0 = vphi1;
+	std::cout << "Going to: vx=" << vx0 << " vy=" << vy0 << " vw=" << vphi0 << std::endl;
+
+	// T = 1.1
+	vx1 = 0.6967f*factor; vy1 = 0.0f*factor; vphi1 = 2.3984f*factor;
+	driveTrajectory(vx0, vy0, vphi0, vx1, vy1, vphi1, 0.1f);
+	vx0 = vx1; vy0 = vy1; vphi0 = vphi1;
+	std::cout << "Going to: vx=" << vx0 << " vy=" << vy0 << " vw=" << vphi0 << std::endl;
+
+	// T = 2.6
+	vx1 = 0.6967f*factor; vy1 = 0.0f*factor; vphi1 = 2.3984f*factor;
+	driveTrajectory(vx0, vy0, vphi0, vx1, vy1, vphi1, 1.5f);
+	vx0 = vx1; vy0 = vy1; vphi0 = vphi1;
+	std::cout << "Going to: vx=" << vx0 << " vy=" << vy0 << " vw=" << vphi0 << std::endl;
+
+	// T = 2.7
+	vx1 = -0.3309f*factor; vy1 = 0.0472f*factor; vphi1 = 3.1511f*factor;
+	driveTrajectory(vx0, vy0, vphi0, vx1, vy1, vphi1, 0.1f);
+	vx0 = vx1; vy0 = vy1; vphi0 = vphi1;
+	std::cout << "Going to: vx=" << vx0 << " vy=" << vy0 << " vw=" << vphi0 << std::endl;
+
+	// T = 5.3
+	vx1 = -0.3309f*factor; vy1 = 0.0472f*factor; vphi1 = 3.1511f*factor;
+	driveTrajectory(vx0, vy0, vphi0, vx1, vy1, vphi1, 2.6f);
+	vx0 = vx1; vy0 = vy1; vphi0 = vphi1;
+	std::cout << "Going to: vx=" << vx0 << " vy=" << vy0 << " vw=" << vphi0 << std::endl;
+
+	/*
+	// T = 5.4
+	vx1 = 0.17f*factor; vy1 = 0.0f*factor; vphi1 = -3.2947f*factor;
+	driveTrajectory(vx0, vy0, vphi0, vx1, vy1, vphi1, 0.1f);
+	vx0 = vx1; vy0 = vy1; vphi0 = vphi1;
+	std::cout << "Going to: vx=" << vx0 << " vy=" << vy0 << " vw=" << vphi0 << std::endl;
+
+	// T = 9
+	vx1 = 0.17f*factor; vy1 = 0.0f*factor; vphi1 = -3.2947f*factor;
+	driveTrajectory(vx0, vy0, vphi0, vx1, vy1, vphi1, 3.6f);
+	vx0 = vx1; vy0 = vy1; vphi0 = vphi1;
+	std::cout << "Going to: vx=" << vx0 << " vy=" << vy0 << " vw=" << vphi0 << std::endl;
+	*/
+
+	// T = 5.4
+	vx1 = 0.25f*factor; vy1 = 0.0f*factor; vphi1 = -3.2947f*factor;
+	driveTrajectory(vx0, vy0, vphi0, vx1, vy1, vphi1, 0.1f);
+	vx0 = vx1; vy0 = vy1; vphi0 = vphi1;
+	std::cout << "Going to: vx=" << vx0 << " vy=" << vy0 << " vw=" << vphi0 << std::endl;
+
+	// T = 9
+	vx1 = 0.25f*factor; vy1 = 0.0f*factor; vphi1 = -3.2947f*factor;
+	driveTrajectory(vx0, vy0, vphi0, vx1, vy1, vphi1, 3.6f);
+	vx0 = vx1; vy0 = vy1; vphi0 = vphi1;
+	std::cout << "Going to: vx=" << vx0 << " vy=" << vy0 << " vw=" << vphi0 << std::endl;
+
+	// T = 9.1
+	vx1 = 0.0f*factor; vy1 = 0.0f*factor; vphi1 = 0.0f*factor;
+	driveTrajectory(vx0, vy0, vphi0, vx1, vy1, vphi1, 0.1f);
+	vx0 = vx1; vy0 = vy1; vphi0 = vphi1;
+	std::cout << "Going to: vx=" << vx0 << " vy=" << vy0 << " vw=" << vphi0 << std::endl;
+	
+
+	return 0;
+}
+
+int NodeClass::commandPltfSpeed(double vx, double vy, double vw) {
 	geometry_msgs::Twist twist_cmd_;
 	
-	//std::cout << "VX = " << vx << " VY = " << vy << " W = " << vw << std::endl;
-
-	//ros::Duration(0.01).sleep();
+	//Velocity constraints for ICM controller-tests
+	double vmax = 0.9f; //vmax in m/s
+	double dmax = 0.2991f;
 	
+	double vtemp, v_lim_factor;
+
+	vtemp = sqrt(vx*vx + vy*vy) + fabs(vw*dmax);
+	if(vtemp > vmax) {
+		v_lim_factor = vmax / vtemp;
+		vx = vx * v_lim_factor;
+		vy = vy * v_lim_factor;
+		vw = vw * v_lim_factor;
+	}
 
 	twist_cmd_.linear.x = vx;
 	twist_cmd_.linear.y = vy;
