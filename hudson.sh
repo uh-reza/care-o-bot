@@ -22,54 +22,39 @@ else
 	echo "ERROR: no valid ROS release specified"
 	exit 1
 fi
-echo $RELEASE
+
+echo "==> RELEASE =" $RELEASE
+
+# checking for workspace
+#if [ -n "${WORKSPACE:-x}" ]; then
+#	WORKSPACE=$PWD
+#fi
+echo "==> WORKSPACE =" $WORKSPACE
 
 # installing ROS release
 sudo apt-get install ros-$RELEASE-pr2all -y
 
-# checkout ros_experimental manually
+# perform rosinstall
 mkdir -p ~/ros
-mkdir -p ~/ros/boxturtle
-svn co https://code.ros.org/svn/ros/stacks/ros_experimental/tags/boxturtle ~/ros/boxturtle/ros_experimental
-mkdir -p ~/ros/latest
-svn co https://code.ros.org/svn/ros/stacks/ros_experimental/trunk ~/ros/latest/ros_experimental
-mkdir -p ~/ros/cturtle
-svn co https://code.ros.org/svn/ros/stacks/ros_experimental/trunk ~/ros/cturtle/ros_experimental
+mkdir -p ~/ros/$RELEASE
+rm ~/ros-$RELEASE/.rosinstall
+rosinstall ~/ros-$RELEASE /opt/ros/$RELEASE $WORKSPACE/cob.rosinstall $WORKSPACE../care-o-bot $WORKSPACE
+. ~/ros-$RELEASE/setup.sh
 
-# checking for workspace
-if [ -n "${WORKSPACE:-x}" ]; then
-	WORKSPACE=$PWD
-	echo $WORKSPACE
-else
-	echo $WORKSPACE
-fi
-
-# setting up envrionment
-export ROS_ROOT=/opt/ros/$RELEASE/ros
-export PATH=${ROS_ROOT}/bin:${PATH}
-export PYTHONPATH=${ROS_ROOT}/core/roslib/src
-export ROS_PACKAGE_PATH=/opt/ros/$RELEASE/stacks
-#export ROS_PACKAGE_PATH=/home/${USER}/ros/$RELEASE/ros_experimental:$ROS_PACKAGE_PATH
-export ROS_PACKAGE_PATH=$WORKSPACE:$ROS_PACKAGE_PATH
+# define amount of ros prozesses during build for multi-prozessor machines
+COUNT=$(cat /proc/cpuinfo | grep 'processor' | wc -l)
+COUNT=$(echo "$COUNT*2" | bc)
+export ROS_PARALLEL_JOBS=-j$COUNT
 
 #build farm stuff
-export PATH=/usr/lib/ccache/:$PATH
-export DISTCC_HOSTS='localhost distcc@hektor.ipa.fhg.de/8 distcc@chaos.ipa.fhg.de/4'
-export CCACHE_PREFIX=distcc
-export ROS_PARALLEL_JOBS=-j28
+#export PATH=/usr/lib/ccache/:$PATH
+#export DISTCC_HOSTS='localhost distcc@hektor.ipa.fhg.de/8 distcc@chaos.ipa.fhg.de/4'
+#export CCACHE_PREFIX=distcc
+#export ROS_PARALLEL_JOBS=-j28
 
-echo $ROS_ROOT
-echo $ROS_PACKAGE_PATH
+echo "==> ROS_ROOT =" $ROS_ROOT
+echo "==> ROS_PACKAGE_PATH =" $ROS_PACKAGE_PATH
 
 # installing dependencies and building
 rosdep install $STACKS
-if [ $RELEASE = "boxturtle" ]; then
-	rosmake $STACKS --skip-blacklist
-elif [ $RELEASE = "latest" ]; then
-	rosmake $STACKS --skip-blacklist
-elif [ $RELEASE = "cturtle" ]; then
-	rosmake $STACKS --skip-blacklist
-else
-	echo "ERROR: no valid ROS release specified"
-	exit 1
-fi
+rosmake $STACKS --skip-blacklist
