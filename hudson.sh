@@ -35,11 +35,12 @@ echo "==> WORKSPACE =" $WORKSPACE
 sudo apt-get install ros-$RELEASE-pr2all -y
 
 # perform rosinstall
-mkdir -p ~/ros
-mkdir -p ~/ros/$RELEASE
-rm ~/ros-$RELEASE/.rosinstall
-rosinstall ~/ros-$RELEASE /opt/ros/$RELEASE $WORKSPACE/cob.rosinstall $WORKSPACE
-. ~/ros-$RELEASE/setup.sh
+#mkdir -p ~/ros
+#mkdir -p ~/ros/$RELEASE
+#mkdir -p $WORKSPACE../ros
+rm $WORKSPACE../.rosinstall
+rosinstall $WORKSPACE/.. /opt/ros/$RELEASE $WORKSPACE./cob.rosinstall $WORKSPACE
+. $WORKSPACE/../setup.sh
 
 # define amount of ros prozesses during build for multi-prozessor machines
 COUNT=$(cat /proc/cpuinfo | grep 'processor' | wc -l)
