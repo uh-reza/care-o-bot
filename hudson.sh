@@ -24,22 +24,14 @@ else
 fi
 
 echo "==> RELEASE =" $RELEASE
-
-# checking for workspace
-#if [ -n "${WORKSPACE:-x}" ]; then
-#	WORKSPACE=$PWD
-#fi
 echo "==> WORKSPACE =" $WORKSPACE
 
 # installing ROS release
 sudo apt-get install ros-$RELEASE-pr2all -y
 
 # perform rosinstall
-#mkdir -p ~/ros
-#mkdir -p ~/ros/$RELEASE
-#mkdir -p $WORKSPACE../ros
 rm $WORKSPACE/../.rosinstall
-rosinstall $WORKSPACE/.. /opt/ros/$RELEASE $WORKSPACE/./cob.rosinstall $WORKSPACE
+rosinstall $WORKSPACE/.. $WORKSPACE/./$RELEASE.rosinstall $WORKSPACE
 . $WORKSPACE/../setup.sh
 
 # define amount of ros prozesses during build for multi-prozessor machines
