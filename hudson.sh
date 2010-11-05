@@ -38,7 +38,7 @@ sudo apt-get install ros-$RELEASE-pr2all -y
 mkdir -p ~/ros
 mkdir -p ~/ros/$RELEASE
 rm ~/ros-$RELEASE/.rosinstall
-rosinstall ~/ros-$RELEASE /opt/ros/$RELEASE $WORKSPACE/cob.rosinstall $WORKSPACE../care-o-bot $WORKSPACE
+rosinstall ~/ros-$RELEASE /opt/ros/$RELEASE $WORKSPACE/cob.rosinstall $WORKSPACE/../care-o-bot $WORKSPACE
 . ~/ros-$RELEASE/setup.sh
 
 # define amount of ros prozesses during build for multi-prozessor machines
