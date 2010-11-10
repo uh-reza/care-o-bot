@@ -170,6 +170,7 @@ class NodeClass
 		
 		std::string sIniDirectory;
 		bool m_bPubEffort;
+		bool m_bReadoutElmo;
 
 		// Constructor
 		NodeClass()
@@ -179,10 +180,18 @@ class NodeClass
 
 			/// Parameters are set within the launch file
 			// Read number of drives from iniFile and pass IniDirectory to CobPlatfCtrl.
-			n.param<std::string>("base_drive_chain/IniDirectory", sIniDirectory, "Platform/IniFiles/");
-			ROS_INFO("IniDirectory loaded from Parameter-Server is: %s", sIniDirectory.c_str());
+			if (n.hasParam("IniDirectory"))
+			{
+				n.getParam("IniDirectory", sIniDirectory);
+				ROS_INFO("IniDirectory loaded from Parameter-Server is: %s", sIniDirectory.c_str());
+			}
+			else
+			{
+				sIniDirectory = "Platform/IniFiles/";
+				ROS_WARN("IniDirectory not found on Parameter-Server, using default value: %s", sIniDirectory.c_str());
+			}
 
-			n.param<bool>("base_drive_chain/PublishEffort", m_bPubEffort, false);
+			n.param<bool>("PublishEffort", m_bPubEffort, false);
 			if(m_bPubEffort) ROS_INFO("You have choosen to publish effort of motors, that charges capacity of CAN");
 			
 			
@@ -202,18 +211,19 @@ class NodeClass
 
 			// implementation of topics
 			// published topics
-			topicPub_JointState = n.advertise<sensor_msgs::JointState>("JointState", 1);
-			topicPub_Diagnostic = n.advertise<diagnostic_msgs::DiagnosticStatus>("Diagnostic", 1);
+			topicPub_JointState = n.advertise<sensor_msgs::JointState>("/joint_states", 1);
+			topicPub_Diagnostic = n.advertise<diagnostic_msgs::DiagnosticStatus>("diagnostic", 1);
 			// subscribed topics
-			topicSub_JointStateCmd = n.subscribe("JointStateCmd", 1, &NodeClass::topicCallback_JointStateCmd, this);
+			topicSub_JointStateCmd = n.subscribe("joint_command", 1, &NodeClass::topicCallback_JointStateCmd, this);
 
 			// implementation of service servers
-			srvServer_Init = n.advertiseService("Init", &NodeClass::srvCallback_Init, this);
+			srvServer_Init = n.advertiseService("init", &NodeClass::srvCallback_Init, this);
 			srvServer_ElmoRecorderConfig = n.advertiseService("ElmoRecorderConfig", &NodeClass::srvCallback_ElmoRecorderConfig, this);
 			srvServer_ElmoRecorderReadout = n.advertiseService("ElmoRecorderReadout", &NodeClass::srvCallback_ElmoRecorderReadout, this);
+			m_bReadoutElmo = false;
 
-			srvServer_Reset = n.advertiseService("Reset", &NodeClass::srvCallback_Reset, this);
-			srvServer_Shutdown = n.advertiseService("Shutdown", &NodeClass::srvCallback_Shutdown, this);
+			srvServer_Reset = n.advertiseService("recover", &NodeClass::srvCallback_Reset, this);
+			srvServer_Shutdown = n.advertiseService("shutdown", &NodeClass::srvCallback_Shutdown, this);
 			//srvServer_isPltfError = n.advertiseService("isPltfError", &NodeClass::srvCallback_isPltfError, this); --> Publish this along with JointStates
 			srvServer_GetJointState = n.advertiseService("GetJointState", &NodeClass::srvCallback_GetJointState, this);
 		}
@@ -221,17 +231,18 @@ class NodeClass
 		// Destructor
 		~NodeClass() 
 		{
+			m_CanCtrlPltf->shutdownPltf();
 		}
 
 		// topic callback functions 
 		// function will be called when a new message arrives on a topic
 		void topicCallback_JointStateCmd(const sensor_msgs::JointState::ConstPtr& msg)
 		{
-			ROS_DEBUG("Topic Callback JointStateCmd");
+			ROS_DEBUG("Topic Callback joint_command");
 			// only process cmds when system is initialized
 			if(m_bisInitialized == true)
 			{
-				ROS_DEBUG("Topic Callback JointStateCmd - Sending Commands to drives (initialized)");
+				ROS_DEBUG("Topic Callback joint_command - Sending Commands to drives (initialized)");
 		   		int iRet;
 				sensor_msgs::JointState JointStateCmd = *msg;
             	// check if velocities lie inside allowed boundaries
@@ -279,7 +290,7 @@ class NodeClass
 		bool srvCallback_Init(cob_srvs::Trigger::Request &req,
 							  cob_srvs::Trigger::Response &res )
 		{
-			ROS_DEBUG("Service Callback Init");
+			ROS_DEBUG("Service Callback init");
 			if(m_bisInitialized == false)
 			{
 				m_bisInitialized = initDrives();
@@ -321,8 +332,11 @@ class NodeClass
 			if(m_bisInitialized) {
 				m_CanCtrlPltf->evalCanBuffer();
 				res.success = m_CanCtrlPltf->ElmoRecordings(1, req.subindex, req.fileprefix);
-				if(res.success == 0) res.message = "Successfully requested reading out of Recorded data";
-				else if(res.success == 1) res.message = "Recorder hasn't been configured well yet";
+				if(res.success == 0) {
+					res.message = "Successfully requested reading out of Recorded data";
+					m_bReadoutElmo = true;
+					ROS_WARN("CPU consuming evalCanBuffer used for ElmoReadout activated");
+				} else if(res.success == 1) res.message = "Recorder hasn't been configured well yet";
 				else if(res.success == 2) res.message = "A previous transmission is still in progress";
 			}
 
@@ -335,13 +349,14 @@ class NodeClass
         bool srvCallback_Reset(cob_srvs::Trigger::Request &req,
                                      cob_srvs::Trigger::Response &res )
         {
-			ROS_DEBUG("Service Callback Reset");
+			ROS_DEBUG("Service callback reset");
 			res.success = m_CanCtrlPltf->resetPltf();
-			if (res.success)
+			if (res.success) {
 	   			ROS_INFO("Can-Node resetted");
-			else
+			} else {
 				res.errorMessage.data = "reset of can-nodes failed";
-				ROS_INFO("Reset of Can-Node FAILED");
+				ROS_WARN("Reset of Can-Node FAILED");
+			}
 
 			return true;
 		}
@@ -350,7 +365,7 @@ class NodeClass
         bool srvCallback_Shutdown(cob_srvs::Trigger::Request &req,
                                      cob_srvs::Trigger::Response &res )
         {
-			ROS_DEBUG("Service Callback Shutdown");
+			ROS_DEBUG("Service callback shutdown");
 			res.success = m_CanCtrlPltf->shutdownPltf();
 			if (res.success)
 	   			ROS_INFO("Drives shut down");
@@ -544,7 +559,24 @@ int main(int argc, char** argv)
 
 	NodeClass nodeClass;
 	
-	ros::spin();
+	// specify looprate of control-cycle
+ 	ros::Rate loop_rate(200); // Hz 
+
+	while(nodeClass.n.ok())
+	{
+		//Read-out of CAN buffer is only necessary during read-out of Elmo Recorder		
+		if( nodeClass.m_bReadoutElmo ) {
+			if(nodeClass.m_bisInitialized) nodeClass.m_CanCtrlPltf->evalCanBuffer();
+			
+			if(nodeClass.m_CanCtrlPltf->ElmoRecordings(100, 0, "") == 0) {
+				nodeClass.m_bReadoutElmo = false;
+				ROS_INFO("CPU consuming evalCanBuffer used for ElmoReadout deactivated");
+			}
+		}
+		
+		loop_rate.sleep();
+		ros::spinOnce();
+	}
 
 	return 0;
 }
