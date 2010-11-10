@@ -1,16 +1,17 @@
 #!/bin/bash
 export ROBOT=cob3-1
+export ROBOT_ENV=brics_rc
 source /opt/ros/cturtle/setup.sh
-source /home/brics/git/care-o-bot/setup.sh /home/uhr/git/care-o-bot
-#source /home/brics/git/cob3_intern/setup.sh /home/uhr/git/cob3_intern
+source /home/brics/git/care-o-bot/setup.sh /home/brics/git/care-o-bot
+source /home/brics/git/cob3_intern/setup.sh /home/brics/git/cob3_intern
 #source /home/uhr/git/robocup/setup.sh /home/uhr/git/robocup
 
 VIRTUALGL_PATH=/opt/VirtualGL/bin/vglrun
 
 
 status() {
-  local package=$cmd
-  local launchfile=$name
+  local package=$name
+  local launchfile=$launchfile
 
   status=1
   nodeRunning=0
@@ -36,7 +37,7 @@ status() {
 
 
 if [ -e $1 ] || [ -e $2 ] || [ -e $3 ] || [ -e $4 ] || [ -e $5 ] || [[ $1 != "start" && $1 != "stop" && $1 != "restart" && $1 != "status" ]] || [[ $4 != "rosstart" && $4 != "roslaunch" && $4 != "rosrun" ]]; then
-  echo "Usage: (start|stop|restart|status) name searchname (rosstart|roslaunch) launchfile args [DISPLAY] [vgl]"
+  echo "Usage: (start|stop|restart|status) name searchname (rosstart|roslaunch) launchfile args [vgl]"
   exit -1
 fi
 
@@ -46,11 +47,10 @@ name=$2
 searchname=$3
 rostype=$4
 launchfile=$5
-disp=$6
-vgl=$7
 
-if [ -z $disp ]; then
-	export DISPLAY=:$disp
+if [[ $6 == "vgl" ]]; then
+  vgl=$6
+  unset args[6]
 fi
 
 unset args[0]
@@ -89,16 +89,17 @@ if [ $cmd = "start" -o $cmd = "restart" ]; then
   echo " * $rostype $name $launchfile $argStr"
   #$rostype $name $argStr &
    if [ -e $vgl ]; then 
-   	python -u /opt/ros/cturtle/ros/bin/$rostype $name $launchfile $argStr &
+   	/opt/ros/cturtle/ros/bin/$rostype $name $launchfile $argStr &
+	echo "/opt/ros/cturtle/ros/bin/$rostype $name $launchfile $argStr "
    else
-	
-   	$VIRTUALGL_PATH python -u /opt/ros/cturtle/ros/bin/$rostype $name $launchfile $argStr &
+	echo "$VIRTUALGL_PATH /opt/ros/cturtle/ros/bin/$rostype $name $launchfile $argStr &"
+   	$VIRTUALGL_PATH  /opt/ros/cturtle/ros/bin/$rostype $name $launchfile $argStr &
    fi
 
   echo "Waiting for \"$name\" to be initialized"
 
-  timeout=10
-  sleepPerPeriod=0.2
+  timeout=6
+  sleepPerPeriod=1
   time=0
   running=0
   while [ $time -lt $timeout ]; do
