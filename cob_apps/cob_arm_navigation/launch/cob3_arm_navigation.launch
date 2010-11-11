@@ -21,7 +21,7 @@
 	<!-- <include file="$(find trajectory_filter_server)/launch/trajectory_unnormalize.launch"/> -->
 	
 	<!-- load move_arm -->
-	<include file="$(find cob_arm_navigation)/launch/cob3_move_arm.launch"/>
+  <include file="$(find cob_arm_navigation)/launch/cob3_move_arm.launch"/>
 	<!-- needs environment-server -->
 
 
