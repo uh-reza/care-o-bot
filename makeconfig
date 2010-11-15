@@ -70,8 +70,11 @@ elif [ "$1" = "-g" ]; then	# setup global git configuration for correct identifi
 	while read CORRECT ; do
 		if [ $CORRECT = "Y" ]; then
 			echo git config --global user.name ipa-$USER
+			git config --global user.name ipa-$USER
 			echo git config --global user.email $USER@ipa.fhg.de
+			git config --global user.email $USER@ipa.fhg.de
 			echo git config --global github.user ipa-$USER
+			git config --global github.user ipa-$USER
 			return
 		elif  [ $CORRECT = "N" ]; then
 			echo "please change the following lines and paste them into the console:"
