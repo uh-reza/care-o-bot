@@ -8,7 +8,7 @@
 * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 *
 * Project name: care-o-bot
-* ROS stack name: cob3_driver
+* ROS stack name: cob_driver
 * ROS package name: cob_camera_sensors
 * Description:
 *
@@ -58,17 +58,6 @@
 #endif
 
 using namespace ipa_CameraSensors;
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-__DLL_ABSTRACTCOLORCAMERA_H__ void APIENTRY ReleaseColorCamera(AbstractColorCamera* colorCamera)
-{
-	delete colorCamera;
-}
-#ifdef __cplusplus
-}
-#endif
 
 AbstractColorCamera::~AbstractColorCamera()
 {

@@ -8,8 +8,8 @@
  * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  *
  * Project name: care-o-bot
- * ROS stack name: cob3_common
- * ROS package name: generic_can
+ * ROS stack name: cob_drivers
+ * ROS package name: cob_generic_can
  * Description:
  *								
  * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -55,7 +55,6 @@
 #include <stdlib.h>
 #include <cerrno>
 #include <cstring>
-#include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -71,7 +70,6 @@ CanPeakSys::CanPeakSys(const char* cIniFile)
 
 	// read IniFile
 	m_IniFile.SetFileName(cIniFile, "CanPeakSys.cpp");
-
 	init();
 }
 
@@ -87,7 +85,11 @@ CanPeakSys::~CanPeakSys()
 //-----------------------------------------------
 void CanPeakSys::init()
 {
-	m_handle = LINUX_CAN_Open("/dev/pcan24", O_RDWR);
+ std::string sCanDevice; 
+ if( m_IniFile.GetKeyString( "TypeCan", "DevicePath", &sCanDevice, false) != 0) {
+		sCanDevice = "/dev/pcan32";
+	} else std::cout << "CAN-device path read from ini-File: " << sCanDevice << std::endl;
+	m_handle = LINUX_CAN_Open(sCanDevice.c_str(), O_RDWR);
 	
 
 	if (! m_handle)

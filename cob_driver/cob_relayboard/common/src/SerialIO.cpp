@@ -15,7 +15,7 @@
  * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  *			
  * Author: Philipp Koehler
- * Supervised by: Christian Connette
+ * Supervised by: Christian Connette, email:christian.connette@ipa.fhg.de
  *
  * Date of creation: March 2010
  * ToDo:
@@ -165,7 +165,7 @@ int SerialIO::open()
 	int Res;
 
 	// open device
-	m_Device = ::open(m_DeviceName.c_str(), O_RDWR | O_NOCTTY);
+	m_Device = ::open(m_DeviceName.c_str(), O_RDWR | O_NOCTTY | O_NONBLOCK);
 
 	if(m_Device < 0)
 	{	

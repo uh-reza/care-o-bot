@@ -15,7 +15,7 @@
  * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  *			
  * Author: Philipp Koehler
- * Supervised by: Christian Connette
+ * Supervised by: Christian Connette, email:christian.connette@ipa.fhg.de
  *
  * Date of creation: March 2010
  * ToDo:
@@ -56,7 +56,6 @@
 
 //-----------------------------------------------
 #include <cob_relayboard/SerialIO.h>
-#include <cob_canopen_motor/DriveParam.h>
 #include <cob_relayboard/Mutex.h>
 
 //-----------------------------------------------
@@ -147,7 +146,9 @@ protected:
 	int m_iRelBoardKeyPad;
 	int m_iRelBoardAnalogIn[4];
 	int m_iRelBoardTempSensor;
-		int m_iDigIn;
+	
+	int m_iDigIn;
+
 	SerialIO m_SerIO;
 
 	bool m_bComInit;

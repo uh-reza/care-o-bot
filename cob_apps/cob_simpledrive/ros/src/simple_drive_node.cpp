@@ -8,14 +8,14 @@
  * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  *
  * Project name: care-o-bot
- * ROS stack name: cob_apps
- * ROS package name: cob3_simpleDrive
+ * ROS stack name: cob_driver
+ * ROS package name: cob_simpledrive
  * Description:
  *								
  * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  *			
- * Author: cpc-pk
- * Supervised by: cpc
+ * Author: Philipp Koehler
+ * Supervised by: Christian Connette, email:christian.connette@ipa.fhg.de
  *
  * Date of creation: Mar 2010
  * ToDo:
@@ -65,7 +65,7 @@
 #include <sensor_msgs/JointState.h>
 
 // ROS service includes
-#include <cob_srvs/Switch.h>
+#include <cob_srvs/Trigger.h>
 #include <cob_srvs/GetJointState.h>
 
 // external includes
@@ -100,11 +100,11 @@ class NodeClass
         // Constructor
         NodeClass()
         {
-            topicPub_JointStateCmd = n.advertise<sensor_msgs::JointState>("JointStateCmd", 1);
+            topicPub_JointStateCmd = n.advertise<sensor_msgs::JointState>("base_driver/JointStateCmd", 1);
 			
-			srvClient_GetJointState = n.serviceClient<cob_srvs::GetJointState>("GetJointState");
-			srvClient_InitPltf = n.serviceClient<cob_srvs::Switch>("Init");
-			srcClient_ShutdownPltf = n.serviceClient<cob_srvs::Switch>("Shutdown");
+			srvClient_GetJointState = n.serviceClient<cob_srvs::GetJointState>("base_driver/GetJointState");
+			srvClient_InitPltf = n.serviceClient<cob_srvs::Trigger>("base_driver/Init");
+			srcClient_ShutdownPltf = n.serviceClient<cob_srvs::Trigger>("base_driver/Shutdown");
 
             //topicSub_demoSubscribe = n.subscribe("demoSubscribe", 1, &NodeClass::topicCallback_demoSubscribe, this);
 
@@ -157,17 +157,17 @@ int main(int argc, char** argv)
 //#### function implementations ####
 int NodeClass::init(){
 
-	cob_srvs::Switch data;
+	cob_srvs::Trigger data;
     srvClient_InitPltf.call(data);
 
     if(data.response.success != true) {
         ROS_ERROR("Failed to initialize Platform using base_drive_chain_node");
         return 1;
     } else ROS_INFO("Successfully initialized base_drive_chain_node");
-
+	
 
 	ROS_INFO("Simple_Drive_node init successful");
-	
+
     return 0;
 }
 
@@ -175,7 +175,7 @@ int NodeClass::simpleDriveTest(int argc, char** argv) {
 	double startTime;
 	sensor_msgs::JointState msgDriveCmd;
 	cob_srvs::GetJointState srvGetJointState;
-	msgDriveCmd.set_velocity_size(iNumMotors);
+	msgDriveCmd.velocity.resize(iNumMotors);
 
 	switch (argc){
 		

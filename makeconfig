@@ -15,6 +15,7 @@
 # * Usage:
 # *     run ". makeconfig" to set environment variables for current terminal
 # *     run ". makeconfig -a" to load environment variables via bashrc automatically
+# *     run ". makeconfig -g" to set the global git configuration
 # *
 # * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # *			
@@ -59,6 +60,32 @@ ROOT=$PWD
 if [ "$1" = "-a" ]; then
 	echo "source $ROOT/setup.sh $ROOT" >> ~/.bashrc
 	. setup.sh $ROOT
+elif [ "$1" = "-g" ]; then	# setup global git configuration for correct identification in commit messages
+	echo "configuring global git configuration"
+	
+	echo "name=" ipa-$USER
+	echo "email=" $USER@ipa.fhg.de
+	
+	echo "Is this correct? (Y/N)"
+	while read CORRECT ; do
+		if [ $CORRECT = "Y" ]; then
+			echo git config --global user.name ipa-$USER
+			git config --global user.name ipa-$USER
+			echo git config --global user.email $USER@ipa.fhg.de
+			git config --global user.email $USER@ipa.fhg.de
+			echo git config --global github.user ipa-$USER
+			git config --global github.user ipa-$USER
+			return
+		elif  [ $CORRECT = "N" ]; then
+			echo "please change the following lines and paste them into the console:"
+			echo "git config --global user.name <your username>"
+			echo "git config --global user.email <your email address>"
+			echo "git config --global github.user <your username>"
+			return
+		else
+			echo "Error: Please enter Y or N"
+		fi
+	done
 else
 	. setup.sh $ROOT
 fi

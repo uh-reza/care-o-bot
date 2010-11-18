@@ -8,8 +8,8 @@
  * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  *
  * Project name: care-o-bot
- * ROS stack name: cob3_common
- * ROS package name: base_drive_chain
+ * ROS stack name: cob_drivers
+ * ROS package name: cob_base_drive_chain
  * Description: This is a sample implementation of a can-bus with several nodes. In this case it implements the drive-chain of the Care-O-bot3 mobile base. yet, this can be used as template for using the generic_can and canopen_motor packages to implement arbitrary can-setups.
  *								
  * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -68,18 +68,11 @@
 
 // Headers provided by cob-packages which should be avoided/removed
 #include <cob_utilities/IniFile.h>
+#include <cob_utilities/Mutex.h>
 
 // remove (not supported)
 //#include "stdafx.h"
-#include <cob_base_drive_chain/Mutex.h>
-//#include <Neobotix/Drivers/Can/CanCtrlPltfItf.h>
-//#include <Neobotix/Drivers/RelayBoard/SerRelayBoard.h>
-//#include <Neobotix/Drivers/Can/CanIOBoardNeo.h>
-//#include <Neobotix/Drivers/Can/CanDriveNeo.h>
-//#include <Neobotix/Drivers/Can/CanUSBoardNeo.h>
-//#include <Neobotix/Drivers/Can/CanGyroBoardNeo.h>
-//#include <Neobotix/Drivers/Can/CanRadarBoardNeo.h>
-//#include <Neobotix/Drivers/Can/CanClientGeneric.h>
+
 
 //-----------------------------------------------
 
@@ -95,7 +88,7 @@ public:
 	/** 
 	 * Default constructor.
 	 */
-	CanCtrlPltfCOb3();
+	CanCtrlPltfCOb3(std::string iniDirectory);
 
 	/**
 	 * Default destructor.
@@ -129,7 +122,7 @@ public:
 	 * !! The homing routine is hardware-dependent (steering and driving is coupled) !!
 	 * !! If you use this code on other hardware -> make sure te remove or adapt homing sequence !! 
 	 */
-	bool initPltf(std::string iniDirectory);
+	bool initPltf();
 
 	/**
 	 * Reinitializes the nodes on the bus.
@@ -235,19 +228,18 @@ public:
 
 	//--------------------------------- Commands specific for a certain motor controller
 	// have to be implemented here, to keep the CanDriveItf generic
-    /** 
-	 * Configures the Elmo Recorder (internal) to log internal data with high frequency
-	 * (This can be used for identification of the drive chain
-	 * data is downloaded via the Elmo's serial interface
-	 * @param iRecordingGap Sleep Time before Recording starts (check whether this is correct)
-	 */
-	void configureElmoRecorder(int iRecordingGap);
 
-    /**
-     *Receives recorded data from Elmos via CAN and saves them into LOG-files
-     */
-    bool printElmoRecordings(std::string LogDirectory);
-
+	/**
+	 * Provides several functions for drive information recording purposes using the built in ElmoRecorder, which allows to record drive information at a high frequency. 
+	 * @param iFlag To keep the interface slight, use iParam to command the recorder:
+	 * 0: Configure the Recorder to record the sources Main Speed(1), Main position(2), Active current(10), Speed command(16). With iParam = iRecordingGap you specify every which time quantum (4*90usec) a new data point (of 1024 points in total) is recorded; 
+	 * 1: Query Upload of recorded source (1=Main Speed, 2=Main position, 10=Active Current, 16=Speed command) with iParam and log data to file sParam = file prefix. Filename is extended with _MotorNumber_RecordedSource.log
+	 * 99: Abort and clear current SDO readout process
+	 * 100: Request status of readout. Gives back 0 if all transmissions have finished and no CAN polling is needed anymore.
+	 * @return -1: Unknown flag set; 0: Success; 1: Recorder hasn't been configured yet; 2: data collection still in progress
+	 *
+	*/
+	int ElmoRecordings(int iFlag, int iParam, std::string sString);
 
 	//--------------------------------- Commands for other nodes
 
@@ -325,6 +317,7 @@ protected:
 		bool	bIsSteer;
 		double  dCurrentToTorque;
 		double  dCurrMax;
+		int 	iHomingDigIn;
 	};
 
 	/**
@@ -450,6 +443,9 @@ protected:
 	// Can-Interface
 	CanItf* m_pCanCtrl;
 	IniFile m_IniFile;
+
+	int m_iNumMotors;
+	int m_iNumDrives;
 
 	// Motor-Controllers
 /*	CanDriveItf* m_pW1DriveMotor;

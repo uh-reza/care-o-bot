@@ -8,7 +8,7 @@
 * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 *
 * Project name: care-o-bot
-* ROS stack name: cob3_driver
+* ROS stack name: cob_driver
 * ROS package name: cob_camera_sensors
 * Description: Virtual color camera representation.
 *
@@ -57,23 +57,17 @@
 /// @author Jan Fischer
 /// @date 2009.
 
-#ifndef __VIRTUALCOLORCAM_H__
-#define __VIRTUALCOLORCAM_H__
+#ifndef __IPA_VIRTUALCOLORCAM_H__
+#define __IPA_VIRTUALCOLORCAM_H__
 
 #ifdef __COB_ROS__
-#include "cob_camera_sensors/AbstractColorCamera.h"
+	#include "cob_camera_sensors/AbstractColorCamera.h"
 #else
-#include "cob_driver/cob_camera_sensors/common/include/cob_camera_sensors/AbstractColorCamera.h"
+	#include "cob_driver/cob_camera_sensors/common/include/cob_camera_sensors/AbstractColorCamera.h"
 #endif
 
-#include <vector>
-#include <iostream>
 #include <cstdlib>
-
-#include "boost/filesystem/operations.hpp"
-#include "boost/filesystem/convenience.hpp"
-#include "boost/filesystem/path.hpp"
-
+#include <boost/filesystem.hpp>
 namespace fs = boost::filesystem;
 using namespace std;
 
@@ -91,7 +85,7 @@ namespace ipa_CameraSensors {
 /// The class offers an interface to a virtual color camera, that is equivalent
 /// to the interface of a real color camera.
 /// However, pictures are read from a directory instead of the camera.
-class VirtualColorCam : public AbstractColorCamera
+class __DLL_LIBCAMERASENSORS__ VirtualColorCam : public AbstractColorCamera
 {
 	private:
 		int m_ImageWidth;
@@ -128,8 +122,8 @@ class VirtualColorCam : public AbstractColorCamera
 		unsigned long Close();
 
 		unsigned long GetColorImage(char* colorImageData, bool getLatestFrame);
-		unsigned long GetColorImage(IplImage * Img, bool getLatestFrame);
-		unsigned long GetColorImage2(IplImage ** Img, bool getLatestFrame);
+		unsigned long GetColorImage(cv::Mat* image, bool getLatestFrame);
+
 		unsigned long SaveParameters(const char* filename);		//speichert die Parameter in das File
 		unsigned long SetProperty(t_cameraProperty* cameraProperty);
 		unsigned long SetPropertyDefaults();
@@ -141,10 +135,24 @@ class VirtualColorCam : public AbstractColorCamera
 		// Camera specific functions
 		//*******************************************************************************
 		
+		/// Returns the number of images in the directory
+		/// @return The number of images in the directory
+		int GetNumberOfImages();
+
+		/// Function specific to virtual camera.
+		/// Resets the image directory read from the configuration file.
+		/// @param path The camera path
+		/// @return Return code
+		unsigned long SetPathToImages(std::string path);
+
 };
+
+/// Creates, intializes and returns a smart pointer object for the camera.
+/// @return Smart pointer, refering to the generated object
+__DLL_LIBCAMERASENSORS__ AbstractColorCameraPtr CreateColorCamera_VirtualCam();
 
 } // end namespace ipa_CameraSensors
 
-#endif //__VIRTUALCOLORCAM_H__
+#endif //__IPA_VIRTUALCOLORCAM_H__
 
 

@@ -1,6 +1,8 @@
-CanDevice: 0
+CanModule: PCAN
+CanDevice: 15
 CanBaudrate: 500
 ModIds: [10]
-JointNames: [joint_platform_tray]
+JointNames: [torso_tray_joint]
 MaxAcc: [0.8]
 OperationMode: position
+frequency: 1

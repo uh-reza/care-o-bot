@@ -8,13 +8,13 @@
  * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  *
  * Project name: care-o-bot
- * ROS stack name: cob3_driver
- * ROS package name: powercube_chain
+ * ROS stack name: cob_driver
+ * ROS package name: cob_powercube_chain
  *								
  * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  *			
  * Author: Florian Weisshardt, email:florian.weisshardt@ipa.fhg.de
- * Supervised by: Alexander Bubeck, email:alexander.bubeck@ipa.fhg.de
+ * Supervised by: Florian Weisshardt, email:florian.weisshardt@ipa.fhg.de
  *
  * Date of creation: Jan 2010
  * ToDo:
@@ -65,7 +65,7 @@
 // ROS message includes
 //#include <cob_msgs/JointCommand.h>
 #include <trajectory_msgs/JointTrajectory.h>
-#include <cob_actions/JointTrajectoryAction.h>
+#include <pr2_controllers_msgs/JointTrajectoryAction.h>
 
 // ROS service includes
 #include <cob_srvs/Trigger.h>
@@ -100,7 +100,7 @@ int main(int argc, char** argv)
 
     // topics to publish
     //ros::Publisher topicPub_JointCommand = n.advertise<trajectory_msgs::JointTrajectory>("command", 1);
-	actionlib::SimpleActionClient<cob_actions::JointTrajectoryAction> ac("JointTrajectory", true); 
+	actionlib::SimpleActionClient<pr2_controllers_msgs::JointTrajectoryAction> ac("joint_trajectory_action", true); 
         
         
 	// topics to subscribe, callback is called for new messages arriving
@@ -225,7 +225,26 @@ int main(int argc, char** argv)
 				//ROS_INFO("Waiting for action server to start.");
 				//ac.waitForServer(); //will wait for infinite time
 				
-				cob_actions::JointTrajectoryGoal goal;
+				pr2_controllers_msgs::JointTrajectoryGoal goal;
+				
+				// get JointNames from parameter server
+				XmlRpc::XmlRpcValue JointNames_param;
+				std::vector<std::string> JointNames;
+				ROS_INFO("getting JointNames from parameter server");
+				if (n.hasParam("JointNames"))
+				{
+					n.getParam("JointNames", JointNames_param);
+				}
+				else
+				{
+					ROS_ERROR("Parameter JointNames not set");
+				}
+				JointNames.resize(JointNames_param.size());
+				for (int i = 0; i<JointNames_param.size(); i++ )
+				{
+					JointNames[i] = (std::string)JointNames_param[i];
+				}
+				std::cout << "JointNames = " << JointNames_param << std::endl;
 				
 				XmlRpc::XmlRpcValue traj_param;
 				trajectory_msgs::JointTrajectory traj;
@@ -256,6 +275,8 @@ int main(int argc, char** argv)
                 }
 				
 				ROS_DEBUG("trajectory %d of %d",traj_nr,traj_param.size());
+				traj.header.stamp = ros::Time::now();
+				traj.joint_names = JointNames;
 				traj.points.resize(traj_param[traj_nr].size());
 				for (int j = 0; j<traj_param[traj_nr].size(); j++ ) // j-th point
 				{
@@ -266,6 +287,9 @@ int main(int argc, char** argv)
 						ROS_DEBUG("      pos value %d of %d = %f",k,traj_param[traj_nr][j].size(),(double)traj_param[traj_nr][j][k]);
 						traj.points[j].positions[k] = (double)traj_param[traj_nr][j][k];
 					}
+					// specify time to reach point (currently only used for simulation
+					ros::Duration duration(3); // reach points in steps of 3 seconds
+					traj.points[j].time_from_start = duration*(j+1);
 				}
 				
 				goal.trajectory = traj;

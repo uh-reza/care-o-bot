@@ -66,7 +66,8 @@ cob_teleop\
 cob_dashboard\
 cob_2dslam\
 cob_2dnav\
-cob_simpledrive
+cob_simpledrive\
+cob_tactiletools
 
 PACKAGES_COMMON=\
 cob_msgs\
@@ -105,6 +106,8 @@ cob_gazebo
 #--------------------------------------------------------------------
 
 PACKAGES_TO_BUILD=$(PACKAGES_APPS) $(PACKAGES_COMMON) $(PACKAGES_DRIVER) $(PACKAGES_EXTERN) $(PACKAGES_SIMULATION)
+PACKAGES_TO_CLEAN=$(PACKAGES_APPS) $(PACKAGES_COMMON) $(PACKAGES_DRIVER) $(PACKAGES_SIMULATION)
+PACKAGES_TO_CLEAN_VISION=cob_vision_utils cob_msgs cob_srvs cob_camera_sensors
 
 all:
 	make ros
@@ -121,6 +124,17 @@ ros-deps:
 	rosdep install $(PACKAGES_TO_BUILD)
 
 clean:
+	@for dir in $(PACKAGES_TO_CLEAN); do \
+		$(MAKE) -C $$(rospack find $$dir) clean; \
+		done
+
+clean-all:
 	@for dir in $(PACKAGES_TO_BUILD); do \
 		$(MAKE) -C $$(rospack find $$dir) clean; \
 		done
+
+clean-vision:
+	@for dir in $(PACKAGES_TO_CLEAN_VISION); do \
+		$(MAKE) -C $$(rospack find $$dir) clean; \
+		done
+
