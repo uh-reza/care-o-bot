@@ -62,6 +62,7 @@ import os
 import sys
 import types
 import thread
+import commands
 
 # ROS imports
 import roslib
@@ -83,7 +84,6 @@ from sound_play.libsoundplay import SoundClient
 # care-o-bot includes
 from cob_msgs.msg import *
 from cob_srvs.srv import *
-#from cob_actions.msg import *
 
 # graph includes
 import pygraphviz as pgv
@@ -681,9 +681,9 @@ class simple_script_server:
 			set_operation_mode = rospy.ServiceProxy("/" + component_name + "_controller/set_operation_mode", SetOperationMode)
 			req = SetOperationModeRequest()
 			req.operationMode.data = mode
-			print req
+			#print req
 			resp = set_operation_mode(req)
-			print resp
+			#print resp
 		except rospy.ServiceException, e:
 			print "Service call failed: %s"%e
 			
@@ -769,6 +769,7 @@ class simple_script_server:
 		text = ""
 		
 		# get values from parameter server
+		language = rospy.get_param(self.ns_global_prefix + "/" + component_name + "/language","en")
 		if type(parameter_name) is str:
 			if not rospy.has_param(self.ns_global_prefix + "/" + component_name + "/" + language + "/" + parameter_name):
 				rospy.logerr("parameter %s does not exist on ROS Parameter Server, aborting...",self.ns_global_prefix + "/" + component_name + "/" + language + "/" + parameter_name)
@@ -817,8 +818,9 @@ class simple_script_server:
 		else:
 			ah.set_active()
 		
-		wav_path = "~/git/care-o-bot/cob_apps/cob_script_server/common/files/wav_de/"
-		filename = wav_path + parameter_name + ".wav"
+		language = rospy.get_param(self.ns_global_prefix + "/" + component_name + "/language","en")
+		wav_path = commands.getoutput("rospack find cob_script_server")
+		filename = wav_path + "/common/files/" + language + "/" + parameter_name + ".wav"
 		
 		rospy.loginfo("Playing <<%s>>",filename)
 		#self.soundhandle.playWave(filename)
