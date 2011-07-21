@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <NXUSTREAM2>
+    <NxuPhysicsCollection id="beshon" sdkVersion="244" nxuVersion="100">
+      <NxPhysicsSDKDesc id="SDK">
+        <hwPageSize>65536</hwPageSize>
+        <hwPageMax>256</hwPageMax>
+        <hwConvexMax>2048</hwConvexMax>
+      </NxPhysicsSDKDesc>
+  <NxConvexMeshDesc id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray_0">
+    <points>
+      0.066593252 0.047548033 -0.092405736  0.075697049 0.034751248 -0.073275238  0.070449881 0.012219997 -0.127578273  0.019544 0.042661 -0.073921002  
+      -0.000773 0.040909 0.001007  0.026236 0.010144 -0.103274003  -0.007229 0.001735 -0.061082002  0.075890929 0.010652306 -0.10734579  
+      0 0 0.001  -0.017999999 -0.001728 0.001007  0.013199 0.032065 0.001026  -0.001517 0.040486 -0.039572999  
+    </points>
+    <triangles>
+      0 1 2  0 2 3  0 4 1  0 3 4  
+      5 2 6  5 6 3  5 3 2  7 8 9  
+      7 9 6  7 6 2  7 2 1  7 1 8  
+      10 4 9  10 9 8  10 1 4  10 8 1  
+      11 6 9  11 9 4  11 4 3  11 3 6  
+    </triangles>
+  </NxConvexMeshDesc>
+  <NxConvexMeshDesc id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray_1">
+    <points>
+      0.070449881 0.012219997 -0.127578273  0.121620998 0.017403999 -0.133845001  0.18226026 0.020187326 -0.106091067  0.0763762 0.018486172 -0.094002999  
+      0.066593252 0.047548033 -0.092405736  0.183019266 0.064451948 -0.055410784  0.179368928 0.080754235 -0.071404934  0.127592102 0.06745515 -0.052187853  
+      0.178776801 0.027810777 -0.129237682  0.075284645 0.036263417 -0.072792523  0.12817663 0.081719369 -0.066608191  0.118300192 0.07842119 -0.062176336  
+    </points>
+    <triangles>
+      0 1 2  0 2 3  0 4 1  0 3 4  
+      5 2 6  5 6 7  8 2 1  8 6 2  
+      9 3 2  9 2 5  9 5 7  9 4 3  
+      10 6 8  10 8 1  10 7 6  10 1 4  
+      11 7 10  11 10 4  11 4 9  11 9 7  
+    </triangles>
+  </NxConvexMeshDesc>
+  <NxConvexMeshDesc id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray_2">
+    <points>
+      0.381776989 0.053305998 -0.067778997  0.125986993 0.074146003 -0.045497999  0.179355398 0.022569072 -0.129343584  0.369383007 0.268774003 0.149130002  
+      0.130665004 0.265466005 0.145822003  0.364528 0.054228999 -0.099578999  0.133855999 0.277922004 0.125719994  0.377716005 0.273950994 0.121365003  
+      0.395552993 0.266238987 0.129076004  0.115789004 0.084633999 -0.055985998  0.39546901 0.076766998 -0.063879997  0.141959995 0.286473006 0.145852998  
+    </points>
+    <triangles>
+      0 1 2  1 0 3  4 1 3  5 0 2  
+      5 2 6  5 6 7  8 3 0  8 7 3  
+      9 1 4  9 4 6  9 2 1  9 6 2  
+      10 5 7  10 7 8  10 0 5  10 8 0  
+      11 6 4  11 4 3  11 3 7  11 7 6  
+    </triangles>
+  </NxConvexMeshDesc>
+  <NxSceneDesc id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray">
+        <filterBool>false</filterBool>
+        <filterOp0>NX_FILTEROP_AND</filterOp0>
+        <filterOp1>NX_FILTEROP_AND</filterOp1>
+        <filterOp2>NX_FILTEROP_AND</filterOp2>
+        <NxGroupsMask id="groupMask0" bits0="0" bits1="0" bits2="0" bits3="0"/>
+        <NxGroupsMask id="groupMask1" bits0="0" bits1="0" bits2="0" bits3="0"/>
+        <gravity>0 -9.800000191 0</gravity>
+        <maxTimestep>0.016666668</maxTimestep>
+        <maxIter>8</maxIter>
+        <timeStepMethod>NX_TIMESTEP_FIXED</timeStepMethod>
+        <maxBounds>FLT_MIN FLT_MIN FLT_MIN  FLT_MAX FLT_MAX FLT_MAX</maxBounds>
+        <NxSceneLimits id="limits">
+          <maxNbActors>0</maxNbActors>
+          <maxNbBodies>0</maxNbBodies>
+          <maxNbStaticShapes>0</maxNbStaticShapes>
+          <maxNbDynamicShapes>0</maxNbDynamicShapes>
+          <maxNbJoints>0</maxNbJoints>
+        </NxSceneLimits>
+        <simType>NX_SIMULATION_SW</simType>
+        <groundPlane>true</groundPlane>
+        <boundsPlanes>false</boundsPlanes>
+        <NxSceneFlags id="flags">
+          <NX_SF_DISABLE_SSE>false</NX_SF_DISABLE_SSE>
+          <NX_SF_DISABLE_COLLISIONS>false</NX_SF_DISABLE_COLLISIONS>
+          <NX_SF_SIMULATE_SEPARATE_THREAD>true</NX_SF_SIMULATE_SEPARATE_THREAD>
+          <NX_SF_ENABLE_MULTITHREAD>false</NX_SF_ENABLE_MULTITHREAD>
+        </NxSceneFlags>
+        <internalThreadCount>0</internalThreadCount>
+        <backgroundThreadCount>0</backgroundThreadCount>
+        <threadMask>1431655764</threadMask>
+        <backgroundThreadMask>1431655764</backgroundThreadMask>
+        <NxMaterialDesc id="Material_0" userProperties="" hasSpring="false" materialIndex="0">
+          <dynamicFriction>0.5</dynamicFriction>
+          <staticFriction>0.5</staticFriction>
+          <restitution>0</restitution>
+          <dynamicFrictionV>0</dynamicFrictionV>
+          <staticFrictionV>0</staticFrictionV>
+          <frictionCombineMode>NX_CM_AVERAGE</frictionCombineMode>
+          <restitutionCombineMode>NX_CM_AVERAGE</restitutionCombineMode>
+          <dirOfAnisotropy>1 0 0</dirOfAnisotropy>
+          <NxMaterialFlag id="flags">
+            <NX_MF_ANISOTROPIC>false</NX_MF_ANISOTROPIC>
+            <NX_MF_DISABLE_FRICTION>false</NX_MF_DISABLE_FRICTION>
+            <NX_MF_DISABLE_STRONG_FRICTION>false</NX_MF_DISABLE_STRONG_FRICTION>
+          </NxMaterialFlag>
+        </NxMaterialDesc>
+    <NxActorDesc id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray" userProperties="" hasBody="true" name="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray">
+      <globalPose>1 0 0    0 1 0    0 0 1    0 0 0 </globalPose>
+			<NxBodyDesc>
+        <mass>1</mass>
+        <linearDamping>0</linearDamping>
+        <angularDamping>0</angularDamping>
+        <solverIterationCount>32</solverIterationCount>
+        <NxBodyFlag id="flags">
+          <NX_BF_POSE_SLEEP_TEST>true</NX_BF_POSE_SLEEP_TEST>
+          <NX_AF_DISABLE_COLLISION>false</NX_AF_DISABLE_COLLISION>
+        </NxBodyFlag>
+      </NxBodyDesc>
+      <name>Bip01 Pelvis</name>
+      <NxConvexShapeDesc id="Shape_0" meshData="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray_0">
+      <NxShapeDesc>
+        <localPose>1 0 0    0 1 0    0 0 1    0 0 0 </localPose>
+        <skinWidth>0</skinWidth>
+      </NxShapeDesc>
+      </NxConvexShapeDesc>
+      <NxConvexShapeDesc id="Shape_1" meshData="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray_1">
+      <NxShapeDesc>
+        <localPose>1 0 0    0 1 0    0 0 1    0 0 0 </localPose>
+        <skinWidth>0</skinWidth>
+      </NxShapeDesc>
+      </NxConvexShapeDesc>
+      <NxConvexShapeDesc id="Shape_2" meshData="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray_2">
+      <NxShapeDesc>
+        <localPose>1 0 0    0 1 0    0 0 1    0 0 0 </localPose>
+        <skinWidth>0</skinWidth>
+      </NxShapeDesc>
+      </NxConvexShapeDesc>
+    </NxActorDesc>
+  </NxSceneDesc>
+	 <NxSceneInstance id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray">
+	 	 <sceneName>beshon</sceneName>
+	 	 <NxuUserProperties></NxuUserProperties>
+	 	 <rootNode>1	0	0	0	1	0	0	0	1	0	0 0</rootNode>
+	 	 <newScene>false</newScene>
+	 	 <ignorePlane>true</ignorePlane>
+	 	 <numSceneInstances>0</numSceneInstances>
+	 </NxSceneInstance>
+  </NxuPhysicsCollection>
+</NXUSTREAM2>

@@ -16,10 +16,10 @@ from geometry_msgs.msg import *
 class ik_solver:
 
 	def __init__(self):
-		if rospy.has_param('JointNames'):
-			self.JointNames = rospy.get_param('JointNames')
+		if rospy.has_param('joint_names'):
+			self.joint_names = rospy.get_param('joint_names')
 		else:
-			rospy.logerror("JointNames not available")
+			rospy.logerror("joint_names not available")
 			return
 		self.configuration = [0,0,0,0,0,0,0]
 		self.lock = threading.Lock()
@@ -106,13 +106,13 @@ class ik_solver:
 		#relpos.orientation.z = qrel[2]
 		#relpos.orientation.w = qrel[3]
 		print "Calling IK Server"
-		(new_config, error) = self.callIKSolver(relpos.pose)
-		if(error != -1):
+		(new_config, error_code) = self.callIKSolver(relpos.pose)
+		if(error_code.val == error_code.SUCCESS):
 			self.moveArm(new_config)
 			result.return_value = 0
 			self.as_.set_succeeded(result)
 		else:
-			result.return_value = -1
+			result.return_value = 1
 			self.as_.set_aborted(result);
 	
 	def moveArm(self, pose):
@@ -135,7 +135,7 @@ class ik_solver:
 		req.ik_request.ik_seed_state.joint_state.position = self.configuration
 		req.ik_request.pose_stamped.pose = goal_pose
 		resp = self.iks(req)
-		return (resp.solution.joint_state.position, resp.error_code.val)
+		return (resp.solution.joint_state.position, resp.error_code)
 	
 		
 		

@@ -9,4 +9,8 @@
   <review status="unreviewed" notes=""/>
   <url>http://ros.org/wiki/libphidgets</url>
 
+  <rosdep name="libusb"/>
+  <export>
+    <cpp cflags="-I${prefix}/include" lflags="-L${prefix}/lib -lphidget21"/>
+  </export>
 </package>

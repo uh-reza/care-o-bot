@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <NXUSTREAM2>
+    <NxuPhysicsCollection id="beshon" sdkVersion="244" nxuVersion="100">
+      <NxPhysicsSDKDesc id="SDK">
+        <hwPageSize>65536</hwPageSize>
+        <hwPageMax>256</hwPageMax>
+        <hwConvexMax>2048</hwConvexMax>
+      </NxPhysicsSDKDesc>
+  <NxConvexMeshDesc id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/upper_neck_collision_0">
+    <points>
+      0.048449982 0.001482352 0  0.067362487 -0.087500796 0.103160352  0.02055919 -0.0026861 0  0.009733929 -0.079364993 0.099847361  
+      0.102847315 -0.006197275 0.103160352  0.015951408 -0.035324544 0.090983137  0.090845309 -0.083990812 0.103160352  0.020181626 -0.005360513 0.063117161  
+      0.102846675 -0.006197185 0.082113445  0.050642271 0.001172852 0.055615235  0.018669492 -0.016071452 0.079423353  0.101777002 -0.027124001 0.092234999  
+    </points>
+    <triangles>
+      0 1 2  3 1 4  3 4 5  3 2 1  
+      3 5 2  6 4 1  6 1 0  7 2 5  
+      8 0 4  8 6 0  9 0 2  9 2 7  
+      9 4 0  9 7 4  10 5 4  10 4 7  
+      10 7 5  11 4 6  11 6 8  11 8 4  
+    </triangles>
+  </NxConvexMeshDesc>
+  <NxConvexMeshDesc id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/upper_neck_collision_1">
+    <points>
+      0.067312226 -0.087506942 -0.103160009  0.049327217 0.00161346 0  0.019283529 -0.002876756 0  0.010649322 -0.07950747 -0.099902608  
+      0.016061854 -0.031469915 -0.089657992  0.102722764 -0.004402773 -0.103085853  0.090845659 -0.083989024 -0.103160009  0.018984916 -0.005527031 -0.062877513  
+      0.102734141 -0.004404055 -0.080393016  0.050461575 0.001485648 -0.052981537  0.018004695 -0.014226723 -0.077523179  0.101777002 -0.027124001 -0.092234999  
+    </points>
+    <triangles>
+      0 1 2  3 0 2  3 2 4  3 5 0  
+      3 4 5  6 0 5  6 1 0  7 4 2  
+      8 5 1  8 1 6  9 1 5  9 5 7  
+      9 2 1  9 7 2  10 5 4  10 4 7  
+      10 7 5  11 6 5  11 5 8  11 8 6  
+    </triangles>
+  </NxConvexMeshDesc>
+  <NxConvexMeshDesc id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/upper_neck_collision_2">
+    <points>
+      0.067312226 -0.087506942 -0.103160009  0.009700133 -0.079373464 -0.189488053  0.08951854 -0.090641953 -0.142488748  0.021648576 0.005261295 -0.185648575  
+      0.102830924 -0.006199748 -0.103160009  0.071869738 -0.001828755 -0.178009078  0.089533888 -0.090644121 -0.104437411  0.056001708 -0.085910164 -0.183277264  
+      0.102804773 -0.006196056 -0.135565624  0.101612337 -0.028085213 -0.103160009  0.101143003 -0.030825 -0.134299994  0.090845659 -0.083989024 -0.103160009  
+    </points>
+    <triangles>
+      0 1 2  3 1 0  3 0 4  3 4 5  
+      6 0 2  7 1 3  7 3 5  7 2 1  
+      7 5 2  8 5 4  8 2 5  9 8 4  
+      9 4 0  10 2 8  10 8 9  11 10 9  
+      11 6 2  11 2 10  11 0 6  11 9 0  
+    </triangles>
+  </NxConvexMeshDesc>
+  <NxConvexMeshDesc id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/upper_neck_collision_3">
+    <points>
+      0.009700133 -0.079373464 -0.189488053  -0.073295482 -0.067656435 -0.103160009  -0.073330805 -0.067651443 -0.206320018  -0.061239608 0.016963162 -0.103160009  
+      0.021648576 0.005261295 -0.185648575  -0.026044056 0.011994375 -0.202941671  -0.061240833 0.016963335 -0.206058487  -0.03845825 -0.07257463 -0.205507129  
+      0.014982265 -0.04195838 -0.18801187  
+    </points>
+    <triangles>
+      0 1 2  3 2 1  4 5 3  4 3 1  
+      4 1 0  6 2 3  6 3 5  7 2 6  
+      7 6 5  7 0 2  7 5 0  8 0 5  
+      8 5 4  8 4 0  
+    </triangles>
+  </NxConvexMeshDesc>
+  <NxConvexMeshDesc id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/upper_neck_collision_4">
+    <points>
+      -0.065646 -0.01557 0  0.010649322 -0.07950747 -0.099902608  0.019283529 -0.002876756 0  -0.061627936 0.014115104 -0.103160009  
+      -0.073295482 -0.067656435 -0.103160009  0.018154714 -0.012895262 -0.075948596  -0.061626703 0.014114965 0  0.019239983 -0.003263237 -0.053638089  
+      0.016061854 -0.031469915 -0.089657992  -0.073284782 -0.06765794 -0.095077358  0.018902719 -0.006256543 -0.06483268  0.017481064 -0.018874066 -0.0820859  
+    </points>
+    <triangles>
+      0 1 2  3 1 4  5 2 1  6 0 2  
+      6 2 3  6 3 4  7 3 2  7 2 5  
+      8 1 3  8 5 1  9 0 6  9 6 4  
+      9 4 1  9 1 0  10 5 3  10 3 7  
+      10 7 5  11 3 5  11 5 8  11 8 3  
+    </triangles>
+  </NxConvexMeshDesc>
+  <NxConvexMeshDesc id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/upper_neck_collision_5">
+    <points>
+      -0.07328283 -0.067644976 0.103160352  0.009733929 -0.079364993 0.099847361  -0.061236512 0.016967511 0.103160352  0.02055919 -0.0026861 0  
+      -0.065646 -0.01557 0  -0.061237741 0.016967684 0  0.019088054 -0.013106638 0.0764689  0.020466678 -0.003341395 0.0556411  
+      0.015951408 -0.035324544 0.090983137  -0.07328283 -0.067644976 0.095074855  0.017439393 -0.024784645 0.086418495  0.019946612 -0.007025186 0.066787995  
+    </points>
+    <triangles>
+      0 1 2  3 1 4  5 2 3  5 3 4  
+      5 0 2  6 1 3  7 3 2  7 6 3  
+      8 2 1  8 1 6  9 0 5  9 5 4  
+      9 4 1  9 1 0  10 6 2  10 2 8  
+      10 8 6  11 2 6  11 6 7  11 7 2  
+    </triangles>
+  </NxConvexMeshDesc>
+  <NxConvexMeshDesc id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/upper_neck_collision_6">
+    <points>
+      -0.074098997 -0.179782003 -0.117232002  0.025157001 -0.254051 -0.134856001  -0.073284782 -0.06765794 -0.095077358  -0.083126001 -0.145135 -0.206468999  
+      -0.073330805 -0.067651443 -0.206320018  0.08951854 -0.090641953 -0.142488748  0.032269001 -0.191484004 -0.190136999  0.089533888 -0.090644121 -0.104437411  
+      -0.010358 -0.241380006 -0.183497995  0.057084002 -0.233898997 -0.165178999  0.056001708 -0.085910164 -0.183277264  0.058249 -0.231306002 -0.131336004  
+    </points>
+    <triangles>
+      0 1 2  2 3 0  4 3 2  4 2 5  
+      6 3 4  7 2 1  7 5 2  8 3 6  
+      8 0 3  8 1 0  9 1 8  9 8 6  
+      10 5 9  10 9 6  10 4 5  10 6 4  
+      11 7 1  11 1 9  11 5 7  11 9 5  
+    </triangles>
+  </NxConvexMeshDesc>
+  <NxConvexMeshDesc id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/upper_neck_collision_7">
+    <points>
+      0.102847315 -0.006197275 0.103160352  0.044621181 0.082838066 0.103160352  -0.061236512 0.016967511 0.103160352  -0.061240833 0.016963335 -0.206058487  
+      -0.052503001 0.081047997 0.103160352  -0.001908 0.093898997 -0.193436995  -0.052503001 0.081047997 -0.206043005  0.071869738 -0.001828755 -0.178009078  
+      0.081974 0.051833998 -0.174772993  0.102804773 -0.006196056 -0.135565624  0.100974001 0.009248 -0.140744999  0.086147845 0.045514274 0.103160352  
+    </points>
+    <triangles>
+      0 1 2  0 2 3  4 2 1  4 1 5  
+      4 3 2  6 3 4  6 4 5  7 3 6  
+      7 0 3  8 6 5  8 7 6  8 5 1  
+      9 7 8  9 8 10  9 10 0  9 0 7  
+      11 0 10  11 10 8  11 1 0  11 8 1  
+    </triangles>
+  </NxConvexMeshDesc>
+  <NxConvexMeshDesc id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/upper_neck_collision_8">
+    <points>
+      0.090349302 0.038573012 0.103160352  0.032260001 -0.253713995 0.095822401  -0.07328283 -0.067644976 0.095074855  -0.052503001 0.081047997 0.103160352  
+      -0.052503001 0.081047997 0.206043005  0.057064001 -0.233941004 0.165187001  0.081974 0.051833998 0.174772993  -0.076803625 -0.174251989 0.116058439  
+      -0.048246 -0.212283999 0.194580004  -0.083075002 -0.148054004 0.206367001  0.02291614 0.09076491 0.103160352  0.018307 -0.253206015 0.175878003  
+    </points>
+    <triangles>
+      0 1 2  3 2 4  5 1 0  6 5 0  
+      7 2 1  7 1 8  9 4 2  9 2 7  
+      9 7 8  9 8 6  9 6 4  10 3 4  
+      10 4 6  10 6 0  10 0 2  10 2 3  
+      11 5 6  11 6 8  11 8 1  11 1 5  
+    </triangles>
+  </NxConvexMeshDesc>
+  <NxSceneDesc id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/upper_neck_collision">
+        <filterBool>false</filterBool>
+        <filterOp0>NX_FILTEROP_AND</filterOp0>
+        <filterOp1>NX_FILTEROP_AND</filterOp1>
+        <filterOp2>NX_FILTEROP_AND</filterOp2>
+        <NxGroupsMask id="groupMask0" bits0="0" bits1="0" bits2="0" bits3="0"/>
+        <NxGroupsMask id="groupMask1" bits0="0" bits1="0" bits2="0" bits3="0"/>
+        <gravity>0 -9.800000191 0</gravity>
+        <maxTimestep>0.016666668</maxTimestep>
+        <maxIter>8</maxIter>
+        <timeStepMethod>NX_TIMESTEP_FIXED</timeStepMethod>
+        <maxBounds>FLT_MIN FLT_MIN FLT_MIN  FLT_MAX FLT_MAX FLT_MAX</maxBounds>
+        <NxSceneLimits id="limits">
+          <maxNbActors>0</maxNbActors>
+          <maxNbBodies>0</maxNbBodies>
+          <maxNbStaticShapes>0</maxNbStaticShapes>
+          <maxNbDynamicShapes>0</maxNbDynamicShapes>
+          <maxNbJoints>0</maxNbJoints>
+        </NxSceneLimits>
+        <simType>NX_SIMULATION_SW</simType>
+        <groundPlane>true</groundPlane>
+        <boundsPlanes>false</boundsPlanes>
+        <NxSceneFlags id="flags">
+          <NX_SF_DISABLE_SSE>false</NX_SF_DISABLE_SSE>
+          <NX_SF_DISABLE_COLLISIONS>false</NX_SF_DISABLE_COLLISIONS>
+          <NX_SF_SIMULATE_SEPARATE_THREAD>true</NX_SF_SIMULATE_SEPARATE_THREAD>
+          <NX_SF_ENABLE_MULTITHREAD>false</NX_SF_ENABLE_MULTITHREAD>
+        </NxSceneFlags>
+        <internalThreadCount>0</internalThreadCount>
+        <backgroundThreadCount>0</backgroundThreadCount>
+        <threadMask>1431655764</threadMask>
+        <backgroundThreadMask>1431655764</backgroundThreadMask>
+        <NxMaterialDesc id="Material_0" userProperties="" hasSpring="false" materialIndex="0">
+          <dynamicFriction>0.5</dynamicFriction>
+          <staticFriction>0.5</staticFriction>
+          <restitution>0</restitution>
+          <dynamicFrictionV>0</dynamicFrictionV>
+          <staticFrictionV>0</staticFrictionV>
+          <frictionCombineMode>NX_CM_AVERAGE</frictionCombineMode>
+          <restitutionCombineMode>NX_CM_AVERAGE</restitutionCombineMode>
+          <dirOfAnisotropy>1 0 0</dirOfAnisotropy>
+          <NxMaterialFlag id="flags">
+            <NX_MF_ANISOTROPIC>false</NX_MF_ANISOTROPIC>
+            <NX_MF_DISABLE_FRICTION>false</NX_MF_DISABLE_FRICTION>
+            <NX_MF_DISABLE_STRONG_FRICTION>false</NX_MF_DISABLE_STRONG_FRICTION>
+          </NxMaterialFlag>
+        </NxMaterialDesc>
+    <NxActorDesc id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/upper_neck_collision" userProperties="" hasBody="true" name="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/upper_neck_collision">
+      <globalPose>1 0 0    0 1 0    0 0 1    0 0 0 </globalPose>
+			<NxBodyDesc>
+        <mass>1</mass>
+        <linearDamping>0</linearDamping>
+        <angularDamping>0</angularDamping>
+        <solverIterationCount>32</solverIterationCount>
+        <NxBodyFlag id="flags">
+          <NX_BF_POSE_SLEEP_TEST>true</NX_BF_POSE_SLEEP_TEST>
+          <NX_AF_DISABLE_COLLISION>false</NX_AF_DISABLE_COLLISION>
+        </NxBodyFlag>
+      </NxBodyDesc>
+      <name>Bip01 Pelvis</name>
+      <NxConvexShapeDesc id="Shape_0" meshData="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/upper_neck_collision_0">
+      <NxShapeDesc>
+        <localPose>1 0 0    0 1 0    0 0 1    0 0 0 </localPose>
+        <skinWidth>0</skinWidth>
+      </NxShapeDesc>
+      </NxConvexShapeDesc>
+      <NxConvexShapeDesc id="Shape_1" meshData="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/upper_neck_collision_1">
+      <NxShapeDesc>
+        <localPose>1 0 0    0 1 0    0 0 1    0 0 0 </localPose>
+        <skinWidth>0</skinWidth>
+      </NxShapeDesc>
+      </NxConvexShapeDesc>
+      <NxConvexShapeDesc id="Shape_2" meshData="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/upper_neck_collision_2">
+      <NxShapeDesc>
+        <localPose>1 0 0    0 1 0    0 0 1    0 0 0 </localPose>
+        <skinWidth>0</skinWidth>
+      </NxShapeDesc>
+      </NxConvexShapeDesc>
+      <NxConvexShapeDesc id="Shape_3" meshData="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/upper_neck_collision_3">
+      <NxShapeDesc>
+        <localPose>1 0 0    0 1 0    0 0 1    0 0 0 </localPose>
+        <skinWidth>0</skinWidth>
+      </NxShapeDesc>
+      </NxConvexShapeDesc>
+      <NxConvexShapeDesc id="Shape_4" meshData="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/upper_neck_collision_4">
+      <NxShapeDesc>
+        <localPose>1 0 0    0 1 0    0 0 1    0 0 0 </localPose>
+        <skinWidth>0</skinWidth>
+      </NxShapeDesc>
+      </NxConvexShapeDesc>
+      <NxConvexShapeDesc id="Shape_5" meshData="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/upper_neck_collision_5">
+      <NxShapeDesc>
+        <localPose>1 0 0    0 1 0    0 0 1    0 0 0 </localPose>
+        <skinWidth>0</skinWidth>
+      </NxShapeDesc>
+      </NxConvexShapeDesc>
+      <NxConvexShapeDesc id="Shape_6" meshData="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/upper_neck_collision_6">
+      <NxShapeDesc>
+        <localPose>1 0 0    0 1 0    0 0 1    0 0 0 </localPose>
+        <skinWidth>0</skinWidth>
+      </NxShapeDesc>
+      </NxConvexShapeDesc>
+      <NxConvexShapeDesc id="Shape_7" meshData="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/upper_neck_collision_7">
+      <NxShapeDesc>
+        <localPose>1 0 0    0 1 0    0 0 1    0 0 0 </localPose>
+        <skinWidth>0</skinWidth>
+      </NxShapeDesc>
+      </NxConvexShapeDesc>
+      <NxConvexShapeDesc id="Shape_8" meshData="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/upper_neck_collision_8">
+      <NxShapeDesc>
+        <localPose>1 0 0    0 1 0    0 0 1    0 0 0 </localPose>
+        <skinWidth>0</skinWidth>
+      </NxShapeDesc>
+      </NxConvexShapeDesc>
+    </NxActorDesc>
+  </NxSceneDesc>
+	 <NxSceneInstance id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/upper_neck_collision">
+	 	 <sceneName>beshon</sceneName>
+	 	 <NxuUserProperties></NxuUserProperties>
+	 	 <rootNode>1	0	0	0	1	0	0	0	1	0	0 0</rootNode>
+	 	 <newScene>false</newScene>
+	 	 <ignorePlane>true</ignorePlane>
+	 	 <numSceneInstances>0</numSceneInstances>
+	 </NxSceneInstance>
+  </NxuPhysicsCollection>
+</NXUSTREAM2>

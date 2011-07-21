@@ -5,7 +5,7 @@
 		<machine name="pc1" address="192.168.0.101" ros-root="$(env ROS_ROOT)" ros-package-path="$(env ROS_PACKAGE_PATH)" default="true"/>
 
 		<!--include file="$(find cob_machine)/$(env ROBOT).machine" /-->
-		<param name="robot_description" command="$(find xacro)/xacro.py '$(find cob_description)/ros/robots/$(env ROBOT).urdf.xacro'" />
+		<include file="$(find cob_description)/ros/robot/upload_robot.launch" />
 	
 		<!-- start robot_state_publisher -->
 		<node pkg="robot_state_publisher" type="state_publisher" name="rob_st_pub" />
@@ -38,7 +38,7 @@
 		<!--include file="$(find cob_camera_sensors)/ros/launch/$(env ROBOT)_color_cameras.launch" /-->
 		<!--include file="$(find cob_camera_sensors)/ros/launch/$(env ROBOT)_tof.launch" /-->
 		<!-- include file="$(find cob_sensor_fusion)/ros/launch/$(env ROBOT)_sensor_fusion_shared.launch" /-->
-		<node pkg="sound_play" type="soundplay_node.py" name="soundplay" respawn="false" output="screen"/>
+		<include file="$(find cob_sound)/ros/launch/sound.launch" />
 		<include file="$(find cob_light)/ros/launch/light.launch" />
 		
 	</group>

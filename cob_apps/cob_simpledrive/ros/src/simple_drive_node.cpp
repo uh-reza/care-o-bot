@@ -66,7 +66,7 @@
 
 // ROS service includes
 #include <cob_srvs/Trigger.h>
-#include <cob_srvs/GetJointState.h>
+#include <cob_base_drive_chain/GetJointState.h>
 
 // external includes
 //--
@@ -102,7 +102,7 @@ class NodeClass
         {
             topicPub_JointStateCmd = n.advertise<sensor_msgs::JointState>("base_driver/JointStateCmd", 1);
 			
-			srvClient_GetJointState = n.serviceClient<cob_srvs::GetJointState>("base_driver/GetJointState");
+			srvClient_GetJointState = n.serviceClient<cob_base_drive_chain::GetJointState>("base_driver/GetJointState");
 			srvClient_InitPltf = n.serviceClient<cob_srvs::Trigger>("base_driver/Init");
 			srcClient_ShutdownPltf = n.serviceClient<cob_srvs::Trigger>("base_driver/Shutdown");
 
@@ -160,7 +160,7 @@ int NodeClass::init(){
 	cob_srvs::Trigger data;
     srvClient_InitPltf.call(data);
 
-    if(data.response.success != true) {
+    if(data.response.success.data != true) {
         ROS_ERROR("Failed to initialize Platform using base_drive_chain_node");
         return 1;
     } else ROS_INFO("Successfully initialized base_drive_chain_node");
@@ -174,7 +174,7 @@ int NodeClass::init(){
 int NodeClass::simpleDriveTest(int argc, char** argv) {
 	double startTime;
 	sensor_msgs::JointState msgDriveCmd;
-	cob_srvs::GetJointState srvGetJointState;
+	cob_base_drive_chain::GetJointState srvGetJointState;
 	msgDriveCmd.velocity.resize(iNumMotors);
 
 	switch (argc){

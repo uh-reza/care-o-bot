@@ -4,7 +4,7 @@
      This Package contains Care-O-bot specific service definitions.
 
   </description>
-  <author>Florian Weisshardt, email:florian.weisshardt@ipa.fhg.de</author>
+  <author>Florian Weisshardt</author>
   <license>LGPL</license>
   <review status="unreviewed" notes=""/>
   <url>http://ros.org/wiki/cob_srvs</url>
@@ -15,6 +15,8 @@
   <depend package="sensor_msgs"/>
   <depend package="geometry_msgs"/>
   <depend package="trajectory_msgs"/>
+  <depend package="motion_planning_msgs"/>
+  <depend package="kinematics_msgs"/>
 
   <export>
     <cpp cflags="-I${prefix}/srv/cpp"/>

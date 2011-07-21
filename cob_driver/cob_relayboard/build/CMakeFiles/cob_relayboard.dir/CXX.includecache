@@ -1,0 +1,44 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../common/include/cob_relayboard/Mutex.h
+pthread.h
+-
+
+../common/include/cob_relayboard/SerRelayBoard.h
+cob_relayboard/SerialIO.h
+-
+cob_relayboard/Mutex.h
+-
+
+../common/include/cob_relayboard/SerialIO.h
+termios.h
+-
+sys/select.h
+-
+string
+-
+
+../common/include/cob_relayboard/StrUtil.h
+sstream
+-
+iomanip
+-
+
+/home/reza/git/care-o-bot/cob_driver/cob_relayboard/common/src/SerRelayBoard.cpp
+math.h
+-
+cob_relayboard/SerRelayBoard.h
+-
+
+/home/reza/git/care-o-bot/cob_driver/cob_relayboard/common/src/StrUtil.cpp
+cob_relayboard/StrUtil.h
+-
+algorithm
+-
+

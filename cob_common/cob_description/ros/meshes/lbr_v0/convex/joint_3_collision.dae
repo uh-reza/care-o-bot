@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA version="1.4.0" xmlns="http://www.collada.org/2005/11/COLLADASchema">
+	<asset>
+		<contributor>
+			<author>NxuStream2 converter - http://www.ageia.com</author>
+			<authoring_tool>PhysX Rocket, PhysX Viewer, or CreateDynamics</authoring_tool>
+			<comments>questions to: jratcliff@ageia.com</comments>
+			<copyright></copyright>
+			<source_data>chair_gothic_tilted</source_data>
+		</contributor>
+		<unit meter="1" name="meter"/>
+		<up_axis>Y_UP</up_axis>
+	</asset>
+   <library_materials>
+      <material id="Material" name="Material">
+         <instance_effect url="#Material-fx"></instance_effect>
+      </material>
+   </library_materials>
+   <library_effects>
+      <effect id="Material-fx" name="Material">
+         <profile_COMMON>
+            <technique id="Material-fx-COMMON" sid="COMMON">
+               <phong>
+                  <ambient>
+                     <color>0.803922 0.588235 0.92549 1</color>
+                  </ambient>
+                  <diffuse>
+                     <color>0.803922 0.588235 0.92549 1</color>
+                  </diffuse>
+                  <specular>
+                     <color>0.631373 0.631373 0.631373 1</color>
+                  </specular>
+                  <shininess>
+                     <float>1</float>
+                  </shininess>
+                  <reflective>
+                     <color>0 0 0 1</color>
+                  </reflective>
+                  <transparent>
+                     <color>1 1 1 1</color>
+                  </transparent>
+                  <transparency>
+                     <float>0</float>
+                  </transparency>
+               </phong>
+           </technique>
+         </profile_COMMON>
+      </effect>
+   </library_effects>
+  <library_geometries>
+    <geometry id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/lbr_v0/convex/joint_3_collision_0-Mesh" name="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/lbr_v0/convex/joint_3_collision_0-Mesh">
+      <convex_mesh>
+        <source id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/lbr_v0/convex/joint_3_collision_0-Position">
+          <float_array count="36" id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/lbr_v0/convex/joint_3_collision_0-Position-array">
+            -0.055652719 -0.018434092 0.120180778  -0.059999999 -0.0075 0.191499993  0.051341999 -0.01510532 0.120940551  -0.003546 -0.073158763 0.10769023  
+            0.054219 -0.037661001 0.212513  0 -0.0075 0.25150001  -0.001511 -0.088533998 0.220981002  0.047658 -0.067984 0.145703003  
+            -0.051440999 -0.067322999 0.179873005  0.058495998 -0.0075 0.204851002  -0.034109 -0.053475 0.236904994  0.047658 -0.054648202 0.111915149  
+          </float_array>
+          <technique_common>
+            <accessor count="12" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/lbr_v0/convex/joint_3_collision_0-Position-array" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+    		   </technique_common>
+				 </source>
+   		 <vertices id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/lbr_v0/convex/joint_3_collision_0-Vertex">
+					<input semantic="POSITION" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/lbr_v0/convex/joint_3_collision_0-Position"/>
+				</vertices>
+				<triangles material="Material" count="20">
+					<input offset="0" semantic="VERTEX" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/lbr_v0/convex/joint_3_collision_0-Vertex"/>
+           <p>
+             0 1 2  0 2 3  4 5 6  7 6 3  
+             7 4 6  8 1 0  8 3 6  8 0 3  
+             9 4 7  9 5 4  9 1 5  9 2 1  
+             10 5 1  10 1 8  10 6 5  10 8 6  
+             11 2 9  11 9 7  11 3 2  11 7 3  
+           </p>
+				</triangles>
+      </convex_mesh>
+		</geometry>
+    <geometry id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/lbr_v0/convex/joint_3_collision_1-Mesh" name="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/lbr_v0/convex/joint_3_collision_1-Mesh">
+      <convex_mesh>
+        <source id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/lbr_v0/convex/joint_3_collision_1-Position">
+          <float_array count="36" id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/lbr_v0/convex/joint_3_collision_1-Position-array">
+            -0.026032999 0.054058 0  0.059999999 0 0  -0.026032999 -0.054058 0  -0.059923999 -0.028525919 0.117877387  
+            0.038860999 -0.061745375 0.110295258  0.033950999 -0.010477368 0.12199685  0.033950999 0.047524001 0.038027  -0.059999999 0 0  
+            -0.023122 -0.069345541 0.10856057  0.026032999 -0.054058 0  0.059939999 -0.028722122 0.117832601  0.026032999 0.054058 0  
+          </float_array>
+          <technique_common>
+            <accessor count="12" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/lbr_v0/convex/joint_3_collision_1-Position-array" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+    		   </technique_common>
+				 </source>
+   		 <vertices id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/lbr_v0/convex/joint_3_collision_1-Vertex">
+					<input semantic="POSITION" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/lbr_v0/convex/joint_3_collision_1-Position"/>
+				</vertices>
+				<triangles material="Material" count="20">
+					<input offset="0" semantic="VERTEX" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/lbr_v0/convex/joint_3_collision_1-Vertex"/>
+           <p>
+             0 1 2  3 4 5  6 0 3  6 3 5  
+             7 0 2  7 2 3  7 3 0  8 4 3  
+             8 3 2  9 4 8  9 8 2  9 2 1  
+             9 1 4  10 1 6  10 6 5  10 5 4  
+             10 4 1  11 1 0  11 0 6  11 6 1  
+           </p>
+				</triangles>
+      </convex_mesh>
+		</geometry>
+  </library_geometries>
+  <library_visual_scenes>
+	  <visual_scene id="Scene0-Visual" name="Scene0-Visual">
+      <node id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/lbr_v0/convex/joint_3_collision-Node" name="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/lbr_v0/convex/joint_3_collision" type="NODE">
+        <translate>0 0 0</translate>
+        <rotate>1 0 0  0</rotate>
+      </node>
+  	  </visual_scene>
+  </library_visual_scenes>
+  <library_physics_materials>
+    <physics_material id="pmat0_0-PhysicsMaterial" name="pmat0_0-PhysicsMaterial">
+      <technique_common>
+        <dynamic_friction>0.5</dynamic_friction>
+        <restitution>0</restitution>
+        <static_friction>0.5</static_friction>
+      </technique_common>
+    </physics_material>
+  </library_physics_materials>
+  <library_physics_models>
+    <physics_model id="Scene0-PhysicsModel">
+      <rigid_body sid="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/lbr_v0/convex/joint_3_collision-RigidBody" name="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/lbr_v0/convex/joint_3_collision">
+        <technique_common>
+          <instance_physics_material url="#pmat0_0-PhysicsMaterial"/>
+         <shape>
+            <translate>0 0 0</translate>
+            <rotate>1 0 0  0</rotate>
+            <instance_physics_material url="#pmat0_0-PhysicsMaterial"/>
+            <density>1</density>
+            <extra>
+              <technique profile="PhysX">
+               <skinWidth>0</skinWidth>
+              </technique>
+            </extra>
+            <instance_geometry url="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/lbr_v0/convex/joint_3_collision_0-Mesh"/>
+         </shape>
+         <shape>
+            <translate>0 0 0</translate>
+            <rotate>1 0 0  0</rotate>
+            <instance_physics_material url="#pmat0_0-PhysicsMaterial"/>
+            <density>1</density>
+            <extra>
+              <technique profile="PhysX">
+               <skinWidth>0</skinWidth>
+              </technique>
+            </extra>
+            <instance_geometry url="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/lbr_v0/convex/joint_3_collision_1-Mesh"/>
+         </shape>
+        <dynamic>true</dynamic>
+        <mass>1</mass>
+		   	</technique_common>
+        <extra>
+          <technique profile="PhysX">
+            <extra>
+              <technique profile="PhysX">
+                <linearDamping>0</linearDamping>
+                <angularDamping>0</angularDamping>
+                <solverIterationCount>32</solverIterationCount>
+              </technique>
+            </extra>
+            <disable_collision>false</disable_collision>
+          </technique>
+        </extra>
+  	  </rigid_body>
+    </physics_model>
+  </library_physics_models>
+  <library_physics_scenes>
+    <physics_scene id="Scene0-Physics">
+      <instance_physics_model url="#Scene0-PhysicsModel">
+        <instance_rigid_body target="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/lbr_v0/convex/joint_3_collision-Node" body="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/lbr_v0/convex/joint_3_collision-RigidBody"/>
+      <extra>
+        <technique profile="PhysX">
+        </technique>
+      </extra>
+      </instance_physics_model>
+      <technique_common>
+        <gravity>0 -9.800000191 0</gravity>
+      </technique_common>
+    </physics_scene>
+  </library_physics_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene0-Visual"/>
+    <instance_physics_scene url="#Scene0-Physics"/>
+  </scene>
+</COLLADA>

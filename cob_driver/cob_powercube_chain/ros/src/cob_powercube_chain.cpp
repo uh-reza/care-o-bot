@@ -139,7 +139,7 @@ class PowercubeChainNode
 #endif
 		PowerCubeCtrlParams* PCubeParams_;
 		std::string CanModule_;
-		int CanDevice_;
+		std::string CanDevice_;
 		int CanBaudrate_;
 		XmlRpc::XmlRpcValue ModIds_param_;
 		std::vector<int> ModIds_;
@@ -196,7 +196,7 @@ class PowercubeChainNode
 
 			// implementation of topics to publish
 			topicPub_JointState_ = n_.advertise<sensor_msgs::JointState>("/joint_states", 1);
-			topicPub_ControllerState_ = n_.advertise<pr2_controllers_msgs::JointTrajectoryControllerState>("controller_state", 1);
+			topicPub_ControllerState_ = n_.advertise<pr2_controllers_msgs::JointTrajectoryControllerState>("state", 1);
 
 			// implementation of topics to subscribe
 			topicSub_DirectCommand_ = n_.subscribe("command", 1, &PowercubeChainNode::topicCallback_DirectCommand, this);
@@ -216,55 +216,55 @@ class PowercubeChainNode
 
 
 			// read parameters from parameter server
-			n_.getParam("CanModule", CanModule_);
-			n_.getParam("CanDevice", CanDevice_);
-			n_.getParam("CanBaudrate", CanBaudrate_);
-			ROS_INFO("CanModule=%s, CanDevice=%d, CanBaudrate=%d",CanModule_.c_str(),CanDevice_,CanBaudrate_);
+			n_.getParam("can_module", CanModule_);
+			n_.getParam("can_device", CanDevice_);
+			n_.getParam("can_baudrate", CanBaudrate_);
+			ROS_INFO("CanModule=%s, CanDevice=%s, CanBaudrate=%d",CanModule_.c_str(),CanDevice_.c_str(),CanBaudrate_);
 
 			// get ModIds from parameter server
-			if (n_.hasParam("ModIds"))
+			if (n_.hasParam("modul_ids"))
 			{
-				n_.getParam("ModIds", ModIds_param_);
+				n_.getParam("modul_ids", ModIds_param_);
 			}
 			else
 			{
-				ROS_ERROR("Parameter ModIds not set");
+				ROS_ERROR("Parameter modul_ids not set");
 			}
 			ModIds_.resize(ModIds_param_.size());
 			for (int i = 0; i<ModIds_param_.size(); i++ )
 			{
 				ModIds_[i] = (int)ModIds_param_[i];
 			}
-			std::cout << "ModIds = " << ModIds_param_ << std::endl;
+			std::cout << "modul_ids = " << ModIds_param_ << std::endl;
 			
 			// get JointNames from parameter server
 			ROS_INFO("getting JointNames from parameter server");
-			if (n_.hasParam("JointNames"))
+			if (n_.hasParam("joint_names"))
 			{
-				n_.getParam("JointNames", JointNames_param_);
+				n_.getParam("joint_names", JointNames_param_);
 			}
 			else
 			{
-				ROS_ERROR("Parameter JointNames not set");
+				ROS_ERROR("Parameter joint_names not set");
 			}
 			JointNames_.resize(JointNames_param_.size());
 			for (int i = 0; i<JointNames_param_.size(); i++ )
 			{
 				JointNames_[i] = (std::string)JointNames_param_[i];
 			}
-			std::cout << "JointNames = " << JointNames_param_ << std::endl;
+			std::cout << "joint_names = " << JointNames_param_ << std::endl;
 
 			PCubeParams_->Init(CanModule_, CanDevice_, CanBaudrate_, ModIds_);
 			
 			// get MaxAcc from parameter server
-			ROS_INFO("getting MaxAcc from parameter server");
-			if (n_.hasParam("MaxAcc"))
+			ROS_INFO("getting max_accelertion from parameter server");
+			if (n_.hasParam("max_accelerations"))
 			{
-				n_.getParam("MaxAcc", MaxAcc_param_);
+				n_.getParam("max_accelerations", MaxAcc_param_);
 			}
 			else
 			{
-				ROS_ERROR("Parameter MaxAcc not set");
+				ROS_ERROR("Parameter max_accelerations not set");
 			}
 			MaxAcc_.resize(MaxAcc_param_.size());
 			for (int i = 0; i<MaxAcc_param_.size(); i++ )
@@ -272,7 +272,7 @@ class PowercubeChainNode
 				MaxAcc_[i] = (double)MaxAcc_param_[i];
 			}
 			PCubeParams_->SetMaxAcc(MaxAcc_);
-			std::cout << "MaxAcc = " << MaxAcc_param_ << std::endl;
+			std::cout << "max_accelerations = " << MaxAcc_param_ << std::endl;
 			
 			// load parameter server string for robot/model
 			std::string param_name = "robot_description";
@@ -447,25 +447,26 @@ class PowercubeChainNode
 			if (isInitialized_ == false)
 			{
 				ROS_INFO("...initializing powercubes...");
-			// init powercubes 
-			if (PCube_->Init(PCubeParams_))
-			{
-				ROS_INFO("Initializing succesfull");
-				isInitialized_ = true;
-				res.success = 0; // 0 = true, else = false
+				// init powercubes 
+				if (PCube_->Init(PCubeParams_))
+				{
+					ROS_INFO("Initializing succesfull");
+					isInitialized_ = true;
+					res.success.data = true;
+					res.error_message.data = "success";
+				}
+				else
+				{
+					ROS_ERROR("Initializing powercubes not succesfull. error: %s", PCube_->getErrorMessage().c_str());
+					res.success.data = false;
+					res.error_message.data = PCube_->getErrorMessage();
+				}
 			}
 			else
 			{
-				ROS_ERROR("Initializing powercubes not succesfull. error: %s", PCube_->getErrorMessage().c_str());
-				res.success = 1; // 0 = true, else = false
-				res.errorMessage.data = PCube_->getErrorMessage();
-			}
-			}
-			else
-			{
-				ROS_ERROR("...powercubes already initialized...");		        
-				res.success = 1;
-				res.errorMessage.data = "powercubes already initialized";
+				ROS_WARN("...powercubes already initialized...");		        
+				res.success.data = true;
+				res.error_message.data = "powercubes already initialized";
 			}
 
 			return true;
@@ -491,13 +492,13 @@ class PowercubeChainNode
 			if (PCube_->Stop())
 			{
 				ROS_INFO("Stopping powercubes succesfull");
-				res.success = 0; // 0 = true, else = false
+				res.success.data = true;
 			}
 			else
 			{
 				ROS_ERROR("Stopping powercubes not succesfull. error: %s", PCube_->getErrorMessage().c_str());
-				res.success = 1; // 0 = true, else = false
-				res.errorMessage.data = PCube_->getErrorMessage();
+				res.success.data = false;
+				res.error_message.data = PCube_->getErrorMessage();
 			}
 			return true;
 		}
@@ -520,20 +521,20 @@ class PowercubeChainNode
 				if (PCube_->Stop())
 				{
 					ROS_INFO("Recovering powercubes succesfull");
-					res.success = 0; // 0 = true, else = false
+					res.success.data = true;
 				}
 				else
 				{
 					ROS_ERROR("Recovering powercubes not succesfull. error: %s", PCube_->getErrorMessage().c_str());
-					res.success = 1; // 0 = true, else = false
-					res.errorMessage.data = PCube_->getErrorMessage();
+					res.success.data = false;
+					res.error_message.data = PCube_->getErrorMessage();
 				}
 			}
 			else
 			{
-				ROS_ERROR("...powercubes already recovered...");
-				res.success = 1;
-				res.errorMessage.data = "powercubes already recovered";
+				ROS_WARN("...powercubes already recovered...");
+				res.success.data = true;
+				res.error_message.data = "powercubes already recovered";
 			}
 
 			return true;
@@ -549,9 +550,9 @@ class PowercubeChainNode
 		bool srvCallback_SetOperationMode(	cob_srvs::SetOperationMode::Request &req,
 											cob_srvs::SetOperationMode::Response &res )
 		{
-			ROS_INFO("Set operation mode to [%s]", req.operationMode.data.c_str());
-			n_.setParam("OperationMode", req.operationMode.data.c_str());
-			res.success = 0; // 0 = true, else = false
+			ROS_INFO("Set operation mode to [%s]", req.operation_mode.data.c_str());
+			n_.setParam("OperationMode", req.operation_mode.data.c_str());
+			res.success.data = true; // 0 = true, else = false
 			return true;
 		}
 
@@ -565,7 +566,7 @@ class PowercubeChainNode
 		  updater_.update();
 			if (isInitialized_ == true)
 			{
-				// create joint_state message
+				// publish joint state message
 				int DOF = ModIds_param_.size();
 				std::vector<double> ActualPos;
 				std::vector<double> ActualVel;
@@ -592,23 +593,37 @@ class PowercubeChainNode
 					msg.velocity[i] = ActualVel[i];
 					//std::cout << "Joint " << msg.name[i] <<": pos="<<  msg.position[i] << "vel=" << msg.velocity[i] << std::endl;
 				}
-		
-				// publish message
+
 				topicPub_JointState_.publish(msg);
 
+				// publish controller state message
 				pr2_controllers_msgs::JointTrajectoryControllerState controllermsg;
 				controllermsg.header.stamp = ros::Time::now();
 				controllermsg.joint_names.resize(DOF);
+				controllermsg.desired.positions.resize(DOF);
+				controllermsg.desired.velocities.resize(DOF);
 				controllermsg.actual.positions.resize(DOF);
 				controllermsg.actual.velocities.resize(DOF);
+				controllermsg.error.positions.resize(DOF);
+				controllermsg.error.velocities.resize(DOF);
 
 				controllermsg.joint_names = JointNames_;
 
 				for (int i = 0; i<DOF; i++ )
 				{
+					//std::cout << "Joint " << msg.name[i] <<": pos="<<  msg.position[i] << "vel=" << msg.velocity[i] << std::endl;
+					
+					if (traj_point_.positions.size() != 0)
+						controllermsg.desired.positions[i] = traj_point_.positions[i];
+					else
+						controllermsg.desired.positions[i] = 0.0;
+					controllermsg.desired.velocities[i] = 0.0;
+					
 					controllermsg.actual.positions[i] = ActualPos[i];
 					controllermsg.actual.velocities[i] = ActualVel[i];
-					//std::cout << "Joint " << msg.name[i] <<": pos="<<  msg.position[i] << "vel=" << msg.velocity[i] << std::endl;
+					
+					controllermsg.error.positions[i] = controllermsg.desired.positions[i] - controllermsg.actual.positions[i];
+					controllermsg.error.velocities[i] = controllermsg.desired.velocities[i] - controllermsg.actual.velocities[i];
 				}
 				topicPub_ControllerState_.publish(controllermsg);
 

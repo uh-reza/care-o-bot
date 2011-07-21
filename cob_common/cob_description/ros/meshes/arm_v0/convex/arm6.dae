@@ -1,0 +1,798 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA version="1.4.0" xmlns="http://www.collada.org/2005/11/COLLADASchema">
+	<asset>
+		<contributor>
+			<author>NxuStream2 converter - http://www.ageia.com</author>
+			<authoring_tool>PhysX Rocket, PhysX Viewer, or CreateDynamics</authoring_tool>
+			<comments>questions to: jratcliff@ageia.com</comments>
+			<copyright></copyright>
+			<source_data>chair_gothic_tilted</source_data>
+		</contributor>
+		<unit meter="1" name="meter"/>
+		<up_axis>Y_UP</up_axis>
+	</asset>
+   <library_materials>
+      <material id="Material" name="Material">
+         <instance_effect url="#Material-fx"></instance_effect>
+      </material>
+   </library_materials>
+   <library_effects>
+      <effect id="Material-fx" name="Material">
+         <profile_COMMON>
+            <technique id="Material-fx-COMMON" sid="COMMON">
+               <phong>
+                  <ambient>
+                     <color>0.803922 0.588235 0.92549 1</color>
+                  </ambient>
+                  <diffuse>
+                     <color>0.803922 0.588235 0.92549 1</color>
+                  </diffuse>
+                  <specular>
+                     <color>0.631373 0.631373 0.631373 1</color>
+                  </specular>
+                  <shininess>
+                     <float>1</float>
+                  </shininess>
+                  <reflective>
+                     <color>0 0 0 1</color>
+                  </reflective>
+                  <transparent>
+                     <color>1 1 1 1</color>
+                  </transparent>
+                  <transparency>
+                     <float>0</float>
+                  </transparency>
+               </phong>
+           </technique>
+         </profile_COMMON>
+      </effect>
+   </library_effects>
+  <library_geometries>
+    <geometry id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_0-Mesh" name="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_0-Mesh">
+      <convex_mesh>
+        <source id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_0-Position">
+          <float_array count="36" id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_0-Position-array">
+            0 -0.086999997 0.032000002  -0.01451 -0.086999997 0.028520999  -0.021757852 -0.086999997 0.023274999  0.021757852 -0.086999997 0.023274999  
+            0.021644862 -0.058773998 0.023274999  -0.02196 -0.058773998 0.023275999  -0.001355488 -0.053758837 0.023274999  0.012675 -0.058773998 0.029383  
+            -0.001861 -0.058773998 0.031946  0.01451 -0.086999997 0.028520999  -0.009178 -0.058773998 0.030656001  0.010040085 -0.054933053 0.023274999  
+          </float_array>
+          <technique_common>
+            <accessor count="12" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_0-Position-array" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+    		   </technique_common>
+				 </source>
+   		 <vertices id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_0-Vertex">
+					<input semantic="POSITION" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_0-Position"/>
+				</vertices>
+				<triangles material="Material" count="20">
+					<input offset="0" semantic="VERTEX" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_0-Vertex"/>
+           <p>
+             0 1 2  3 0 2  3 2 4  5 2 1  
+             6 4 2  6 2 5  7 6 8  7 8 0  
+             9 3 4  9 4 7  9 0 3  9 7 0  
+             10 8 6  10 6 5  10 5 1  10 0 8  
+             10 1 0  11 4 6  11 6 7  11 7 4  
+           </p>
+				</triangles>
+      </convex_mesh>
+		</geometry>
+    <geometry id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_1-Mesh" name="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_1-Mesh">
+      <convex_mesh>
+        <source id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_1-Position">
+          <float_array count="36" id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_1-Position-array">
+            0 -0.039999999 0.048250001  0 -0.021096 0.056249999  0 -0.044808 0.023274999  0.012121459 -0.021096 0.056249999  
+            0.039551094 -0.021096 0.023274999  0.020058 -0.040282 0.023274999  0.038260002 -0.023689 0.03675  0.020058 -0.040282 0.03675  
+            0.028284 -0.028284 0.048250001  0.033861283 -0.021096 0.048250001  0.004152 -0.044808 0.03675  0.015307 -0.036954999 0.048250001  
+          </float_array>
+          <technique_common>
+            <accessor count="12" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_1-Position-array" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+    		   </technique_common>
+				 </source>
+   		 <vertices id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_1-Vertex">
+					<input semantic="POSITION" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_1-Position"/>
+				</vertices>
+				<triangles material="Material" count="20">
+					<input offset="0" semantic="VERTEX" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_1-Vertex"/>
+           <p>
+             0 1 2  1 0 3  4 1 3  4 2 1  
+             5 4 6  5 6 7  5 2 4  8 7 6  
+             9 3 8  9 8 6  9 6 4  9 4 3  
+             10 2 5  10 5 7  10 0 2  11 0 10  
+             11 10 7  11 7 8  11 3 0  11 8 3  
+           </p>
+				</triangles>
+      </convex_mesh>
+		</geometry>
+    <geometry id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_2-Mesh" name="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_2-Mesh">
+      <convex_mesh>
+        <source id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_2-Position">
+          <float_array count="36" id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_2-Position-array">
+            -0.039551094 -0.021096 0.023274999  0 -0.044808 0.023274999  -0.020058 -0.040282 0.023274999  0 -0.021096 0.056249999  
+            -0.039551094 -0.021096 0.03675  -0.033861283 -0.021096 0.048250001  0 -0.039999999 0.048250001  -0.027119 -0.035911001 0.03675  
+            -0.012315 -0.043281998 0.03675  -0.007804 -0.039230999 0.048250001  -0.022222999 -0.033259001 0.048250001  -0.01225673 -0.021096 0.056249999  
+          </float_array>
+          <technique_common>
+            <accessor count="12" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_2-Position-array" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+    		   </technique_common>
+				 </source>
+   		 <vertices id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_2-Vertex">
+					<input semantic="POSITION" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_2-Position"/>
+				</vertices>
+				<triangles material="Material" count="20">
+					<input offset="0" semantic="VERTEX" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_2-Vertex"/>
+           <p>
+             0 1 2  0 3 1  0 4 3  5 3 4  
+             6 1 3  7 5 4  7 4 0  7 0 2  
+             8 7 2  8 1 6  8 6 9  8 2 1  
+             10 7 8  10 8 9  10 5 7  11 3 5  
+             11 5 10  11 10 9  11 9 6  11 6 3  
+           </p>
+				</triangles>
+      </convex_mesh>
+		</geometry>
+    <geometry id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_3-Mesh" name="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_3-Mesh">
+      <convex_mesh>
+        <source id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_3-Position">
+          <float_array count="36" id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_3-Position-array">
+            0 -0.044808 -0.0097  -0.039551094 -0.021096 -0.0097  -0.022102289 -0.054310162 -0.0097  0 -0.039999999 -0.042675  
+            -0.01 -0.05294656 -0.042675  -0.033861283 -0.021096 -0.042675  0 -0.051819831 -0.036456738  -0.01047429 -0.052999999 -0.0097  
+            -0.037436001 -0.024058999 -0.02925  -0.038963206 -0.021096 -0.02925  0 -0.039999999 -0.02925  -0.033861283 -0.021096 -0.02925  
+          </float_array>
+          <technique_common>
+            <accessor count="12" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_3-Position-array" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+    		   </technique_common>
+				 </source>
+   		 <vertices id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_3-Vertex">
+					<input semantic="POSITION" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_3-Position"/>
+				</vertices>
+				<triangles material="Material" count="20">
+					<input offset="0" semantic="VERTEX" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_3-Vertex"/>
+           <p>
+             0 1 2  3 4 5  6 4 3  6 3 0  
+             6 2 4  7 0 2  7 2 6  7 6 0  
+             8 2 1  8 5 4  8 4 2  9 1 5  
+             9 5 8  9 8 1  10 1 0  10 0 3  
+             10 3 5  11 5 1  11 1 10  11 10 5  
+           </p>
+				</triangles>
+      </convex_mesh>
+		</geometry>
+    <geometry id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_4-Mesh" name="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_4-Mesh">
+      <convex_mesh>
+        <source id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_4-Position">
+          <float_array count="36" id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_4-Position-array">
+            0.033861283 -0.021096 -0.042675  0.01 -0.05294656 -0.042675  0 -0.039999999 -0.042675  0.022121826 -0.054312363 -0.00971091  
+            0 -0.051819831 -0.036456738  0 -0.044808 -0.0097  0.01047429 -0.052999999 -0.0097  0.039551094 -0.021096 -0.0097  
+            0.039099906 -0.021096 -0.02925  0 -0.039999999 -0.02925  0.033861283 -0.021096 -0.02925  0 -0.042117029 -0.042675  
+          </float_array>
+          <technique_common>
+            <accessor count="12" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_4-Position-array" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+    		   </technique_common>
+				 </source>
+   		 <vertices id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_4-Vertex">
+					<input semantic="POSITION" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_4-Position"/>
+				</vertices>
+				<triangles material="Material" count="20">
+					<input offset="0" semantic="VERTEX" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_4-Vertex"/>
+           <p>
+             0 1 2  0 3 1  4 5 2  4 1 3  
+             6 5 4  6 4 3  6 3 7  6 7 5  
+             8 7 3  8 3 0  8 0 7  9 0 2  
+             9 5 7  9 2 5  10 7 0  10 0 9  
+             10 9 7  11 2 1  11 1 4  11 4 2  
+           </p>
+				</triangles>
+      </convex_mesh>
+		</geometry>
+    <geometry id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_5-Mesh" name="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_5-Mesh">
+      <convex_mesh>
+        <source id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_5-Position">
+          <float_array count="36" id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_5-Position-array">
+            0.02733 -0.086999997 -0.016644999  0.01 -0.05294656 -0.042675  0.030184919 -0.058714703 -0.0097  0 -0.086999997 -0.029781001  
+            0 -0.052999999 -0.0097  0 -0.073674761 -0.042675  0 -0.051819831 -0.036456738  0.028172234 -0.086999997 -0.0097  
+            0.01 -0.073674761 -0.042675  0.01 -0.086999997 -0.032000002  0.022121826 -0.054312363 -0.00971091  0.030480407 -0.086999997 -0.0097  
+          </float_array>
+          <technique_common>
+            <accessor count="12" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_5-Position-array" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+    		   </technique_common>
+				 </source>
+   		 <vertices id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_5-Vertex">
+					<input semantic="POSITION" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_5-Position"/>
+				</vertices>
+				<triangles material="Material" count="20">
+					<input offset="0" semantic="VERTEX" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_5-Vertex"/>
+           <p>
+             0 1 2  3 4 5  6 1 5  6 5 4  
+             7 4 3  7 3 0  7 2 4  8 5 1  
+             8 1 0  9 3 5  9 5 8  9 0 3  
+             9 8 0  10 1 6  10 6 4  10 2 1  
+             10 4 2  11 0 2  11 2 7  11 7 0  
+           </p>
+				</triangles>
+      </convex_mesh>
+		</geometry>
+    <geometry id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_6-Mesh" name="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_6-Mesh">
+      <convex_mesh>
+        <source id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_6-Position">
+          <float_array count="36" id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_6-Position-array">
+            -0.030364633 -0.058773998 -0.0097  -0.028172234 -0.086999997 -0.0097  0 -0.052999999 -0.0097  0 -0.086999997 -0.029781001  
+            0 -0.073674761 -0.042675  -0.01 -0.073674761 -0.042675  -0.01 -0.05294656 -0.042675  0 -0.051819831 -0.036456738  
+            -0.016812 -0.086999997 -0.027228  -0.02733 -0.086999997 -0.016644999  -0.022102289 -0.054310162 -0.0097  -0.01 -0.086999997 -0.032000002  
+          </float_array>
+          <technique_common>
+            <accessor count="12" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_6-Position-array" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+    		   </technique_common>
+				 </source>
+   		 <vertices id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_6-Vertex">
+					<input semantic="POSITION" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_6-Position"/>
+				</vertices>
+				<triangles material="Material" count="20">
+					<input offset="0" semantic="VERTEX" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_6-Vertex"/>
+           <p>
+             0 1 2  3 2 1  4 5 6  4 2 3  
+             7 2 4  7 4 6  8 3 1  9 5 8  
+             9 8 1  9 0 6  9 6 5  9 1 0  
+             10 2 7  10 7 6  10 0 2  10 6 0  
+             11 3 8  11 8 5  11 5 4  11 4 3  
+           </p>
+				</triangles>
+      </convex_mesh>
+		</geometry>
+    <geometry id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_7-Mesh" name="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_7-Mesh">
+      <convex_mesh>
+        <source id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_7-Position">
+          <float_array count="36" id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_7-Position-array">
+            -0 0.010398758 -0.056249999  0.036245536 -0.021096 -0.042750001  0.038443893 0.010398758 -0.042675  -0 0.010398758 -0.075649999  
+            -0 -0.021096 -0.075649999  -0 -0.021096 -0.056249999  0.0360802 -0.021096 -0.068049997  0.040530462 0.010398758 -0.068049997  
+            0.028836001 0 -0.075649999  0.041999999 0 -0.068049997  0.026804417 0.010398758 -0.075649999  0.041646 -0.00544 -0.042750001  
+          </float_array>
+          <technique_common>
+            <accessor count="12" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_7-Position-array" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+    		   </technique_common>
+				 </source>
+   		 <vertices id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_7-Vertex">
+					<input semantic="POSITION" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_7-Position"/>
+				</vertices>
+				<triangles material="Material" count="20">
+					<input offset="0" semantic="VERTEX" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_7-Vertex"/>
+           <p>
+             0 1 2  0 2 3  0 3 4  5 4 1  
+             5 1 0  5 0 4  6 1 4  7 3 2  
+             8 7 9  8 9 6  8 6 4  8 4 3  
+             10 3 7  10 7 8  10 8 3  11 9 7  
+             11 7 2  11 1 6  11 6 9  11 2 1  
+           </p>
+				</triangles>
+      </convex_mesh>
+		</geometry>
+    <geometry id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_8-Mesh" name="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_8-Mesh">
+      <convex_mesh>
+        <source id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_8-Position">
+          <float_array count="36" id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_8-Position-array">
+            -0 -0.021096 -0.056249999  -0.033861283 -0.021096 -0.042675  -0.019446747 -0.021096 -0.075649999  -0 0.010425 -0.056249999  
+            -0 0.010425 -0.075649999  -0.038435932 0.010425 -0.042675  -0 -0.021096 -0.075649999  -0.040515095 0.010425 -0.068049997  
+            -0.036226034 -0.021096 -0.068049997  -0.041785002 -0.004249 -0.068049997  -0.041646 -0.00544 -0.042750001  -0.026744854 0.010425 -0.075649999  
+          </float_array>
+          <technique_common>
+            <accessor count="12" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_8-Position-array" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+    		   </technique_common>
+				 </source>
+   		 <vertices id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_8-Vertex">
+					<input semantic="POSITION" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_8-Position"/>
+				</vertices>
+				<triangles material="Material" count="20">
+					<input offset="0" semantic="VERTEX" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_8-Vertex"/>
+           <p>
+             0 1 2  3 4 5  3 0 4  3 5 1  
+             3 1 0  6 2 4  6 4 0  6 0 2  
+             7 5 4  8 9 2  8 2 1  10 9 8  
+             10 8 1  10 5 7  10 7 9  10 1 5  
+             11 4 2  11 7 4  11 2 9  11 9 7  
+           </p>
+				</triangles>
+      </convex_mesh>
+		</geometry>
+    <geometry id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_9-Mesh" name="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_9-Mesh">
+      <convex_mesh>
+        <source id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_9-Position">
+          <float_array count="36" id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_9-Position-array">
+            -0.033861283 -0.021096 -0.042675  -0 0.044808 -0.0097  -0.039551094 -0.021096 -0.0097  0 0.039999999 -0.042675  
+            -0.038260002 0.023689 -0.0097  -0.033259001 0.022222999 -0.042675  -0.044500001 0 -0.02925  -0.037436001 0.024058999 -0.02925  
+            -0.018486001 0.040479001 -0.02925  -0.045000002 0 -0.0097  -0.020058 0.040282 -0.0097  -0.039999999 0 -0.042675  
+          </float_array>
+          <technique_common>
+            <accessor count="12" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_9-Position-array" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+    		   </technique_common>
+				 </source>
+   		 <vertices id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_9-Vertex">
+					<input semantic="POSITION" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_9-Position"/>
+				</vertices>
+				<triangles material="Material" count="20">
+					<input offset="0" semantic="VERTEX" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_9-Vertex"/>
+           <p>
+             0 1 2  3 1 0  4 2 1  5 3 0  
+             6 4 7  6 0 2  8 3 5  8 5 7  
+             8 1 3  9 2 4  9 4 6  9 6 2  
+             10 4 1  10 1 8  10 7 4  10 8 7  
+             11 5 0  11 0 6  11 7 5  11 6 7  
+           </p>
+				</triangles>
+      </convex_mesh>
+		</geometry>
+    <geometry id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_10-Mesh" name="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_10-Mesh">
+      <convex_mesh>
+        <source id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_10-Position">
+          <float_array count="36" id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_10-Position-array">
+            0.039551094 -0.021096 -0.0097  -0 0.044808 -0.0097  0.033861283 -0.021096 -0.042675  0.020058 0.040282 -0.0097  
+            0.007804 0.039230999 -0.042675  0.036954999 0.015307 -0.042675  0.041960999 0.016256001 -0.0097  0 0.039999999 -0.042675  
+            0.044298001 -0.00423 -0.02925  0.029141 0.033631001 -0.02925  0.045000002 0 -0.0097  0.022222999 0.033259001 -0.042675  
+          </float_array>
+          <technique_common>
+            <accessor count="12" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_10-Position-array" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+    		   </technique_common>
+				 </source>
+   		 <vertices id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_10-Vertex">
+					<input semantic="POSITION" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_10-Position"/>
+				</vertices>
+				<triangles material="Material" count="20">
+					<input offset="0" semantic="VERTEX" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_10-Vertex"/>
+           <p>
+             0 1 2  1 0 3  4 1 3  5 2 4  
+             6 3 0  7 2 1  7 1 4  7 4 2  
+             8 5 6  8 0 2  8 2 5  9 3 6  
+             9 6 5  9 4 3  10 6 0  10 0 8  
+             10 8 6  11 5 4  11 4 9  11 9 5  
+           </p>
+				</triangles>
+      </convex_mesh>
+		</geometry>
+    <geometry id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_11-Mesh" name="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_11-Mesh">
+      <convex_mesh>
+        <source id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_11-Position">
+          <float_array count="36" id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_11-Position-array">
+            0.01 -0.073674761 -0.042675  0.0360802 -0.021096 -0.068049997  0.033861283 -0.021096 -0.042675  -0.036300741 -0.021096 -0.042750001  
+            -0.01 -0.073674761 -0.042675  -0.036226034 -0.021096 -0.068049997  0.01 -0.041999999 -0.068049997  0.019613825 -0.021096 -0.075649999  
+            -0.012699 -0.025889 -0.075649999  -0.019446747 -0.021096 -0.075649999  -0.025707999 -0.033213001 -0.068049997  -0.01 -0.041999999 -0.068049997  
+          </float_array>
+          <technique_common>
+            <accessor count="12" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_11-Position-array" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+    		   </technique_common>
+				 </source>
+   		 <vertices id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_11-Vertex">
+					<input semantic="POSITION" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_11-Position"/>
+				</vertices>
+				<triangles material="Material" count="20">
+					<input offset="0" semantic="VERTEX" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_11-Vertex"/>
+           <p>
+             0 1 2  3 2 1  4 0 2  4 2 3  
+             5 4 3  5 3 1  6 0 4  6 1 0  
+             7 1 6  7 6 8  7 5 1  9 5 7  
+             9 7 8  10 5 9  10 9 8  10 4 5  
+             11 4 10  11 10 8  11 8 6  11 6 4  
+           </p>
+				</triangles>
+      </convex_mesh>
+		</geometry>
+    <geometry id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_12-Mesh" name="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_12-Mesh">
+      <convex_mesh>
+        <source id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_12-Position">
+          <float_array count="36" id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_12-Position-array">
+            0.039551094 -0.021096 -0.0097  0.028172234 -0.086999997 -0.0097  0 -0.044808 -0.0097  0.039551094 -0.021096 0.023274999  
+            0 -0.044808 0.023274999  0.021757852 -0.086999997 0.023274999  0 -0.079999998 0.022838721  0.031597 -0.086999997 0.005064  
+            0 -0.055 -0.0097  0.030480407 -0.086999997 -0.0097  0.029545 -0.086999997 0.012291  0.018639037 -0.086999997 0.023274999  
+          </float_array>
+          <technique_common>
+            <accessor count="12" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_12-Position-array" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+    		   </technique_common>
+				 </source>
+   		 <vertices id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_12-Vertex">
+					<input semantic="POSITION" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_12-Position"/>
+				</vertices>
+				<triangles material="Material" count="20">
+					<input offset="0" semantic="VERTEX" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_12-Vertex"/>
+           <p>
+             0 1 2  0 2 3  4 5 3  4 3 2  
+             6 4 2  7 0 3  7 5 1  8 2 1  
+             8 1 6  8 6 2  9 1 0  9 0 7  
+             9 7 1  10 3 5  10 5 7  10 7 3  
+             11 1 5  11 6 1  11 5 4  11 4 6  
+           </p>
+				</triangles>
+      </convex_mesh>
+		</geometry>
+    <geometry id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_13-Mesh" name="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_13-Mesh">
+      <convex_mesh>
+        <source id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_13-Position">
+          <float_array count="36" id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_13-Position-array">
+            -0.018639037 -0.086999997 0.023274999  -0.029545 -0.086999997 0.012291  -0.030480407 -0.086999997 -0.0097  -0.039551094 -0.021096 -0.0097  
+            -0.039551094 -0.021096 0.023274999  0 -0.044808 -0.0097  0 -0.044808 0.023274999  0 -0.079999998 0.022838721  
+            0 -0.055 -0.0097  -0.021757852 -0.086999997 0.023274999  -0.020629155 -0.079999998 -0.0097  -0.031597 -0.086999997 0.005064  
+          </float_array>
+          <technique_common>
+            <accessor count="12" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_13-Position-array" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+    		   </technique_common>
+				 </source>
+   		 <vertices id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_13-Vertex">
+					<input semantic="POSITION" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_13-Position"/>
+				</vertices>
+				<triangles material="Material" count="20">
+					<input offset="0" semantic="VERTEX" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_13-Vertex"/>
+           <p>
+             0 1 2  3 4 5  3 5 2  6 4 0  
+             6 5 4  7 5 6  7 6 0  7 0 2  
+             8 2 5  8 5 7  9 0 4  9 4 1  
+             9 1 0  10 7 2  10 2 8  10 8 7  
+             11 4 3  11 3 2  11 2 1  11 1 4  
+           </p>
+				</triangles>
+      </convex_mesh>
+		</geometry>
+    <geometry id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_14-Mesh" name="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_14-Mesh">
+      <convex_mesh>
+        <source id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_14-Position">
+          <float_array count="36" id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_14-Position-array">
+            0.040615041 0.010398758 -0.042750001  0.040530462 0.010398758 -0.068049997  0.020143 0.036853999 -0.042750001  -0.040610526 0.010425 -0.042750001  
+            -0.020143 0.036853999 -0.042750001  0.014587 0.039386 -0.068049997  -0.040073998 0.012573 -0.068049997  -0.018497 0.037707999 -0.068049997  
+            -0.026744854 0.010425 -0.075649999  0.019866999 0.0209 -0.075649999  0.026804417 0.010398758 -0.075649999  -0.004195 0.041790001 -0.042750001  
+          </float_array>
+          <technique_common>
+            <accessor count="12" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_14-Position-array" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+    		   </technique_common>
+				 </source>
+   		 <vertices id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_14-Vertex">
+					<input semantic="POSITION" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_14-Position"/>
+				</vertices>
+				<triangles material="Material" count="20">
+					<input offset="0" semantic="VERTEX" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_14-Vertex"/>
+           <p>
+             0 1 2  0 2 3  4 3 2  5 2 1  
+             6 3 4  6 4 7  6 8 3  6 7 8  
+             9 8 7  9 7 5  9 5 1  10 8 9  
+             10 9 1  10 1 0  10 0 3  10 3 8  
+             11 4 2  11 2 5  11 7 4  11 5 7  
+           </p>
+				</triangles>
+      </convex_mesh>
+		</geometry>
+    <geometry id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_15-Mesh" name="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_15-Mesh">
+      <convex_mesh>
+        <source id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_15-Position">
+          <float_array count="36" id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_15-Position-array">
+            -0.012315 0.043281998 -0.0097  0.045000002 0 -0.0097  -0.039551094 -0.021096 -0.0097  -0.033861283 -0.021096 0.048250001  
+            0.033861283 -0.021096 0.048250001  0.010432 0.022167999 0.056249999  -0.028284 0.028284 0.048250001  0.027119 0.035911001 0.03675  
+            0.039551094 -0.021096 -0.0097  0.027119 0.035911001 -0.0097  -0.041960999 0.016256001 -0.0097  0.044234 0.008269 0.03675  
+          </float_array>
+          <technique_common>
+            <accessor count="12" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_15-Position-array" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+    		   </technique_common>
+				 </source>
+   		 <vertices id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_15-Vertex">
+					<input semantic="POSITION" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_15-Position"/>
+				</vertices>
+				<triangles material="Material" count="20">
+					<input offset="0" semantic="VERTEX" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_15-Vertex"/>
+           <p>
+             0 1 2  3 2 4  3 4 5  6 3 5  
+             7 0 6  7 6 5  8 4 2  8 2 1  
+             9 1 0  9 0 7  10 2 3  10 3 6  
+             10 0 2  10 6 0  11 1 9  11 9 7  
+             11 4 8  11 8 1  11 5 4  11 7 5  
+           </p>
+				</triangles>
+      </convex_mesh>
+		</geometry>
+  </library_geometries>
+  <library_visual_scenes>
+	  <visual_scene id="Scene0-Visual" name="Scene0-Visual">
+      <node id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6-Node" name="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6" type="NODE">
+        <translate>0 0 0</translate>
+        <rotate>1 0 0  0</rotate>
+      </node>
+  	  </visual_scene>
+  </library_visual_scenes>
+  <library_physics_materials>
+    <physics_material id="pmat0_0-PhysicsMaterial" name="pmat0_0-PhysicsMaterial">
+      <technique_common>
+        <dynamic_friction>0.5</dynamic_friction>
+        <restitution>0</restitution>
+        <static_friction>0.5</static_friction>
+      </technique_common>
+    </physics_material>
+  </library_physics_materials>
+  <library_physics_models>
+    <physics_model id="Scene0-PhysicsModel">
+      <rigid_body sid="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6-RigidBody" name="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6">
+        <technique_common>
+          <instance_physics_material url="#pmat0_0-PhysicsMaterial"/>
+         <shape>
+            <translate>0 0 0</translate>
+            <rotate>1 0 0  0</rotate>
+            <instance_physics_material url="#pmat0_0-PhysicsMaterial"/>
+            <density>1</density>
+            <extra>
+              <technique profile="PhysX">
+               <skinWidth>0</skinWidth>
+              </technique>
+            </extra>
+            <instance_geometry url="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_0-Mesh"/>
+         </shape>
+         <shape>
+            <translate>0 0 0</translate>
+            <rotate>1 0 0  0</rotate>
+            <instance_physics_material url="#pmat0_0-PhysicsMaterial"/>
+            <density>1</density>
+            <extra>
+              <technique profile="PhysX">
+               <skinWidth>0</skinWidth>
+              </technique>
+            </extra>
+            <instance_geometry url="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_1-Mesh"/>
+         </shape>
+         <shape>
+            <translate>0 0 0</translate>
+            <rotate>1 0 0  0</rotate>
+            <instance_physics_material url="#pmat0_0-PhysicsMaterial"/>
+            <density>1</density>
+            <extra>
+              <technique profile="PhysX">
+               <skinWidth>0</skinWidth>
+              </technique>
+            </extra>
+            <instance_geometry url="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_2-Mesh"/>
+         </shape>
+         <shape>
+            <translate>0 0 0</translate>
+            <rotate>1 0 0  0</rotate>
+            <instance_physics_material url="#pmat0_0-PhysicsMaterial"/>
+            <density>1</density>
+            <extra>
+              <technique profile="PhysX">
+               <skinWidth>0</skinWidth>
+              </technique>
+            </extra>
+            <instance_geometry url="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_3-Mesh"/>
+         </shape>
+         <shape>
+            <translate>0 0 0</translate>
+            <rotate>1 0 0  0</rotate>
+            <instance_physics_material url="#pmat0_0-PhysicsMaterial"/>
+            <density>1</density>
+            <extra>
+              <technique profile="PhysX">
+               <skinWidth>0</skinWidth>
+              </technique>
+            </extra>
+            <instance_geometry url="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_4-Mesh"/>
+         </shape>
+         <shape>
+            <translate>0 0 0</translate>
+            <rotate>1 0 0  0</rotate>
+            <instance_physics_material url="#pmat0_0-PhysicsMaterial"/>
+            <density>1</density>
+            <extra>
+              <technique profile="PhysX">
+               <skinWidth>0</skinWidth>
+              </technique>
+            </extra>
+            <instance_geometry url="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_5-Mesh"/>
+         </shape>
+         <shape>
+            <translate>0 0 0</translate>
+            <rotate>1 0 0  0</rotate>
+            <instance_physics_material url="#pmat0_0-PhysicsMaterial"/>
+            <density>1</density>
+            <extra>
+              <technique profile="PhysX">
+               <skinWidth>0</skinWidth>
+              </technique>
+            </extra>
+            <instance_geometry url="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_6-Mesh"/>
+         </shape>
+         <shape>
+            <translate>0 0 0</translate>
+            <rotate>1 0 0  0</rotate>
+            <instance_physics_material url="#pmat0_0-PhysicsMaterial"/>
+            <density>1</density>
+            <extra>
+              <technique profile="PhysX">
+               <skinWidth>0</skinWidth>
+              </technique>
+            </extra>
+            <instance_geometry url="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_7-Mesh"/>
+         </shape>
+         <shape>
+            <translate>0 0 0</translate>
+            <rotate>1 0 0  0</rotate>
+            <instance_physics_material url="#pmat0_0-PhysicsMaterial"/>
+            <density>1</density>
+            <extra>
+              <technique profile="PhysX">
+               <skinWidth>0</skinWidth>
+              </technique>
+            </extra>
+            <instance_geometry url="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_8-Mesh"/>
+         </shape>
+         <shape>
+            <translate>0 0 0</translate>
+            <rotate>1 0 0  0</rotate>
+            <instance_physics_material url="#pmat0_0-PhysicsMaterial"/>
+            <density>1</density>
+            <extra>
+              <technique profile="PhysX">
+               <skinWidth>0</skinWidth>
+              </technique>
+            </extra>
+            <instance_geometry url="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_9-Mesh"/>
+         </shape>
+         <shape>
+            <translate>0 0 0</translate>
+            <rotate>1 0 0  0</rotate>
+            <instance_physics_material url="#pmat0_0-PhysicsMaterial"/>
+            <density>1</density>
+            <extra>
+              <technique profile="PhysX">
+               <skinWidth>0</skinWidth>
+              </technique>
+            </extra>
+            <instance_geometry url="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_10-Mesh"/>
+         </shape>
+         <shape>
+            <translate>0 0 0</translate>
+            <rotate>1 0 0  0</rotate>
+            <instance_physics_material url="#pmat0_0-PhysicsMaterial"/>
+            <density>1</density>
+            <extra>
+              <technique profile="PhysX">
+               <skinWidth>0</skinWidth>
+              </technique>
+            </extra>
+            <instance_geometry url="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_11-Mesh"/>
+         </shape>
+         <shape>
+            <translate>0 0 0</translate>
+            <rotate>1 0 0  0</rotate>
+            <instance_physics_material url="#pmat0_0-PhysicsMaterial"/>
+            <density>1</density>
+            <extra>
+              <technique profile="PhysX">
+               <skinWidth>0</skinWidth>
+              </technique>
+            </extra>
+            <instance_geometry url="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_12-Mesh"/>
+         </shape>
+         <shape>
+            <translate>0 0 0</translate>
+            <rotate>1 0 0  0</rotate>
+            <instance_physics_material url="#pmat0_0-PhysicsMaterial"/>
+            <density>1</density>
+            <extra>
+              <technique profile="PhysX">
+               <skinWidth>0</skinWidth>
+              </technique>
+            </extra>
+            <instance_geometry url="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_13-Mesh"/>
+         </shape>
+         <shape>
+            <translate>0 0 0</translate>
+            <rotate>1 0 0  0</rotate>
+            <instance_physics_material url="#pmat0_0-PhysicsMaterial"/>
+            <density>1</density>
+            <extra>
+              <technique profile="PhysX">
+               <skinWidth>0</skinWidth>
+              </technique>
+            </extra>
+            <instance_geometry url="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_14-Mesh"/>
+         </shape>
+         <shape>
+            <translate>0 0 0</translate>
+            <rotate>1 0 0  0</rotate>
+            <instance_physics_material url="#pmat0_0-PhysicsMaterial"/>
+            <density>1</density>
+            <extra>
+              <technique profile="PhysX">
+               <skinWidth>0</skinWidth>
+              </technique>
+            </extra>
+            <instance_geometry url="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6_15-Mesh"/>
+         </shape>
+        <dynamic>true</dynamic>
+        <mass>1</mass>
+		   	</technique_common>
+        <extra>
+          <technique profile="PhysX">
+            <extra>
+              <technique profile="PhysX">
+                <linearDamping>0</linearDamping>
+                <angularDamping>0</angularDamping>
+                <solverIterationCount>32</solverIterationCount>
+              </technique>
+            </extra>
+            <disable_collision>false</disable_collision>
+          </technique>
+        </extra>
+  	  </rigid_body>
+    </physics_model>
+  </library_physics_models>
+  <library_physics_scenes>
+    <physics_scene id="Scene0-Physics">
+      <instance_physics_model url="#Scene0-PhysicsModel">
+        <instance_rigid_body target="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6-Node" body="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/arm_v0/convex/arm6-RigidBody"/>
+      <extra>
+        <technique profile="PhysX">
+        </technique>
+      </extra>
+      </instance_physics_model>
+      <technique_common>
+        <gravity>0 -9.800000191 0</gravity>
+      </technique_common>
+    </physics_scene>
+  </library_physics_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene0-Visual"/>
+    <instance_physics_scene url="#Scene0-Physics"/>
+  </scene>
+</COLLADA>

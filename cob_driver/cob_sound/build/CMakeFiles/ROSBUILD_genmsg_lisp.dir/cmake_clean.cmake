@@ -1,0 +1,42 @@
+FILE(REMOVE_RECURSE
+  "../src/cob_sound/msg"
+  "../src/cob_sound/srv"
+  "../msg_gen"
+  "../srv_gen"
+  "../msg_gen"
+  "../srv_gen"
+  "CMakeFiles/ROSBUILD_genmsg_lisp"
+  "../msg_gen/lisp/SayAction.lisp"
+  "../msg_gen/lisp/_package.lisp"
+  "../msg_gen/lisp/_package_SayAction.lisp"
+  "../msg_gen/lisp/SayGoal.lisp"
+  "../msg_gen/lisp/_package.lisp"
+  "../msg_gen/lisp/_package_SayGoal.lisp"
+  "../msg_gen/lisp/SayActionGoal.lisp"
+  "../msg_gen/lisp/_package.lisp"
+  "../msg_gen/lisp/_package_SayActionGoal.lisp"
+  "../msg_gen/lisp/SayResult.lisp"
+  "../msg_gen/lisp/_package.lisp"
+  "../msg_gen/lisp/_package_SayResult.lisp"
+  "../msg_gen/lisp/SayActionResult.lisp"
+  "../msg_gen/lisp/_package.lisp"
+  "../msg_gen/lisp/_package_SayActionResult.lisp"
+  "../msg_gen/lisp/SayFeedback.lisp"
+  "../msg_gen/lisp/_package.lisp"
+  "../msg_gen/lisp/_package_SayFeedback.lisp"
+  "../msg_gen/lisp/SayActionFeedback.lisp"
+  "../msg_gen/lisp/_package.lisp"
+  "../msg_gen/lisp/_package_SayActionFeedback.lisp"
+  "../msg/SayAction.msg"
+  "../msg/SayGoal.msg"
+  "../msg/SayActionGoal.msg"
+  "../msg/SayResult.msg"
+  "../msg/SayActionResult.msg"
+  "../msg/SayFeedback.msg"
+  "../msg/SayActionFeedback.msg"
+)
+
+# Per-language clean rules from dependency scanning.
+FOREACH(lang)
+  INCLUDE(CMakeFiles/ROSBUILD_genmsg_lisp.dir/cmake_clean_${lang}.cmake OPTIONAL)
+ENDFOREACH(lang)

@@ -34,20 +34,29 @@
 			<collision>
 				<origin xyz="0 0 0" rpy="0 0 0" />
 				<geometry>
-					<mesh filename="package://cob_description/ros/meshes/sdh_v0/palm.stl"/>
+					<mesh filename="package://cob_description/ros/meshes/sdh_v0/palm.stlb"/>
 				</geometry>
 			</collision>
 		</link>
+		
+		<!-- grasp link -->
+		<joint name="${name}_grasp_joint" type="fixed" >
+			<origin xyz="0 0 0.15" rpy="0 0 0"/>
+			<parent link="${name}_palm_link" />
+			<child link="${name}_grasp_link" />
+		</joint>
+
+		<link name="${name}_grasp_link"/>
 
 		<!-- finger1 -->
 		<!-- joint between sdh_palm_link and sdh_finger_11_link -->
-		<joint name="${name}_finger_11_joint" type="revolute">
-			<origin xyz="0.01905 0.033 0.0745" rpy="0 0 3.159265" />
+		<joint name="${name}_knuckle_joint" type="revolute">
+			<origin xyz="0.01905 0.033 0.0745" rpy="0 0 3.14159265" />
 			<parent link="${name}_palm_link"/>
 			<child link="${name}_finger_11_link"/>
 			<axis xyz="0 0 1" />
 			<dynamics damping="1" />
-			<limit effort="100" lower="-2" upper="2" velocity="5"/>
+			<limit effort="100" lower="0" upper="1.570796327" velocity="5"/>
 		</joint>
 
 		<link name="${name}_finger_11_link">
@@ -68,7 +77,7 @@
 			<collision>
 				<origin xyz="0 0 0" rpy="0 0 0" />
 				<geometry>
-				<mesh filename="package://cob_description/ros/meshes/sdh_v0/knuckle.stl"/>
+				<mesh filename="package://cob_description/ros/meshes/sdh_v0/knuckle.stlb"/>
 				</geometry>
 			</collision>
 		</link>
@@ -80,7 +89,7 @@
 			<child link="${name}_finger_12_link"/>
 			<axis xyz="0 1 0" />
 			<dynamics damping="1" />
-			<limit effort="100" lower="-2" upper="2" velocity="5"/>
+			<limit effort="100" lower="-1.570796327" upper="1.570796327" velocity="5"/>
 		</joint>
 
 		<link name="${name}_finger_12_link">
@@ -101,19 +110,20 @@
 			<collision>
 				<origin xyz="0 0 0" rpy="0 0 0" />
 				<geometry>
-					<mesh filename="package://cob_description/ros/meshes/sdh_v0/finger.stl"/>
+					<mesh filename="package://cob_description/ros/meshes/sdh_v0/finger.stlb"/>
 				</geometry>
 			</collision>
 		</link>
 
 		<!-- joint between sdh_finger_12_link and sdh_finger_13_link -->
 		<joint name="${name}_finger_13_joint" type="revolute">
+			 
 			<origin xyz="0 0 0.0865" rpy="0 0 0" />
 			<parent link="${name}_finger_12_link"/>
 			<child link="${name}_finger_13_link"/>
 			<axis xyz="0 1 0" />
 			<dynamics damping="1" />
-			<limit effort="100" lower="-2" upper="2" velocity="5"/>
+			<limit effort="100" lower="-1.570796327" upper="1.570796327" velocity="5"/>
 		</joint>
 
 		<link name="${name}_finger_13_link">
@@ -134,7 +144,7 @@
 			<collision>
 				<origin xyz="0 0 0" rpy="0 0 0" />
 				<geometry>
-					<mesh filename="package://cob_description/ros/meshes/sdh_v0/finger_tip.stl"/>
+					<mesh filename="package://cob_description/ros/meshes/sdh_v0/finger_tip.stlb"/>
 				</geometry>
 			</collision>
 		</link>
@@ -142,12 +152,13 @@
 		<!-- finger2 -->
 		<!-- joint between sdh_palm_link and sdh_finger_21_link -->
 		<joint name="${name}_finger_21_joint" type="revolute">
+			<mimic joint="${name}_knuckle_joint" multiplier="1" offset="0"/>
 			<origin xyz="0.01905 -0.033 0.0745" rpy="0 0 3.14159265" />
 			<parent link="${name}_palm_link"/>
 			<child link="${name}_finger_21_link"/>
-			<axis xyz="0 0 1" />
+			<axis xyz="0 0 -1" />
 			<dynamics damping="1" />
-			<limit effort="100" lower="-2" upper="2" velocity="5"/>
+			<limit effort="100" lower="0" upper="1.570796327" velocity="5"/>
 		</joint>
 
 		<link name="${name}_finger_21_link">
@@ -168,7 +179,7 @@
 			<collision>
 				<origin xyz="0 0 0" rpy="1.57079633 0 0" />
 				<geometry>
-					<mesh filename="package://cob_description/ros/meshes/sdh_v0/knuckle.stl"/>
+					<mesh filename="package://cob_description/ros/meshes/sdh_v0/knuckle.stlb"/>
 				</geometry>
 			</collision>
 		</link>
@@ -180,7 +191,7 @@
 			<child link="${name}_finger_22_link"/>
 			<axis xyz="0 1 0" />
 			<dynamics damping="1" />
-			<limit effort="100" lower="-2" upper="2" velocity="5"/>
+			<limit effort="100" lower="-1.570796327" upper="1.570796327" velocity="5"/>
 		</joint>
 
 		<link name="${name}_finger_22_link">
@@ -201,7 +212,7 @@
 			<collision>
 				<origin xyz="0 0 0" rpy="0 0 0" />
 				<geometry>
-					<mesh filename="package://cob_description/ros/meshes/sdh_v0/finger.stl"/>
+					<mesh filename="package://cob_description/ros/meshes/sdh_v0/finger.stlb"/>
 				</geometry>
 			</collision>
 		</link>
@@ -213,7 +224,7 @@
 			<child link="${name}_finger_23_link"/>
 			<axis xyz="0 1 0" />
 			<dynamics damping="1" />
-			<limit effort="100" lower="-2" upper="2" velocity="5"/>
+			<limit effort="100" lower="-1.570796327" upper="1.570796327" velocity="5"/>
 		</joint>
 
 		<link name="${name}_finger_23_link">
@@ -234,7 +245,7 @@
 			<collision>
 				<origin xyz="0 0 0" rpy="0 0 0" />
 				<geometry>
-					<mesh filename="package://cob_description/ros/meshes/sdh_v0/finger_tip.stl"/>
+					<mesh filename="package://cob_description/ros/meshes/sdh_v0/finger_tip.stlb"/>
 				</geometry>
 			</collision>
 		</link>
@@ -265,7 +276,7 @@
 			<collision>
 				<origin xyz="0 0 0" rpy="0 0 0" />
 				<geometry>
-					<mesh filename="package://cob_description/ros/meshes/sdh_v0/knuckle.stl"/>
+					<mesh filename="package://cob_description/ros/meshes/sdh_v0/knuckle.stlb"/>
 				</geometry>
 			</collision>
 		</link>
@@ -277,7 +288,7 @@
 		<child link="${name}_thumb_2_link"/>
 		<axis xyz="0 1 0" />
 		<dynamics damping="1" />
-		<limit effort="100" lower="-2" upper="2" velocity="5"/>
+		<limit effort="100" lower="-1.570796327" upper="1.570796327" velocity="5"/>
 		</joint>
 
 		<link name="${name}_thumb_2_link">
@@ -298,7 +309,7 @@
 			<collision>
 				<origin xyz="0 0 0" rpy="0 0 0" />
 				<geometry>
-					<mesh filename="package://cob_description/ros/meshes/sdh_v0/finger.stl"/>
+					<mesh filename="package://cob_description/ros/meshes/sdh_v0/finger.stlb"/>
 				</geometry>
 			</collision>
 		</link>
@@ -310,7 +321,7 @@
 			<child link="${name}_thumb_3_link"/>
 			<axis xyz="0 1 0" />
 			<dynamics damping="1" />
-			<limit effort="100" lower="-2" upper="2" velocity="5"/>
+			<limit effort="100" lower="-1.570796327" upper="1.570796327" velocity="5"/>
 		</joint>
 
 		<link name="${name}_thumb_3_link">
@@ -331,7 +342,7 @@
 			<collision>
 				<origin xyz="0 0 0" rpy="0 0 0" />
 				<geometry>
-					<mesh filename="package://cob_description/ros/meshes/sdh_v0/finger_tip.stl"/>
+					<mesh filename="package://cob_description/ros/meshes/sdh_v0/finger_tip.stlb"/>
 				</geometry>
 			</collision>
 		</link>

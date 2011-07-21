@@ -1,0 +1,38 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../common/include/cob_relayboard/SerialIO.h
+termios.h
+-
+sys/select.h
+-
+string
+-
+
+/home/reza/git/care-o-bot/cob_driver/cob_relayboard/common/src/SerialIO.cpp
+cob_relayboard/SerialIO.h
+-
+math.h
+-
+string.h
+-
+iostream
+-
+errno.h
+-
+sys/types.h
+-
+sys/stat.h
+-
+fcntl.h
+-
+sys/ioctl.h
+-
+linux/serial.h
+-
+

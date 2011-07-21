@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA version="1.4.0" xmlns="http://www.collada.org/2005/11/COLLADASchema">
+	<asset>
+		<contributor>
+			<author>NxuStream2 converter - http://www.ageia.com</author>
+			<authoring_tool>PhysX Rocket, PhysX Viewer, or CreateDynamics</authoring_tool>
+			<comments>questions to: jratcliff@ageia.com</comments>
+			<copyright></copyright>
+			<source_data>chair_gothic_tilted</source_data>
+		</contributor>
+		<unit meter="1" name="meter"/>
+		<up_axis>Y_UP</up_axis>
+	</asset>
+   <library_materials>
+      <material id="Material" name="Material">
+         <instance_effect url="#Material-fx"></instance_effect>
+      </material>
+   </library_materials>
+   <library_effects>
+      <effect id="Material-fx" name="Material">
+         <profile_COMMON>
+            <technique id="Material-fx-COMMON" sid="COMMON">
+               <phong>
+                  <ambient>
+                     <color>0.803922 0.588235 0.92549 1</color>
+                  </ambient>
+                  <diffuse>
+                     <color>0.803922 0.588235 0.92549 1</color>
+                  </diffuse>
+                  <specular>
+                     <color>0.631373 0.631373 0.631373 1</color>
+                  </specular>
+                  <shininess>
+                     <float>1</float>
+                  </shininess>
+                  <reflective>
+                     <color>0 0 0 1</color>
+                  </reflective>
+                  <transparent>
+                     <color>1 1 1 1</color>
+                  </transparent>
+                  <transparency>
+                     <float>0</float>
+                  </transparency>
+               </phong>
+           </technique>
+         </profile_COMMON>
+      </effect>
+   </library_effects>
+  <library_geometries>
+    <geometry id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray_0-Mesh" name="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray_0-Mesh">
+      <convex_mesh>
+        <source id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray_0-Position">
+          <float_array count="36" id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray_0-Position-array">
+            0.066593252 0.047548033 -0.092405736  0.075697049 0.034751248 -0.073275238  0.070449881 0.012219997 -0.127578273  0.019544 0.042661 -0.073921002  
+            -0.000773 0.040909 0.001007  0.026236 0.010144 -0.103274003  -0.007229 0.001735 -0.061082002  0.075890929 0.010652306 -0.10734579  
+            0 0 0.001  -0.017999999 -0.001728 0.001007  0.013199 0.032065 0.001026  -0.001517 0.040486 -0.039572999  
+          </float_array>
+          <technique_common>
+            <accessor count="12" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray_0-Position-array" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+    		   </technique_common>
+				 </source>
+   		 <vertices id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray_0-Vertex">
+					<input semantic="POSITION" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray_0-Position"/>
+				</vertices>
+				<triangles material="Material" count="20">
+					<input offset="0" semantic="VERTEX" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray_0-Vertex"/>
+           <p>
+             0 1 2  0 2 3  0 4 1  0 3 4  
+             5 2 6  5 6 3  5 3 2  7 8 9  
+             7 9 6  7 6 2  7 2 1  7 1 8  
+             10 4 9  10 9 8  10 1 4  10 8 1  
+             11 6 9  11 9 4  11 4 3  11 3 6  
+           </p>
+				</triangles>
+      </convex_mesh>
+		</geometry>
+    <geometry id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray_1-Mesh" name="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray_1-Mesh">
+      <convex_mesh>
+        <source id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray_1-Position">
+          <float_array count="36" id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray_1-Position-array">
+            0.070449881 0.012219997 -0.127578273  0.121620998 0.017403999 -0.133845001  0.18226026 0.020187326 -0.106091067  0.0763762 0.018486172 -0.094002999  
+            0.066593252 0.047548033 -0.092405736  0.183019266 0.064451948 -0.055410784  0.179368928 0.080754235 -0.071404934  0.127592102 0.06745515 -0.052187853  
+            0.178776801 0.027810777 -0.129237682  0.075284645 0.036263417 -0.072792523  0.12817663 0.081719369 -0.066608191  0.118300192 0.07842119 -0.062176336  
+          </float_array>
+          <technique_common>
+            <accessor count="12" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray_1-Position-array" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+    		   </technique_common>
+				 </source>
+   		 <vertices id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray_1-Vertex">
+					<input semantic="POSITION" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray_1-Position"/>
+				</vertices>
+				<triangles material="Material" count="20">
+					<input offset="0" semantic="VERTEX" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray_1-Vertex"/>
+           <p>
+             0 1 2  0 2 3  0 4 1  0 3 4  
+             5 2 6  5 6 7  8 2 1  8 6 2  
+             9 3 2  9 2 5  9 5 7  9 4 3  
+             10 6 8  10 8 1  10 7 6  10 1 4  
+             11 7 10  11 10 4  11 4 9  11 9 7  
+           </p>
+				</triangles>
+      </convex_mesh>
+		</geometry>
+    <geometry id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray_2-Mesh" name="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray_2-Mesh">
+      <convex_mesh>
+        <source id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray_2-Position">
+          <float_array count="36" id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray_2-Position-array">
+            0.381776989 0.053305998 -0.067778997  0.125986993 0.074146003 -0.045497999  0.179355398 0.022569072 -0.129343584  0.369383007 0.268774003 0.149130002  
+            0.130665004 0.265466005 0.145822003  0.364528 0.054228999 -0.099578999  0.133855999 0.277922004 0.125719994  0.377716005 0.273950994 0.121365003  
+            0.395552993 0.266238987 0.129076004  0.115789004 0.084633999 -0.055985998  0.39546901 0.076766998 -0.063879997  0.141959995 0.286473006 0.145852998  
+          </float_array>
+          <technique_common>
+            <accessor count="12" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray_2-Position-array" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+    		   </technique_common>
+				 </source>
+   		 <vertices id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray_2-Vertex">
+					<input semantic="POSITION" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray_2-Position"/>
+				</vertices>
+				<triangles material="Material" count="20">
+					<input offset="0" semantic="VERTEX" source="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray_2-Vertex"/>
+           <p>
+             0 1 2  1 0 3  4 1 3  5 0 2  
+             5 2 6  5 6 7  8 3 0  8 7 3  
+             9 1 4  9 4 6  9 2 1  9 6 2  
+             10 5 7  10 7 8  10 0 5  10 8 0  
+             11 6 4  11 4 3  11 3 7  11 7 6  
+           </p>
+				</triangles>
+      </convex_mesh>
+		</geometry>
+  </library_geometries>
+  <library_visual_scenes>
+	  <visual_scene id="Scene0-Visual" name="Scene0-Visual">
+      <node id="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray-Node" name="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray" type="NODE">
+        <translate>0 0 0</translate>
+        <rotate>1 0 0  0</rotate>
+      </node>
+  	  </visual_scene>
+  </library_visual_scenes>
+  <library_physics_materials>
+    <physics_material id="pmat0_0-PhysicsMaterial" name="pmat0_0-PhysicsMaterial">
+      <technique_common>
+        <dynamic_friction>0.5</dynamic_friction>
+        <restitution>0</restitution>
+        <static_friction>0.5</static_friction>
+      </technique_common>
+    </physics_material>
+  </library_physics_materials>
+  <library_physics_models>
+    <physics_model id="Scene0-PhysicsModel">
+      <rigid_body sid="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray-RigidBody" name="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray">
+        <technique_common>
+          <instance_physics_material url="#pmat0_0-PhysicsMaterial"/>
+         <shape>
+            <translate>0 0 0</translate>
+            <rotate>1 0 0  0</rotate>
+            <instance_physics_material url="#pmat0_0-PhysicsMaterial"/>
+            <density>1</density>
+            <extra>
+              <technique profile="PhysX">
+               <skinWidth>0</skinWidth>
+              </technique>
+            </extra>
+            <instance_geometry url="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray_0-Mesh"/>
+         </shape>
+         <shape>
+            <translate>0 0 0</translate>
+            <rotate>1 0 0  0</rotate>
+            <instance_physics_material url="#pmat0_0-PhysicsMaterial"/>
+            <density>1</density>
+            <extra>
+              <technique profile="PhysX">
+               <skinWidth>0</skinWidth>
+              </technique>
+            </extra>
+            <instance_geometry url="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray_1-Mesh"/>
+         </shape>
+         <shape>
+            <translate>0 0 0</translate>
+            <rotate>1 0 0  0</rotate>
+            <instance_physics_material url="#pmat0_0-PhysicsMaterial"/>
+            <density>1</density>
+            <extra>
+              <technique profile="PhysX">
+               <skinWidth>0</skinWidth>
+              </technique>
+            </extra>
+            <instance_geometry url="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray_2-Mesh"/>
+         </shape>
+        <dynamic>true</dynamic>
+        <mass>1</mass>
+		   	</technique_common>
+        <extra>
+          <technique profile="PhysX">
+            <extra>
+              <technique profile="PhysX">
+                <linearDamping>0</linearDamping>
+                <angularDamping>0</angularDamping>
+                <solverIterationCount>32</solverIterationCount>
+              </technique>
+            </extra>
+            <disable_collision>false</disable_collision>
+          </technique>
+        </extra>
+  	  </rigid_body>
+    </physics_model>
+  </library_physics_models>
+  <library_physics_scenes>
+    <physics_scene id="Scene0-Physics">
+      <instance_physics_model url="#Scene0-PhysicsModel">
+        <instance_rigid_body target="#/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray-Node" body="/home/reza/git/care-o-bot/cob_common/cob_description/ros/meshes/torso_v0/convex/tray-RigidBody"/>
+      <extra>
+        <technique profile="PhysX">
+        </technique>
+      </extra>
+      </instance_physics_model>
+      <technique_common>
+        <gravity>0 -9.800000191 0</gravity>
+      </technique_common>
+    </physics_scene>
+  </library_physics_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene0-Visual"/>
+    <instance_physics_scene url="#Scene0-Physics"/>
+  </scene>
+</COLLADA>

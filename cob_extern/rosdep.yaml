@@ -1,3 +1,14 @@
 linux-headers:
-  ubuntu: |
-    sudo apt-get install linux-headers-"`uname -r`"
+  ubuntu: linux-headers-generic
+
+libusb: 
+  ubuntu: libusb-dev
+
+unzip: 
+  ubuntu: unzip
+  
+libsdl-net:
+  ubuntu: libsdl-net1.2-dev
+
+cvs:
+  ubuntu: cvs

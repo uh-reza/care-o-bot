@@ -19,7 +19,7 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/common/lib)
 #uncomment if you have defined messages
 #rosbuild_genmsg()
 #uncomment if you have defined services
-#rosbuild_gensrv()
+rosbuild_gensrv()
 
 #common commands for building c++ executables and libraries
 #rosbuild_add_library(${PROJECT_NAME} src/example.cpp)
@@ -34,7 +34,11 @@ INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/common/include)
 
 # add project libs
 rosbuild_add_library(${PROJECT_NAME} common/src/CanCtrlPltfCOb3.cpp)
+
 # add executable
 rosbuild_add_executable(${PROJECT_NAME}_node ros/src/${PROJECT_NAME}.cpp)
+rosbuild_add_executable(${PROJECT_NAME}_sim_node ros/src/${PROJECT_NAME}.cpp)
+rosbuild_add_compile_flags(${PROJECT_NAME}_sim_node -D__SIM__)
+#rosbuild_add_executable(cob_base_drive_chain_sim ros/src/base_drive_chain_sim.cpp)
 
 target_link_libraries(${PROJECT_NAME}_node ${PROJECT_NAME} cob_canopen_motor_harmonica)
